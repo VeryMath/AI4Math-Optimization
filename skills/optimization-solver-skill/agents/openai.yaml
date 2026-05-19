@@ -1,0 +1,5 @@
+interface:
+  display_name: "Optimization Solver"
+  short_description: "Route and diagnose optimization solvers"
+  default_prompt: "Use $optimization-solver-skill to model an optimization problem, choose a solver route, generate approved solver code, and parse solver evidence."
+

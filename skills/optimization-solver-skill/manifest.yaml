@@ -1,0 +1,39 @@
+schema_version: 1
+name: optimization-solver-skill
+version: 0.1.0
+scope: computational-math-solver
+description: Understand, normalize, route, execute, parse, and diagnose optimization solver workflows across structured specs, natural-language or LaTeX modeling checkpoints, SDPT3, CDOpt, and extensible solver backends.
+entrypoint: SKILL.md
+requires_env:
+  conda: ai4math
+requires_tools:
+  - python
+  - agent-native-file-inspection
+  - optional-matlab-or-octave-cli
+requires_skills:
+  - computational_math_reproduction_workflow_skill
+  - matlab_environment_setup_skill
+  - matlab_runtime_skill
+  - environment_deployment_skill
+  - failure_diagnosis_skill
+  - report_generation_skill
+  - human_review_skill
+input_artifacts:
+  - optimization_problem_spec
+  - optional_natural_language_or_latex_problem
+  - optional_source_path
+  - optional_solver_hint
+output_artifacts:
+  - modeling_checkpoint.md
+  - solver_route.json
+  - generated_solver_entrypoint
+  - results/solver_summary.json
+  - optional_repair_plan.md
+approval_required_for:
+  - solver_code_execution
+  - dependency_install
+  - mex_compilation
+  - modeling_adapter_generation
+  - model_interpretation_confirmation
+  - source_edit
+risk_level: medium

@@ -1,0 +1,129 @@
+import json
+import subprocess
+import sys
+
+import yaml
+
+from codegen import generate_solver_entrypoint
+from problem_spec import OptimizationProblemSpec
+from result_parser import parse_solver_log
+
+
+def write_yaml(path, payload):
+    path.write_text(yaml.safe_dump(payload, sort_keys=False))
+    return path
+
+
+def test_solver_router_selects_sdpt3_for_conic_sqlp(tmp_path):
+    spec_path = write_yaml(
+        tmp_path / "problem.yaml",
+        {
+            "schema_version": 1,
+            "problem_id": "Tiny SDP",
+            "input_type": "structured_spec",
+            "problem_class": "conic_sqlp",
+            "objective": {"sense": "minimize"},
+            "review": {"modeling_status": "confirmed"},
+            "data": {"mat_file": "tiny.mat"},
+            "sdpt3": {"data_variables": {"blk": "blk", "At": "At", "C": "C", "b": "b"}},
+        },
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "skills/optimization-solver-skill/scripts/solver_router.py",
+            "--spec",
+            str(spec_path),
+        ],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 0
+    route = json.loads(result.stdout)
+    assert route["solver"] == "sdpt3"
+    assert route["entrypoint"] == "run_tiny_sdp_sdpt3.m"
+    assert "matlab -batch" in route["candidate_command"]
+
+
+def test_codegen_writes_sdpt3_matlab_wrapper(tmp_path):
+    spec = OptimizationProblemSpec.from_mapping(
+        {
+            "schema_version": 1,
+            "problem_id": "sdp_case",
+            "input_type": "structured_spec",
+            "problem_class": "semidefinite_program",
+            "objective": {"sense": "minimize"},
+            "review": {"modeling_status": "confirmed"},
+            "data": {"mat_file": "case.mat"},
+            "sdpt3": {
+                "solver": "sdpt3",
+                "data_variables": {"blk": "blk", "At": "At", "C": "C", "b": "b"},
+                "options": {"printlevel": 2},
+            },
+        }
+    )
+
+    route = generate_solver_entrypoint(spec, tmp_path / "generated")
+
+    entrypoint = tmp_path / "generated" / "run_sdp_case_sdpt3.m"
+    assert route["solver"] == "sdpt3"
+    assert entrypoint.exists()
+    text = entrypoint.read_text()
+    assert "load(data_file, 'blk', 'At', 'C', 'b')" in text
+    assert "[obj, X, y, Z, info, runhist] = sdpt3" in text
+    assert "OPTIONS.printlevel = 2;" in text
+
+
+def test_codegen_writes_cdopt_python_wrapper(tmp_path):
+    spec = OptimizationProblemSpec.from_mapping(
+        {
+            "schema_version": 1,
+            "problem_id": "stiefel_demo",
+            "input_type": "structured_spec",
+            "problem_class": "riemannian",
+            "objective": {"sense": "minimize"},
+            "review": {"modeling_status": "confirmed"},
+            "cdopt": {
+                "backend": "torch",
+                "manifold": {"type": "stiefel_torch", "shape": [20, 3]},
+                "objective": {"module": "problem_definition", "function": "obj_fun"},
+                "beta": 50,
+            },
+        }
+    )
+
+    route = generate_solver_entrypoint(spec, tmp_path / "generated")
+
+    entrypoint = tmp_path / "generated" / "run_stiefel_demo_cdopt.py"
+    assert route["solver"] == "cdopt"
+    assert entrypoint.exists()
+    text = entrypoint.read_text()
+    assert "import cdopt" in text
+    assert "problem_definition" in text
+    assert "stiefel_torch" in text
+
+
+def test_result_parser_classifies_solver_failures_and_metrics():
+    summary = parse_solver_log(
+        """
+        sqlp stop: primal problem is suspected of being infeasible
+        info.termcode = 1
+        gap = 3.2e-08
+        pinfeas = 1.0e-07
+        """
+    )
+
+    assert summary["status"] == "failed"
+    assert summary["failure_type"] == "infeasible"
+    assert summary["metrics"]["termcode"] == 1
+    assert summary["metrics"]["gap"] == 3.2e-08
+
+
+def test_result_parser_classifies_cdopt_missing_dependency():
+    summary = parse_solver_log("ModuleNotFoundError: No module named 'cdopt'")
+
+    assert summary["status"] == "failed"
+    assert summary["failure_type"] == "missing_dependency"
