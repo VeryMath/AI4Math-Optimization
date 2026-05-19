@@ -55,6 +55,7 @@ Skill 的结构预留了更大的优化求解器枢纽：
 - `skills/optimization-solver-skill/references/solver_catalog.md`：solver 和建模后端选择规则。
 - `skills/optimization-solver-skill/references/code_generation_patterns.md`：生成 adapter 的约定。
 - `skills/optimization-solver-skill/references/evaluation_reporting.md`：结果解释和报告规则。
+- `skills/optimization-solver-skill/references/interaction_examples.md`：基于 CDOpt 官方 examples 的人机交互测试样例。
 - `skills/optimization-solver-skill/scripts/solver_router.py`：把结构化 spec 路由到求解器后端。
 - `skills/optimization-solver-skill/scripts/codegen.py`：生成 SDPT3 MATLAB 或 CDOpt Python 入口。
 - `skills/optimization-solver-skill/scripts/result_parser.py`：把 solver 日志解析成紧凑摘要。
@@ -88,6 +89,10 @@ conda run -n ai4math python skills/optimization-solver-skill/scripts/result_pars
 ```
 
 10. 报告目标值、可行性、证书、残差、solver 状态、运行时间和失败证据。
+
+## 人机交互测试样例
+
+当目标是测试 Skill 的对话使用效果，而不是跑 CI 时，读取 `skills/optimization-solver-skill/references/interaction_examples.md`。推荐先用 CDOpt 的 Dictionary Learning 例子，因为它能检查 Stiefel 流形建模、CDOpt 路由和 solver 证据，同时不会默认进入长时间神经网络训练。
 
 ## 示例问题描述
 
