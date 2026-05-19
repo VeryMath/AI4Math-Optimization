@@ -122,4 +122,3 @@ Only create the files that the task actually needs. Keep the conversation as the
 - `references/solver_catalog.md`: solver backend guidance.
 - `references/code_generation_patterns.md`: generated entrypoint conventions.
 - `references/evaluation_reporting.md`: result interpretation and reporting.
-- `references/interaction_examples.md`: human-agent interaction examples using official CDOpt examples.

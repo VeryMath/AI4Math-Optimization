@@ -11,7 +11,6 @@ Read this index when the task involves optimization problem modeling, solver sel
 - `solver_catalog.md`: read when choosing SDPT3, CDOpt, an existing repository solver, or an extension backend.
 - `code_generation_patterns.md`: read before generating MATLAB, Octave, Python, or modeling-layer entrypoints.
 - `evaluation_reporting.md`: read after a run, failed run, or solver-status ambiguity.
-- `interaction_examples.md`: read when designing or evaluating human-agent interaction tests for this Skill.
 
 ## Do
 
@@ -26,3 +25,4 @@ Read this index when the task involves optimization problem modeling, solver sel
 - Do not run generated solver code without an approved run plan.
 - Do not install CDOpt, CVX, YALMIP, SDPT3, MATLAB toolboxes, Python solver packages, or MEX dependencies without approval.
 - Do not hide infeasibility, weak certificates, bad scaling, or ambiguous termination codes.
+

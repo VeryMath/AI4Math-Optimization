@@ -55,7 +55,6 @@ The Skill is structured to grow into a broader optimization solver hub:
 - `skills/optimization-solver-skill/references/solver_catalog.md`: solver and modeling backend guidance.
 - `skills/optimization-solver-skill/references/code_generation_patterns.md`: generated adapter conventions.
 - `skills/optimization-solver-skill/references/evaluation_reporting.md`: result interpretation and reporting guidance.
-- `skills/optimization-solver-skill/references/interaction_examples.md`: human-agent workflow examples grounded in CDOpt examples.
 - `skills/optimization-solver-skill/scripts/solver_router.py`: route structured specs to solver backends.
 - `skills/optimization-solver-skill/scripts/codegen.py`: generate SDPT3 MATLAB or CDOpt Python entrypoints.
 - `skills/optimization-solver-skill/scripts/result_parser.py`: parse solver logs into compact summaries.
@@ -89,10 +88,6 @@ conda run -n ai4math python skills/optimization-solver-skill/scripts/result_pars
 ```
 
 10. Report objective values, feasibility, certificates, residuals, solver status, runtime, and failure evidence.
-
-## Human-Agent Interaction Examples
-
-Use `skills/optimization-solver-skill/references/interaction_examples.md` when the goal is to test the Skill conversationally rather than as CI. The CDOpt Dictionary Learning example is the recommended first scenario because it checks Stiefel-manifold modeling, CDOpt routing, and solver evidence without defaulting to long neural-network training.
 
 ## Example Problem Spec
 

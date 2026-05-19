@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 import subprocess
 import sys
 
@@ -128,13 +127,3 @@ def test_result_parser_classifies_cdopt_missing_dependency():
 
     assert summary["status"] == "failed"
     assert summary["failure_type"] == "missing_dependency"
-
-
-def test_skill_includes_human_agent_interaction_examples():
-    text = Path("skills/optimization-solver-skill/references/interaction_examples.md").read_text()
-
-    assert "Human-Agent Interaction Examples" in text
-    assert "Dictionary Learning" in text
-    assert "JIT" in text
-    assert "PyTorch" in text
-    assert "not CI tests" in text
