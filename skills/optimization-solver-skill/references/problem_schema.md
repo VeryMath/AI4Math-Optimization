@@ -94,9 +94,20 @@ cdopt:
   optimizer:
     family: scipy
     method: L-BFGS-B
+    options:
+      maxiter: 200
+      gtol: 1.0e-6
 ```
 
 The objective module must be importable from the approved working directory or from a path added in the run plan.
+
+Concrete code generation currently supports:
+
+- `cdopt.backend`: `torch`, `numpy`/`np`, or `jax`.
+- `cdopt.manifold.type`: `sphere_*`, `oblique_*`, `stiefel_*`, `grassmann_*`, `generalized_stiefel_*`, `hyperbolic_*`, or `symp_stiefel_*`, with suffix matching the backend (`_torch`, `_np`, or `_jax`).
+- `cdopt.manifold.shape`: non-empty integer list passed to the manifold constructor.
+- `cdopt.objective.module` and `cdopt.objective.function`: an importable objective function.
+- `cdopt.optimizer.family`: `scipy` for generated wrappers. Other optimizer families should use a repository-native adapter or a reviewed custom extension.
 
 ### Modeling Layers
 
@@ -113,4 +124,3 @@ modeling_layer:
 ```
 
 Treat newly generated modeling adapters as reviewable artifacts.
-

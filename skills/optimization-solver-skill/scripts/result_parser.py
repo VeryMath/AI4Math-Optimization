@@ -27,6 +27,10 @@ METRIC_PATTERNS = {
 
 
 def parse_solver_log(text: str) -> dict[str, Any]:
+    json_summary = _parse_json_summary(text)
+    if json_summary:
+        return json_summary
+
     failure_type = "none"
     evidence = ""
     for candidate, pattern in FAILURE_PATTERNS:
@@ -45,6 +49,41 @@ def parse_solver_log(text: str) -> dict[str, Any]:
     status = "failed" if failure_type != "none" else "unknown"
     if re.search(r"success|optimal|completed", text, re.I) and failure_type == "none":
         status = "completed"
+
+    return {
+        "status": status,
+        "failure_type": failure_type,
+        "evidence": evidence,
+        "metrics": metrics,
+    }
+
+
+def _parse_json_summary(text: str) -> dict[str, Any] | None:
+    stripped = text.strip()
+    start = stripped.find("{")
+    end = stripped.rfind("}")
+    if start < 0 or end < start:
+        return None
+
+    try:
+        payload = json.loads(stripped[start : end + 1])
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(payload, dict) or "status" not in payload:
+        return None
+
+    metrics: dict[str, Any] = {}
+    for name in ["objective", "stationarity", "feasibility", "nit", "nfev", "elapsed_seconds"]:
+        if name in payload:
+            metrics[name] = payload[name]
+
+    status = str(payload.get("status", "unknown"))
+    success = payload.get("success")
+    failure_type = "none" if status == "completed" or success is True else "solver_failure"
+    if status == "failed" and payload.get("message"):
+        evidence = str(payload["message"])
+    else:
+        evidence = ""
 
     return {
         "status": status,

@@ -72,6 +72,12 @@ conda run -n ai4math python skills/optimization-solver-skill/scripts/result_pars
 - **Existing solver route:** repository-native solvers when they are the safest way to reproduce the original experiment.
 - **Future backend route:** add solvers by extending `solver_catalog.md`, `problem_schema.md`, `solver_router.py`, `codegen.py`, and parser patterns together.
 
+Current generated support is concrete but intentionally bounded:
+
+- SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
+- CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
+- Natural-language or LaTeX-only models require a modeling checkpoint before executable SDPT3/CDOpt code is generated.
+
 ## Approval Rules
 
 Ask before:

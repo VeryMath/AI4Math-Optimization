@@ -16,6 +16,8 @@ Primary sources:
 
 The direct SDPT3 data interface expects `blk`, `At`, `C`, and `b`. A generated wrapper may call `sdpt3`, `sqlp`, or `HSDsqlp`, but `sdpt3` is the preferred default unless the source repository already uses a lower-level entrypoint.
 
+Current generated support: direct MATLAB/Octave wrappers for confirmed SQLP data in `.mat` files. The wrapper loads `blk`, `At`, `C`, and `b`, applies `sqlparameters` options, calls the selected SDPT3 entrypoint, and saves `obj`, `X`, `y`, `Z`, `info`, and `runhist`. Natural-language or LaTeX SDP models still require a modeling checkpoint and reviewed data/model construction before execution.
+
 ### CDOpt
 
 CDOpt is a Python package for optimization on Riemannian manifolds through constraint dissolving functions. Use it when the problem has explicit manifold constraints and the user or repository provides an objective function and manifold definition.
@@ -27,6 +29,8 @@ Primary sources:
 - Quickstart: https://cdopt.github.io/md_files/tutorials/quick_start.html
 
 CDOpt supports NumPy/SciPy-style, PyTorch, and JAX-adjacent workflows. Treat optional backend installation and GPU/JAX setup as dependency work requiring approval.
+
+Current generated support: Python wrappers for confirmed manifold specs using CDOpt's constraint-dissolving problem object and SciPy `optimize.minimize`. Supported generated manifold families include sphere, oblique, Stiefel, Grassmann, generalized Stiefel, hyperbolic, and symplectic Stiefel variants for `torch`, `numpy`/`np`, or `jax` backends. The objective must be supplied as an importable module/function pair.
 
 ## Modeling-Layer Routes
 
@@ -58,4 +62,3 @@ Do not add a modeling layer just because it is convenient. Prefer existing sourc
 - Manifold solvers: objective value, gradient norm, feasibility/constraint violation, iteration history.
 - Modeling layers: model dimensions, selected backend, solver status, raw solver log.
 - Repository-native solvers: original metrics, convergence trace, parameters, runtime.
-

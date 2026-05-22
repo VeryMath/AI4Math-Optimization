@@ -35,8 +35,10 @@ The human gives a goal, problem statement, paper excerpt, repository, `.mat` fil
 
 The first concrete backends are:
 
-- **SDPT3** for semidefinite, second-order-cone, linear-cone, and SQLP-style MATLAB/Octave problems.
-- **CDOpt** for Riemannian and manifold-constrained optimization through constraint dissolving.
+- **SDPT3** for confirmed semidefinite, second-order-cone, linear-cone, and SQLP-style MATLAB/Octave problems. The helper layer routes SQLP-compatible specs and generates a MATLAB/Octave wrapper that loads `blk`, `At`, `C`, and `b`, applies `sqlparameters`, calls the selected SDPT3 entrypoint, and saves solver evidence.
+- **CDOpt** for confirmed Riemannian and manifold-constrained optimization through constraint dissolving. The helper layer routes common manifold classes and generates a Python wrapper that constructs CDOpt manifolds, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON summary.
+
+Current generated CDOpt wrappers support `torch`, `numpy`/`np`, and `jax` manifold constructors for sphere, oblique, Stiefel, Grassmann, generalized Stiefel, hyperbolic, and symplectic Stiefel families. They require an importable objective module/function and a reviewed problem spec. Natural-language or LaTeX-only problems still stop at a modeling checkpoint before executable code is generated.
 
 The Skill is structured to grow into a broader optimization solver hub:
 
@@ -133,4 +135,4 @@ python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate
 conda run -n ai4math pytest
 ```
 
-Current verification: `Skill is valid!` and `5 passed`.
+Current verification: `Skill is valid!` and `8 passed`.

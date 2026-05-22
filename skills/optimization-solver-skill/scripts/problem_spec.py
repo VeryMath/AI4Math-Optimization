@@ -24,7 +24,12 @@ CDOPT_CLASSES = {
     "manifold_optimization",
     "orthogonality_constrained",
     "stiefel",
+    "sphere",
+    "oblique",
     "grassmann",
+    "generalized_stiefel",
+    "hyperbolic",
+    "symplectic_stiefel",
 }
 
 SUPPORTED_BACKENDS = {"auto", "sdpt3", "cdopt", "scipy", "existing"}

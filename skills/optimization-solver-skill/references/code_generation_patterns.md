@@ -32,10 +32,12 @@ Generated wrappers should:
 2. Import the user-provided objective module and function.
 3. Construct the requested manifold from the selected backend when all required fields are confirmed.
 4. Build a `cdopt.core.problem` object.
-5. Route to SciPy, PyTorch, JAX, or the source repository's existing optimizer.
+5. Route the generated constraint-dissolving function to SciPy `optimize.minimize` for the generated adapter path.
 6. Write a JSON summary with objective value, feasibility, iterations, backend, and status.
 
-When the manifold construction details are ambiguous, generate a checkpointing adapter that states exactly what must be confirmed before execution.
+The generated CDOpt path supports `torch`, `numpy`/`np`, and `jax` manifold constructors when the spec provides a manifold type, shape, objective module, objective function, beta, and SciPy optimizer options. If the source repository already uses a PyTorch, JAX, or custom optimizer loop, preserve that route as repository-native unless the human approves a custom adapter.
+
+When the manifold construction details are ambiguous, stop at the modeling checkpoint instead of inventing executable code.
 
 ## Modeling-Layer Adapter
 
@@ -53,4 +55,3 @@ Use this pattern for CVX, YALMIP, CVXPY, JuMP, or Pyomo:
 - Keep generated code deterministic and small.
 - Generated code may stop with a clear message when required problem pieces are missing; it should not silently invent math.
 - If code generation would require unresolved modeling choices, write a modeling checkpoint instead of executable code.
-
