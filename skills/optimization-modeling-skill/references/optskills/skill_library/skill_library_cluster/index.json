@@ -1,0 +1,281 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "skill_id": "maximum_cardinality_bipartite_matching",
+      "name": "Maximum Cardinality Bipartite Matching",
+      "description": "Model and solve one-to-one assignment problems between two disjoint sets with preference compatibility, aiming to maximize the total number of matches.",
+      "path": "maximum_cardinality_bipartite_matching.md"
+    },
+    {
+      "skill_id": "binary_network_flow_routing",
+      "name": "Binary Network Flow Routing",
+      "description": "Model and solve network flow problems with binary arc selection variables, enforcing flow conservation and minimizing linear costs, using either a direct solver API or a modeling framework.",
+      "path": "binary_network_flow_routing.md"
+    },
+    {
+      "skill_id": "multi_resource_assignment_optimization",
+      "name": "Multi-Resource Assignment Optimization",
+      "description": "Model and solve linear cost-minimization problems where discrete or continuous resources with capacity contributions must be assigned to tasks to meet demands, subject to supply limits.",
+      "path": "multi_resource_assignment_optimization.md"
+    },
+    {
+      "skill_id": "quadratic_portfolio_optimization",
+      "name": "Quadratic Portfolio Optimization",
+      "description": "Formulate and solve portfolio variance minimization as a quadratic program with linear constraints, handling incomplete covariance data and verifying solution feasibility.",
+      "path": "quadratic_portfolio_optimization.md"
+    },
+    {
+      "skill_id": "multiindexflowassignmentlp",
+      "name": "MultiIndexFlowAssignmentLP",
+      "description": "Model and solve multi-index flow assignment problems with linear profit maximization and exact demand satisfaction using continuous variables, implemented via either direct solver APIs or algebraic modeling frameworks.",
+      "path": "multiindexflowassignmentlp.md"
+    },
+    {
+      "skill_id": "multi_index_flow_allocation",
+      "name": "Multi-Index Flow Allocation",
+      "description": "Model and solve linear profit maximization problems for allocating flows across multiple origins, types, and destinations with exact demand satisfaction.",
+      "path": "multi_index_flow_allocation.md"
+    },
+    {
+      "skill_id": "multi_commodity_flow_allocation",
+      "name": "Multi-Commodity Flow Allocation",
+      "description": "Model and solve multi-source, multi-sink, multi-commodity flow problems with linear profit objectives and exact demand satisfaction using linear programming.",
+      "path": "multi_commodity_flow_allocation.md"
+    },
+    {
+      "skill_id": "weighted_set_cover_solver",
+      "name": "Weighted Set Cover Solver",
+      "description": "Model and solve weighted set covering problems with binary selection variables, coverage constraints, and fixed-cost minimization using either CP-SAT or MILP frameworks.",
+      "path": "weighted_set_cover_solver.md"
+    },
+    {
+      "skill_id": "cardinality_constrained_pairwise_selection",
+      "name": "Cardinality-Constrained Pairwise Selection",
+      "description": "Model and solve combinatorial problems where exactly K elements are selected from a set, and the objective maximizes the sum of pairwise benefits between selected elements, using linearized binary variables for pairwise activation.",
+      "path": "cardinality_constrained_pairwise_selection.md"
+    },
+    {
+      "skill_id": "weighted_set_cover_optimization",
+      "name": "Weighted Set Cover Optimization",
+      "description": "Model binary selection problems with coverage requirements as weighted set cover MILP, then solve with open-source solvers via Pyomo or OR-Tools.",
+      "path": "weighted_set_cover_optimization.md"
+    },
+    {
+      "skill_id": "multi_commodity_resource_allocation_with_shared_capacity",
+      "name": "Multi-Commodity Resource Allocation with Shared Capacity",
+      "description": "Model and solve integer or linear programs for allocating multiple products across shared, capacity-constrained resources to maximize linear profit, using explicit demand limits and resource usage matrices.",
+      "path": "multi_commodity_resource_allocation_with_shared_capacity.md"
+    },
+    {
+      "skill_id": "fixed_charge_production_planning",
+      "name": "Fixed-Charge Production Planning",
+      "description": "Model and solve production planning problems with fixed activation costs and variable production costs using mixed-integer linear programming (MILP) with big-M constraints.",
+      "path": "fixed_charge_production_planning.md"
+    },
+    {
+      "skill_id": "minimum_cost_network_flow",
+      "name": "Minimum Cost Network Flow",
+      "description": "Model and solve capacitated network flow problems with supply/demand nodes and linear transportation costs using structured data and solver-aware implementations.",
+      "path": "minimum_cost_network_flow.md"
+    },
+    {
+      "skill_id": "transportationproblemsolver",
+      "name": "TransportationProblemSolver",
+      "description": "Model and solve balanced or capacitated transportation problems with linear costs using either direct LP solver APIs or algebraic modeling frameworks.",
+      "path": "transportationproblemsolver.md"
+    },
+    {
+      "skill_id": "binary_selection_with_knapsack_constraint",
+      "name": "Binary Selection with Knapsack Constraint",
+      "description": "Model and solve binary selection problems with a single capacity constraint using either a dedicated knapsack solver or a general-purpose MILP solver, ensuring robust solution extraction and verification.",
+      "path": "binary_selection_with_knapsack_constraint.md"
+    },
+    {
+      "skill_id": "supplier_selection_with_minimum_quantity_and_count",
+      "name": "Supplier Selection with Minimum Quantity and Count",
+      "description": "Model and solve assignment problems with minimum quantity requirements if selected and minimum supplier count constraints using mixed-integer linear programming.",
+      "path": "supplier_selection_with_minimum_quantity_and_count.md"
+    },
+    {
+      "skill_id": "set_cover_cost_minimization",
+      "name": "Set Cover Cost Minimization",
+      "description": "Model and solve binary set cover problems with linear costs using either a direct matrix formulation or a sparse coverage mapping, and implement robust solving with verification.",
+      "path": "set_cover_cost_minimization.md"
+    },
+    {
+      "skill_id": "tsp_mtz_mip",
+      "name": "TSP-MTZ-MIP",
+      "description": "Model and solve the Traveling Salesperson Problem (TSP) as a Mixed-Integer Program (MIP) using binary arc selection and Miller-Tucker-Zemlin (MTZ) subtour elimination constraints, with workflows for both commercial and open-source solver backends.",
+      "path": "tsp_mtz_mip.md"
+    },
+    {
+      "skill_id": "integer_linear_programming_with_multiple_knapsack_constraints",
+      "name": "Integer Linear Programming with Multiple Knapsack Constraints",
+      "description": "Model and solve integer linear programs with bounded, nonnegative integer variables, a linear objective to maximize profit, and multiple linear inequality (knapsack) constraints using structured formulations and robust solver backends.",
+      "path": "integer_linear_programming_with_multiple_knapsack_constraints.md"
+    },
+    {
+      "skill_id": "bipartiteassignmentflow",
+      "name": "BipartiteAssignmentFlow",
+      "description": "Model and solve linear bipartite assignment problems with flow quantities, demand satisfaction, and unconstrained supply to maximize total profit or minimize total cost.",
+      "path": "bipartiteassignmentflow.md"
+    },
+    {
+      "skill_id": "multicommodityflowoptimization",
+      "name": "MultiCommodityFlowOptimization",
+      "description": "Model multi-commodity flow problems with shared arc capacities and solve them using linear programming, with robust status checking and solution validation.",
+      "path": "multicommodityflowoptimization.md"
+    },
+    {
+      "skill_id": "schedulewithprecedenceanddeviations",
+      "name": "ScheduleWithPrecedenceAndDeviations",
+      "description": "Model and solve scheduling problems with precedence decisions, time windows, and piecewise-linear deviation penalties using MILP formulations and modern solvers.",
+      "path": "schedulewithprecedenceanddeviations.md"
+    },
+    {
+      "skill_id": "binary_arc_selection_with_flow_conservation",
+      "name": "Binary Arc Selection with Flow Conservation",
+      "description": "Model and solve network optimization problems where arcs are selected via binary variables and flow conservation enforces connectivity from source to sink, minimizing total cost.",
+      "path": "binary_arc_selection_with_flow_conservation.md"
+    },
+    {
+      "skill_id": "weighted_set_cover_optimization_2",
+      "name": "Weighted Set Cover Optimization",
+      "description": "Model and solve weighted set cover problems using binary selection variables, coverage constraints, and weighted sum minimization, with implementation options for both CP-SAT and MIP solvers.",
+      "path": "weighted_set_cover_optimization_2.md"
+    },
+    {
+      "skill_id": "constrained_cardinality_assignment",
+      "name": "Constrained Cardinality Assignment",
+      "description": "Model and solve binary assignment problems with cardinality constraints, assignment limits, conditional exclusions, and linear cost minimization using MILP solvers.",
+      "path": "constrained_cardinality_assignment.md"
+    },
+    {
+      "skill_id": "assignmentflowwithparticipationrequirements",
+      "name": "AssignmentFlowWithParticipationRequirements",
+      "description": "Model and solve mixed-integer linear programs for assignment-flow problems with minimum contributor counts and conditional minimum delivery amounts, using either direct solver APIs or algebraic modeling frameworks.",
+      "path": "assignmentflowwithparticipationrequirements.md"
+    },
+    {
+      "skill_id": "cardinality_constrained_pairwise_interaction_maximization",
+      "name": "Cardinality-Constrained Pairwise Interaction Maximization",
+      "description": "Model and solve selection problems where exactly K items are chosen to maximize the sum of directed pairwise interaction scores between selected items, using linearized binary variables and logical constraints.",
+      "path": "cardinality_constrained_pairwise_interaction_maximization.md"
+    },
+    {
+      "skill_id": "capacitated_facility_location_milp",
+      "name": "Capacitated Facility Location MILP",
+      "description": "Model and solve capacitated facility location problems with fixed opening costs and linear transportation costs using mixed-integer linear programming (MILP), with robust solver integration and solution validation.",
+      "path": "capacitated_facility_location_milp.md"
+    },
+    {
+      "skill_id": "binary_coverage_maximization_with_budget",
+      "name": "Binary Coverage Maximization with Budget",
+      "description": "Model and solve binary selection problems to maximize weighted coverage subject to a budget constraint, using two-layer binary variables and activation constraints.",
+      "path": "binary_coverage_maximization_with_budget.md"
+    },
+    {
+      "skill_id": "multi_item_allocation_with_capacity_constraints",
+      "name": "Multi-Item Allocation with Capacity Constraints",
+      "description": "Model and solve integer linear programs for allocating items under individual demand limits and multiple linear capacity constraints to maximize linear revenue.",
+      "path": "multi_item_allocation_with_capacity_constraints.md"
+    },
+    {
+      "skill_id": "multicommodityflowallocation",
+      "name": "MultiCommodityFlowAllocation",
+      "description": "Model and solve multi-source, multi-destination, multi-commodity allocation problems with exact demand satisfaction and linear profit maximization using structured LP formulations.",
+      "path": "multicommodityflowallocation.md"
+    },
+    {
+      "skill_id": "multiperiodproductioninventorylp",
+      "name": "MultiPeriodProductionInventoryLP",
+      "description": "Model and solve multi-period production-inventory problems with resource capacity constraints and sales limits using linear programming, with workflows for both direct solver APIs and algebraic modeling languages.",
+      "path": "multiperiodproductioninventorylp.md"
+    },
+    {
+      "skill_id": "multicommoditynetworkflow",
+      "name": "MultiCommodityNetworkFlow",
+      "description": "Model and solve multi-commodity flow problems with shared arc capacities and commodity-specific limits, minimizing linear transportation cost.",
+      "path": "multicommoditynetworkflow.md"
+    },
+    {
+      "skill_id": "generalized_bin_packing_container_minimization",
+      "name": "Generalized Bin Packing / Container Minimization",
+      "description": "Model and solve assignment problems where items must be assigned to containers with capacity limits, minimizing the number of containers used, using binary assignment and container usage variables.",
+      "path": "generalized_bin_packing_container_minimization.md"
+    },
+    {
+      "skill_id": "multi_period_production_inventory_planning",
+      "name": "Multi-Period Production-Inventory Planning",
+      "description": "Formulate and solve multi-period production planning problems with inventory balance, capacity constraints, and terminal conditions, using both continuous and integer variable approaches.",
+      "path": "multi_period_production_inventory_planning.md"
+    },
+    {
+      "skill_id": "weighted_set_cover_solver_2",
+      "name": "Weighted Set Cover Solver",
+      "description": "Model and solve weighted set cover problems by selecting subsets to cover all elements at minimum cost using binary variables, coverage constraints, and MIP solvers.",
+      "path": "weighted_set_cover_solver_2.md"
+    },
+    {
+      "skill_id": "job_shop_scheduling_with_disjunctive_constraints",
+      "name": "Job Shop Scheduling with Disjunctive Constraints",
+      "description": "Model job shop scheduling problems using binary precedence variables and big-M constraints to sequence operations on shared machines, then solve via MIP with careful numerical tolerance settings and solution verification.",
+      "path": "job_shop_scheduling_with_disjunctive_constraints.md"
+    },
+    {
+      "skill_id": "set_covering_with_logical_or_constraints",
+      "name": "Set Covering with Logical OR Constraints",
+      "description": "Model and solve binary selection problems where elements must be covered by at least one chosen set, minimizing total selection cost.",
+      "path": "set_covering_with_logical_or_constraints.md"
+    },
+    {
+      "skill_id": "tsp_mtz_formulation",
+      "name": "TSP_MTZ_Formulation",
+      "description": "Model and solve the Traveling Salesperson Problem using the Miller-Tucker-Zemlin (MTZ) formulation with binary arc and integer position variables, producing exact or feasible tours via MIP/CP-SAT solvers.",
+      "path": "tsp_mtz_formulation.md"
+    },
+    {
+      "skill_id": "binary_subset_selection_with_pairwise_interactions",
+      "name": "Binary Subset Selection with Pairwise Interactions",
+      "description": "Model and solve subset selection problems with cardinality constraints and pairwise interaction objectives using linearized binary variables.",
+      "path": "binary_subset_selection_with_pairwise_interactions.md"
+    },
+    {
+      "skill_id": "multi_commodity_transportation_network_flow",
+      "name": "Multi-Commodity Transportation Network Flow",
+      "description": "Model and solve multi-product flow problems on capacitated networks, minimizing total transportation cost while respecting supply limits, demand requirements, and shared arc capacities.",
+      "path": "multi_commodity_transportation_network_flow.md"
+    },
+    {
+      "skill_id": "capacitated_transportation_problem_solver",
+      "name": "Capacitated Transportation Problem Solver",
+      "description": "Model and solve balanced capacitated transportation problems with linear costs, supply/demand equality, and per-route capacity limits using continuous flow variables.",
+      "path": "capacitated_transportation_problem_solver.md"
+    },
+    {
+      "skill_id": "generator_commitment_and_dispatch",
+      "name": "Generator Commitment and Dispatch",
+      "description": "Model and solve unit commitment problems with startup logic, capacity constraints, and cost minimization using mixed-integer linear programming.",
+      "path": "generator_commitment_and_dispatch.md"
+    },
+    {
+      "skill_id": "integer_resource_allocation_with_demand_satisfaction",
+      "name": "Integer Resource Allocation with Demand Satisfaction",
+      "description": "Model and solve integer linear programs for minimizing total resource usage while satisfying demand requirements and respecting individual usage limits.",
+      "path": "integer_resource_allocation_with_demand_satisfaction.md"
+    },
+    {
+      "skill_id": "assignment_problem_with_capacity_and_demand",
+      "name": "Assignment Problem with Capacity and Demand",
+      "description": "Model and solve linear assignment problems with resource availability, task demand, and per-assignment capacity limits using continuous variables and linear programming solvers.",
+      "path": "assignment_problem_with_capacity_and_demand.md"
+    },
+    {
+      "skill_id": "tsp_with_position_variables",
+      "name": "TSP with Position Variables",
+      "description": "Model and solve the Traveling Salesperson Problem using binary arc selection and integer position assignment variables, with explicit subtour elimination constraints, to produce a minimal-distance Hamiltonian cycle.",
+      "path": "tsp_with_position_variables.md"
+    }
+  ]
+}

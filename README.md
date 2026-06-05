@@ -1,30 +1,31 @@
-# Optimization Solver Skill
+# AI4Math Optimization Skills
 
 English | [简体中文](README.zh-CN.md)
 
-Optimization Solver Skill is a standalone, coding-agent-facing project for turning mathematical optimization tasks into safe, inspectable solver workflows. It is designed for agents that need to understand an optimization problem, choose a solver ecosystem, generate execution code, request approval, run the solver, parse evidence, and diagnose failures.
+AI4Math Optimization Skills is a standalone, coding-agent-facing project for turning mathematical optimization tasks into safe, inspectable modeling and solver workflows. It is designed for agents that need to understand an optimization problem, match it to a modeling archetype, prepare a reviewable mathematical model, choose a solver ecosystem, generate execution code, request approval, run the solver, parse evidence, and diagnose failures.
 
-The project presents the full Skill concept, not a narrow demo. It covers the target end-to-end workflow from natural-language or LaTeX problem statements to structured modeling, solver selection, execution, result interpretation, and Skill-registry integration. The helper scripts automate the structured-spec layer for SDPT3 and CDOpt, while the documentation defines the broader modeling and solver expansion surface.
+The project presents the full Skill concept, not a narrow demo. It now contains two coordinated Skills: `optimization-modeling-skill` for archetype matching and model checkpoints, and `optimization-solver-skill` for solver routing, code generation, execution governance, and evidence parsing. The helper scripts automate OptSkills archetype search plus the structured-spec layer for SDPT3 and CDOpt, while the documentation defines the broader modeling and solver expansion surface.
 
 ## Core Idea
 
 The human gives a goal, problem statement, paper excerpt, repository, `.mat` file, or structured problem spec. The coding agent uses this Skill to:
 
-1. Identify the optimization problem class and modeling form.
-2. Convert or normalize the problem into a reviewable problem spec.
-3. Route the task to an appropriate solver backend.
-4. Generate solver entrypoint code without rewriting the source project.
-5. Write a run plan and ask for approval before execution or dependency changes.
-6. Run only approved commands.
-7. Parse solver outputs, numerical status, certificates, and failures.
-8. Report evidence and propose repairs or alternative solver routes.
+1. Identify the optimization problem archetype and modeling form.
+2. Use imported OptSkills references to build a reviewable modeling checkpoint.
+3. Convert or normalize the confirmed model into a structured problem spec.
+4. Route the task to an appropriate solver backend.
+5. Generate solver entrypoint code without rewriting the source project.
+6. Write a run plan and ask for approval before execution or dependency changes.
+7. Run only approved commands.
+8. Parse solver outputs, numerical status, certificates, and failures.
+9. Report evidence and propose repairs or alternative solver routes.
 
 ## Capability Map
 
 | Layer | Scope | Current artifacts |
 | --- | --- | --- |
-| Problem understanding | Natural language, LaTeX, paper excerpts, README instructions, local data files, existing source code | `references/problem_schema.md`, `references/modeling_pipeline.md` |
-| Modeling conversion | Standard forms for LP, QP, SOCP, SDP, SQLP, nonlinear programs, manifold optimization, and source-defined models | `problem_schema.md`, modeling checkpoints |
+| Problem understanding | Natural language, LaTeX, paper excerpts, README instructions, local data files, existing source code | `optimization-modeling-skill`, `optimization-solver-skill/references/modeling_pipeline.md` |
+| Modeling conversion | OptSkills archetype matching plus standard forms for LP, QP, SOCP, SDP, SQLP, nonlinear programs, manifold optimization, and source-defined models | `optimization-modeling-skill/references/optskills`, modeling checkpoints, `problem_schema.md` |
 | Solver routing | SDPT3, CDOpt, existing repository solvers, and extension points for CVX/CVXPY/YALMIP/JuMP/Pyomo/MOSEK/SciPy | `references/solver_catalog.md`, `scripts/solver_router.py` |
 | Code generation | MATLAB/Octave wrappers, Python adapters, log/result output contracts | `references/code_generation_patterns.md`, `scripts/codegen.py` |
 | Execution governance | Human approvals before solver runs, installs, MEX compilation, source edits, and modeling adapters | `SKILL.md`, plan artifact contract |
@@ -49,6 +50,9 @@ The Skill is structured to grow into a broader optimization solver hub:
 
 ## Project Layout
 
+- `skills/optimization-modeling-skill/SKILL.md`: modeling Skill instructions for archetype matching and model checkpoints.
+- `skills/optimization-modeling-skill/references/optskills/`: full imported OptSkills released libraries, bundled as references under the upstream MIT license.
+- `skills/optimization-modeling-skill/scripts/search_archetypes.py`: keyword search over imported OptSkills archetype indexes and markdown files.
 - `skills/optimization-solver-skill/SKILL.md`: primary Skill instructions for coding agents.
 - `skills/optimization-solver-skill/agents/openai.yaml`: UI metadata for Skill-aware agents.
 - `skills/optimization-solver-skill/references/INDEX.md`: reference routing index.
@@ -65,11 +69,16 @@ The Skill is structured to grow into a broader optimization solver hub:
 
 ## Agent Workflow
 
-1. Read `skills/optimization-solver-skill/SKILL.md`.
-2. Inspect the user input and classify it as natural-language, LaTeX, repository source, solver data, or structured spec.
-3. If the input is not already structured, create a modeling checkpoint using `references/modeling_pipeline.md`; ask the human to confirm the mathematical model before execution.
-4. Normalize the problem with `references/problem_schema.md`.
-5. Route the solver:
+1. Read `skills/optimization-modeling-skill/SKILL.md` when the input is not already a confirmed structured spec.
+2. Navigate the imported OptSkills references with `rg`, `index.json`, filenames, targeted file reads, and agent judgment. An optional helper can narrow a large candidate set:
+
+```bash
+python skills/optimization-modeling-skill/scripts/search_archetypes.py --query "minimum cost sets covering all requirements" --limit 5
+```
+
+3. Read and compare the candidate archetype files, then create a modeling checkpoint and ask the human to confirm the mathematical model before execution.
+4. Normalize the confirmed problem with `skills/optimization-solver-skill/references/problem_schema.md`.
+5. Read `skills/optimization-solver-skill/SKILL.md` and route the solver:
 
 ```bash
 conda run -n ai4math python skills/optimization-solver-skill/scripts/solver_router.py --spec problem.yaml
@@ -132,7 +141,8 @@ Run from this folder:
 
 ```bash
 python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/optimization-solver-skill
+python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/optimization-modeling-skill
 conda run -n ai4math pytest
 ```
 
-Current verification: `Skill is valid!` and `8 passed`.
+Current verification: both Skills are valid and the Python test suite passes.

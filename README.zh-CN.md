@@ -1,30 +1,31 @@
-# 优化求解器 Skill
+# AI4Math 优化 Skills
 
 [English](README.md) | 简体中文
 
-Optimization Solver Skill 是一个独立的、面向 coding agent 的优化求解器项目。它的目标是把数学优化任务转成安全、可检查、可复现的求解流程：理解问题、选择求解器生态、生成执行代码、请求审批、运行 solver、解析证据，并诊断失败。
+AI4Math 优化 Skills 是一个独立的、面向 coding agent 的优化建模与求解项目。它的目标是把数学优化任务转成安全、可检查、可复现的 workflow：理解问题、匹配建模 archetype、形成可 review 的数学模型、选择求解器生态、生成执行代码、请求审批、运行 solver、解析证据，并诊断失败。
 
-这个项目呈现的是完整 Skill 形态，不是一个窄 demo。它覆盖从自然语言或 LaTeX 问题陈述，到结构化建模、求解器选择、执行、结果解释，以及接入 Skill 仓库的完整路径。当前脚本已经自动化结构化 spec 到 SDPT3/CDOpt 的路由、代码生成和日志解析；文档则定义更完整的建模层与 solver 扩展面。
+这个项目呈现的是完整 Skill 形态，不是一个窄 demo。现在它包含两个协同 Skill：`optimization-modeling-skill` 负责 archetype 匹配和建模检查点，`optimization-solver-skill` 负责 solver 路由、代码生成、执行治理和证据解析。当前脚本已经自动化 OptSkills archetype 搜索，以及结构化 spec 到 SDPT3/CDOpt 的路由、代码生成和日志解析；文档则定义更完整的建模层与 solver 扩展面。
 
 ## 核心想法
 
 人类可以给出自然语言目标、论文片段、LaTeX 公式、代码仓库、`.mat` 数据文件，或已经结构化的问题描述。coding agent 使用这个 Skill 来：
 
-1. 识别优化问题类别和建模形式。
-2. 把问题转成可 review 的结构化 spec。
-3. 路由到合适的 solver 后端。
-4. 生成求解入口代码，同时不直接改写源项目。
-5. 写运行计划，并在执行或改环境前请求批准。
-6. 只运行已经批准的命令。
-7. 解析 solver 输出、数值状态、证书和失败原因。
-8. 报告证据，并提出修复方案或替代 solver 路由。
+1. 识别优化问题 archetype 和建模形式。
+2. 借助导入的 OptSkills references 写出可 review 的建模检查点。
+3. 把确认后的模型转成结构化 spec。
+4. 路由到合适的 solver 后端。
+5. 生成求解入口代码，同时不直接改写源项目。
+6. 写运行计划，并在执行或改环境前请求批准。
+7. 只运行已经批准的命令。
+8. 解析 solver 输出、数值状态、证书和失败原因。
+9. 报告证据，并提出修复方案或替代 solver 路由。
 
 ## 能力地图
 
 | 层级 | 范围 | 当前产物 |
 | --- | --- | --- |
-| 问题理解 | 自然语言、LaTeX、论文片段、README 命令、本地数据文件、已有源码 | `references/problem_schema.md`, `references/modeling_pipeline.md` |
-| 建模转换 | LP、QP、SOCP、SDP、SQLP、非线性规划、流形优化、源码定义模型 | `problem_schema.md`, modeling checkpoints |
+| 问题理解 | 自然语言、LaTeX、论文片段、README 命令、本地数据文件、已有源码 | `optimization-modeling-skill`, `optimization-solver-skill/references/modeling_pipeline.md` |
+| 建模转换 | OptSkills archetype 匹配，以及 LP、QP、SOCP、SDP、SQLP、非线性规划、流形优化、源码定义模型 | `optimization-modeling-skill/references/optskills`, modeling checkpoints, `problem_schema.md` |
 | 求解器路由 | SDPT3、CDOpt、已有仓库 solver，以及 CVX/CVXPY/YALMIP/JuMP/Pyomo/MOSEK/SciPy 扩展点 | `references/solver_catalog.md`, `scripts/solver_router.py` |
 | 代码生成 | MATLAB/Octave wrapper、Python adapter、日志和结果输出契约 | `references/code_generation_patterns.md`, `scripts/codegen.py` |
 | 执行治理 | 运行 solver、安装依赖、编译 MEX、改源码、生成建模 adapter 前的人类审批 | `SKILL.md`, plan artifact contract |
@@ -49,6 +50,9 @@ Skill 的结构预留了更大的优化求解器枢纽：
 
 ## 项目结构
 
+- `skills/optimization-modeling-skill/SKILL.md`：建模 Skill 指令，用于 archetype 匹配和建模检查点。
+- `skills/optimization-modeling-skill/references/optskills/`：完整导入的 OptSkills released libraries，按上游 MIT license 作为 references 打包。
+- `skills/optimization-modeling-skill/scripts/search_archetypes.py`：在导入的 OptSkills archetype 索引和 Markdown 文件中做关键词搜索。
 - `skills/optimization-solver-skill/SKILL.md`：给 coding agent 读取的主 Skill 指令。
 - `skills/optimization-solver-skill/agents/openai.yaml`：面向 Skill-aware agent 的 UI 元数据。
 - `skills/optimization-solver-skill/references/INDEX.md`：reference 路由索引。
@@ -65,11 +69,16 @@ Skill 的结构预留了更大的优化求解器枢纽：
 
 ## Agent 使用流程
 
-1. 读取 `skills/optimization-solver-skill/SKILL.md`。
-2. 检查用户输入，并分类为自然语言、LaTeX、代码仓库、solver 数据或结构化 spec。
-3. 如果输入还不是结构化 spec，按 `references/modeling_pipeline.md` 建立建模检查点；执行前先请人类确认数学模型。
-4. 按 `references/problem_schema.md` 规范化问题。
-5. 路由 solver：
+1. 当输入还不是确认过的结构化 spec 时，读取 `skills/optimization-modeling-skill/SKILL.md`。
+2. 用 `rg`、`index.json`、文件名、定向阅读和 agent 自己的判断来浏览导入的 OptSkills references。下面这个脚本只是用于缩小大候选集的可选辅助：
+
+```bash
+python skills/optimization-modeling-skill/scripts/search_archetypes.py --query "minimum cost sets covering all requirements" --limit 5
+```
+
+3. 阅读并比较候选 archetype 文件，然后建立建模检查点；执行前先请人类确认数学模型。
+4. 按 `skills/optimization-solver-skill/references/problem_schema.md` 规范化确认后的问题。
+5. 读取 `skills/optimization-solver-skill/SKILL.md` 并路由 solver：
 
 ```bash
 conda run -n ai4math python skills/optimization-solver-skill/scripts/solver_router.py --spec problem.yaml
@@ -132,7 +141,8 @@ review:
 
 ```bash
 python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/optimization-solver-skill
+python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/optimization-modeling-skill
 conda run -n ai4math pytest
 ```
 
-当前验证结果：`Skill is valid!`，并且 `8 passed`。
+当前验证结果：两个 Skill 都通过格式校验，并且 Python 测试套件通过。

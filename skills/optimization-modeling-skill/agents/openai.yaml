@@ -1,0 +1,4 @@
+interface:
+  display_name: "Optimization Modeling"
+  short_description: "Match and formalize optimization models"
+  default_prompt: "Use $optimization-modeling-skill to match this optimization problem to an archetype, write a modeling checkpoint, and prepare problem.yaml for solver handoff."

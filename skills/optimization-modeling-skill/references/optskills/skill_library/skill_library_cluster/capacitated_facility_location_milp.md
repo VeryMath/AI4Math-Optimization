@@ -1,0 +1,210 @@
+---
+name: Capacitated Facility Location MILP
+description: |
+  Model and solve capacitated facility location problems with fixed opening costs and linear transportation costs using mixed-integer linear programming (MILP), with robust solver integration and solution validation.
+
+---
+
+# Workflow 1 (Pyomo with HiGHS/CBC)
+
+## Modeling stage
+
+### Strategy Overview
+This workflow uses Pyomo's abstract modeling capabilities to define a MILP formulation, separating model logic from data. It is designed for clarity, maintainability, and compatibility with open-source solvers like HiGHS and CBC.
+
+### Step 1 - Define Model Sets and Parameters
+- Declare sets for facilities and customers using `pyo.Set()`.
+- Define parameters for fixed costs, capacities, demands, and shipping costs using `pyo.Param()`. Store data in dictionaries for clean initialization.
+
+### Step 2 - Declare Decision Variables
+- Create binary variables `y[f]` for facility opening decisions using `domain=pyo.Binary`.
+- Create continuous, non-negative variables `x[f, c]` for flow assignments using `domain=pyo.NonNegativeReals`.
+
+### Step 3 - Formulate Objective Function
+- Construct a linear objective to minimize total cost: sum of fixed costs (`fixed_cost[f] * y[f]`) plus linear transportation costs (`shipping_cost[f, c] * x[f, c]`). Use `sense=pyo.minimize`.
+
+### Step 4 - Implement Core Constraints
+- Add demand satisfaction constraints: for each customer `c`, the sum of incoming flows must equal its demand (`sum(x[f, c] for f in F) == demand[c]`).
+- Add capacity linking constraints: for each facility `f`, total outgoing flow must be less than or equal to its capacity multiplied by its opening variable (`sum(x[f, c] for c in C) <= capacity[f] * y[f]`). This enforces the logical link.
+
+### Formulation Template
+```json
+{
+  "sets": ["facilities", "customers"],
+  "parameters": ["fixed_cost[facilities]", "capacity[facilities]", "demand[customers]", "shipping_cost[facilities, customers]"],
+  "decision_variables": ["y[facilities] ∈ {0,1}", "x[facilities, customers] ≥ 0"],
+  "objective": {
+    "sense": "min",
+    "expression": "sum(fixed_cost[f] * y[f] for f in facilities) + sum(shipping_cost[f,c] * x[f,c] for f in facilities for c in customers)"
+  },
+  "constraints": [
+    "demand_satisfaction[c]: sum(x[f,c] for f in facilities) == demand[c] for each c in customers",
+    "capacity_link[f]: sum(x[f,c] for c in customers) <= capacity[f] * y[f] for each f in facilities"
+  ]
+}
+```
+
+### Common Pitfalls
+- Forgetting to initialize parameters correctly, leading to `KeyError` during model construction. Ensure parameter dictionaries are fully populated for all set indices.
+- Incorrectly using `sum()` with multiple arguments instead of an iterable (e.g., `sum(x[f,c] for f in F for c in C)`). Always pass a single iterable.
+- Defining constraints with incorrect index order, which can cause mismatched dimensions between variables and parameters.
+
+## Solving stage
+
+### Strategy Overview
+This stage focuses on solving the Pyomo model using a configured solver, with explicit checks for solution status and careful loading of results to ensure robustness and prevent errors.
+
+### Step 1 - Configure and Instantiate Solver
+- Instantiate the solver via `SolverFactory('solver_name')` (e.g., `'highs'` or `'cbc'`).
+- Set performance and termination options: `time_limit`, `mip_rel_gap` (or `ratio`), and `threads`. For reproducibility, consider setting a random seed if supported.
+
+### Step 2 - Solve with Status Control
+- Execute the solve command with `load_solutions=False` to prevent automatic loading. This allows inspection of the termination status before accessing variable values.
+- Capture the results object for status checking.
+
+### Step 3 - Check Termination Status and Load Solution
+- Verify the solver status (`SolverStatus.ok`) and termination condition (`TerminationCondition.optimal` or `.feasible`).
+- Only if the status is acceptable, load the solution into the model using `model.solutions.load_from(results)`.
+
+### Step 4 - Extract and Validate Solution
+- Extract the objective value using `pyo.value(model.obj)`.
+- Iterate over binary variables with a tolerance (e.g., `> 0.5`) to identify opened facilities.
+- Compute derived metrics (total flow per facility, cost breakdown) and validate against original constraints (demand satisfaction, capacity limits) within a numerical tolerance (e.g., `1e-6`).
+- Perform a manual cost check: sum fixed costs of opened facilities plus shipping costs of all positive flows, and compare to the reported objective value to catch inconsistencies.
+
+### Code Usage
+```python
+import pyomo.environ as pyo
+from pyomo.opt import SolverFactory, SolverStatus, TerminationCondition
+
+# 1. Build Model (ConcreteModel, Sets, Vars, Objective, Constraints)
+# ... model definition as per Modeling Stage ...
+
+# 2. Instantiate Solver & Set Options
+solver = SolverFactory('highs')
+solver.options['time_limit'] = 30
+solver.options['mip_rel_gap'] = 0.0
+
+# 3. Solve with status control
+results = solver.solve(model, tee=False, load_solutions=False)
+
+# 4. Check Status & Termination
+status = results.solver.status
+term = results.solver.termination_condition
+
+if status == SolverStatus.ok and term in {TerminationCondition.optimal, TerminationCondition.feasible}:
+    model.solutions.load_from(results)  # Load only after status check
+    objective_value = float(pyo.value(model.obj))
+    # 5. Extract solution...
+    opened_facilities = [f for f in model.F if pyo.value(model.y[f]) > 0.5]
+    # ... further processing and validation
+else:
+    # Handle non-optimal/infeasible case
+    print(f"Solver failed: Status={status}, Termination={term}")
+```
+
+### Common Pitfalls
+- Loading solutions automatically (`load_solutions=True`) without checking status first, which can cause errors if the solver did not find a feasible solution.
+- Misinterpreting the termination condition; `feasible` is acceptable for a usable solution, but `optimal` guarantees optimality.
+- Not using a tolerance when checking binary variable values, leading to incorrect classification due to floating-point precision.
+
+# Workflow 2 (OR-Tools with SCIP/CBC)
+
+## Modeling stage
+
+### Strategy Overview
+This workflow uses Google's OR-Tools `pywraplp` API for a direct, imperative model build. It is suited for rapid prototyping and environments where a lightweight, programmatic modeling interface is preferred.
+
+### Step 1 - Initialize Solver and Define Variable Scope
+- Create a solver instance using `pywraplp.Solver.CreateSolver("SCIP")` or `"CBC"`.
+- Define the index sets for facilities and customers as lists.
+
+### Step 2 - Create Decision Variables
+- Create binary variables for facility opening: `y[i] = solver.IntVar(0, 1, name)`.
+- Create continuous flow variables: `x[i, j] = solver.NumVar(0, solver.infinity(), name)`.
+
+### Step 3 - Build Objective Function Term-by-Term
+- Instantiate the objective with `solver.Objective()`.
+- Add the fixed cost terms using `objective.SetCoefficient(y[i], fixed_cost[i])`.
+- Add the transportation cost terms using `objective.SetCoefficient(x[i, j], shipping_cost[i][j])`.
+- Set the optimization sense to minimization with `objective.SetMinimization()`.
+
+### Step 4 - Add Constraints Directly
+- For each customer, add a demand satisfaction constraint: `solver.Add(sum(x[i, j] for i in facilities) == demand[j])`.
+- For each facility, add the capacity linking constraint: `solver.Add(sum(x[i, j] for j in customers) <= capacity[i] * y[i])`.
+
+### Formulation Template
+```json
+{
+  "sets": ["facilities", "customers"],
+  "parameters": ["fixed_cost[facilities]", "capacity[facilities]", "demand[customers]", "shipping_cost[facilities, customers]"],
+  "decision_variables": ["y[facilities] ∈ {0,1}", "x[facilities, customers] ≥ 0"],
+  "objective": {
+    "sense": "min",
+    "expression": "sum(fixed_cost[i] * y[i] for i in facilities) + sum(shipping_cost[i][j] * x[i,j] for i in facilities for j in customers)"
+  },
+  "constraints": [
+    "demand_satisfaction[j]: sum(x[i,j] for i in facilities) == demand[j] for each j in customers",
+    "capacity_link[i]: sum(x[i,j] for j in customers) <= capacity[i] * y[i] for each i in facilities"
+  ]
+}
+```
+
+### Common Pitfalls
+- Incorrectly setting the coefficient sign in the capacity linking constraint when building it manually. The constraint `sum(x) <= capacity * y` must be added as-is.
+- Using `solver.infinity()` for variable upper bounds when unnecessary; it's acceptable but explicit bounds can sometimes aid presolve.
+- Building the objective by looping over parameters but missing some variable-coefficient pairs, leading to an incorrect objective function.
+
+## Solving stage
+
+### Strategy Overview
+This stage involves executing the solver, handling its status codes, and extracting the solution values directly from the OR-Tools variable objects. It emphasizes straightforward solution retrieval and verification.
+
+### Step 1 - Configure Solver Settings
+- Set a time limit using `solver.SetTimeLimit(milliseconds)`.
+- Control parallelism with `solver.SetNumThreads(number)`.
+- (Optional) Set other solver-specific parameters via `solver.SetSolverSpecificParametersAsString`.
+
+### Step 2 - Solve and Check Status
+- Call `status = solver.Solve()`.
+- Check if the status is `solver.OPTIMAL` or `solver.FEASIBLE`. Handle other statuses (e.g., `INFEASIBLE`, `UNBOUNDED`) appropriately.
+
+### Step 3 - Extract Solution Values
+- If the status is acceptable, obtain the objective value via `objective.Value()`.
+- Determine opened facilities by checking `y[i].solution_value() > 0.5`.
+- Retrieve flow quantities using `x[i, j].solution_value()`.
+
+### Step 4 - Post-Solve Validation
+- Programmatically verify constraint satisfaction: recompute total flow to each customer and per facility, comparing against demand and capacity within a small tolerance (e.g., `1e-6`).
+- Calculate a manual objective value from the extracted solution and compare it to the solver's reported value to catch potential inconsistencies.
+
+### Code Usage
+```python
+from ortools.linear_solver import pywraplp
+
+# 1. Initialize Solver
+solver = pywraplp.Solver.CreateSolver("SCIP")
+solver.SetTimeLimit(30000)
+solver.SetNumThreads(4)
+
+# 2. Build Model (Variables, Objective, Constraints)
+# ... model definition as per Modeling Stage ...
+
+# 3. Solve and check status
+status = solver.Solve()
+
+# 4. Extract results if feasible/optimal
+if status in (solver.OPTIMAL, solver.FEASIBLE):
+    total_cost = solver.Objective().Value()
+    opened_facilities = [i for i in facilities if y[i].solution_value() > 0.5]
+    flow_assignments = {(i, j): x[i, j].solution_value() for i in facilities for j in customers if x[i, j].solution_value() > 1e-6}
+    # 5. Optional validation
+    # ...
+else:
+    print(f"Solver did not find a feasible solution. Status: {status}")
+```
+
+### Common Pitfalls
+- Confusing `solver.OPTIMAL` with `solver.FEASIBLE`; the latter provides a valid solution but without optimality guarantee.
+- Not using a tolerance when checking continuous flow values for positivity, potentially including near-zero flows in reports.
+- Assuming the solver's internal time limit units are seconds; OR-Tools uses milliseconds for `SetTimeLimit`.
