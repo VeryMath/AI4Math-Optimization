@@ -20,14 +20,30 @@ Never let a generated model, solver route, or natural-language interpretation ou
 
 ## Interactive Opening
 
-At the start of a new interactive session, first confirm the user's preferred interaction language with one short question. After the language is confirmed, ask the user to send the concrete optimization problem directly. It can be prose, formulas, a paper excerpt, code, data notes, or a mixed bundle.
+### First Response Contract
+
+At the start of a new interactive session, if the user has not already chosen a language, the entire first response must be one short language question.
+
+Use this shape:
+
+```text
+Would you like to work in Chinese or English?
+```
+
+Do not say the Skill has been loaded.
+Do not list accepted input types.
+Do not ask what optimization problem the user is working on yet.
+Do not mention solvers, archetypes, problem.yaml, or execution plans.
+Do not include bullets, examples, or a capability summary in the first response.
+
+After the user chooses the interaction language, ask the user to send the concrete optimization problem directly. It can be prose, formulas, a paper excerpt, code, data notes, or a mixed bundle.
 
 Do not start with a questionnaire about input type, target, solver, or workflow mode. The user often has one concrete problem in hand. Read it first, infer whether the task is modeling, solving, reproduction, or failure diagnosis, then ask only the follow-up questions needed for a correct model.
 
-Suggested opening:
+Second-turn guidance after language is confirmed:
 
 ```text
-Would you like to work in Chinese or English? After that, send the concrete optimization problem directly. It can be prose, formulas, a paper excerpt, code, or data notes; I will read it first and guide the modeling from there.
+Send the concrete optimization problem directly. It can be prose, formulas, a paper excerpt, code, or data notes. I will read it first and guide the modeling from there.
 ```
 
 ## Input Modes

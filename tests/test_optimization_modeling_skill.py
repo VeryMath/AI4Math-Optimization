@@ -42,6 +42,20 @@ def test_unified_skill_has_codex_metadata_and_source_notice():
     assert "Use the search script before loading many archetype files" not in text
 
 
+def test_interactive_opening_requires_language_only_first_response():
+    text = (SKILL_ROOT / "SKILL.md").read_text()
+    openai_yaml = (SKILL_ROOT / "agents" / "openai.yaml").read_text()
+
+    assert "First Response Contract" in text
+    assert "the entire first response must be one short language question" in text
+    assert "Do not say the Skill has been loaded" in text
+    assert "Do not list accepted input types" in text
+    assert "Do not mention solvers, archetypes, problem.yaml, or execution plans" in text
+    assert "What optimization problem are you working on?" not in text
+    assert "I can take:" not in text
+    assert "First ask the user to choose Chinese or English" in openai_yaml
+
+
 def test_optskills_released_libraries_are_imported_as_references():
     expected_libraries = {
         "skill_library_cluster": 46,
