@@ -90,27 +90,28 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 5. Ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
 6. Normalize the confirmed model into `problem.yaml` using `references/problem_schema.md`.
 7. Read `references/solver_catalog.md` and choose a solver route.
-8. Route the structured problem:
+8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark.
+9. Route the structured problem:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/solver_router.py --spec <problem.yaml>
 ```
 
-9. Read `references/code_generation_patterns.md` and generate an entrypoint when appropriate:
+10. Read `references/code_generation_patterns.md` and generate an entrypoint when appropriate:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/codegen.py --spec <problem.yaml> --out outputs/{run_id}/generated
 ```
 
-10. Put the exact command, risks, timeout, expected outputs, and dependencies into a review plan.
-11. Run only approved commands.
-12. Parse logs and evidence:
+11. Put the exact command, risks, timeout, expected outputs, dependencies, and any CDOpt preflight result into a review plan.
+12. Run only approved commands.
+13. Parse logs and evidence:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py --log outputs/{run_id}/logs/run.log --out outputs/{run_id}/results/solver_summary.json
 ```
 
-13. Read `references/evaluation_reporting.md` and summarize status, objective values, feasibility, residuals, certificates, numerical warnings, and next choices.
+14. Read `references/evaluation_reporting.md` and summarize status, objective values, feasibility, residuals, certificates, numerical warnings, and next choices.
 
 ## Solver Routes
 
@@ -124,6 +125,7 @@ Current generated support is concrete but intentionally bounded:
 
 - SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
 - CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
+- CDOpt execution should be preceded by the post-install manifold smoke test when available. The local suite at `/Users/conanxu/cdopt_manifold_tests` checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
 - Natural-language or LaTeX-only models require a modeling checkpoint before executable SDPT3/CDOpt code is generated.
 
 ## Approval Rules
@@ -131,6 +133,7 @@ Current generated support is concrete but intentionally bounded:
 Ask before:
 
 - running generated or repository solver code
+- running the CDOpt post-install smoke test, unless the user has already approved CDOpt validation in the current task
 - installing or upgrading solver packages
 - compiling SDPT3/MEX/native extensions
 - modifying MATLAB path, Python environment, or system solver configuration

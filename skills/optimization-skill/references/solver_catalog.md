@@ -30,6 +30,15 @@ Primary sources:
 
 CDOpt supports NumPy/SciPy-style, PyTorch, and JAX-adjacent workflows. Treat optional backend installation and GPU/JAX setup as dependency work requiring approval.
 
+Before solving a CDOpt problem, use the local post-install manifold smoke test when available:
+
+```bash
+cd /Users/conanxu/cdopt_manifold_tests
+python run_all_notebooks.py
+```
+
+This suite is installation/API validation, not an application benchmark. It should confirm that the active runtime imports PyPI CDOpt, exercises manifold constructors, checks CDF gradient generation against finite differences, reports feasibility, and runs tiny L-BFGS-B solves. If it fails, diagnose the CDOpt environment before generating or running application-level CDOpt examples.
+
 Current generated support: Python wrappers for confirmed manifold specs using CDOpt's constraint-dissolving problem object and SciPy `optimize.minimize`. Supported generated manifold families include sphere, oblique, Stiefel, Grassmann, generalized Stiefel, hyperbolic, and symplectic Stiefel variants for `torch`, `numpy`/`np`, or `jax` backends. The objective must be supplied as an importable module/function pair.
 
 ## Modeling-Layer Routes
@@ -59,6 +68,6 @@ Do not add a modeling layer just because it is convenient. Prefer existing sourc
 ## Evidence Expectations
 
 - Conic solvers: objective values, primal/dual feasibility, gap, termination code, certificates.
-- Manifold solvers: objective value, gradient norm, feasibility/constraint violation, iteration history.
+- Manifold solvers: CDOpt preflight status when applicable, objective value, gradient norm, feasibility/constraint violation, iteration history.
 - Modeling layers: model dimensions, selected backend, solver status, raw solver log.
 - Repository-native solvers: original metrics, convergence trace, parameters, runtime.

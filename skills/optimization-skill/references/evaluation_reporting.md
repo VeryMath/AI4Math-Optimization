@@ -14,6 +14,7 @@ Report:
 - runtime and iteration count when available
 - raw log location
 - generated entrypoint location
+- CDOpt post-install smoke test result when CDOpt was used or proposed
 - limitations and unresolved ambiguity
 
 ## Status Vocabulary
@@ -36,6 +37,7 @@ Route failures by evidence:
 | infeasible or dual infeasible | mathematical status |
 | stalled residuals, short steps, ill conditioning | numerical failure |
 | missing objective module or manifold | CDOpt adapter/modeling |
+| CDOpt smoke test fails before problem execution | CDOpt installation/API environment |
 | timeout or killed process | resource or budget |
 
 ## Reporting Shape
@@ -59,4 +61,3 @@ Use concise run summaries:
 ```
 
 For final conclusions, distinguish solver evidence from mathematical truth. A solver status can support a claim, but weak certificates, bad scaling, or modeling ambiguity should remain visible.
-
