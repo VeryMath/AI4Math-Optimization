@@ -41,6 +41,18 @@ approve / revise / reject / skip
 
 The checkpoint should be compact but mathematically explicit. Include source evidence such as file paths, equation labels, line numbers, or quoted variable definitions when available.
 
+## OptSkills Archetype Matching
+
+Use `references/optskills/skill_library/` when the user problem resembles a known operations-research, MILP, network, assignment, routing, scheduling, facility-location, covering, packing, or resource-allocation archetype.
+
+Prefer agent judgment over a fixed script flow:
+
+1. Use the user's goal and terminology to search with `rg`, filenames, and `index.json`.
+2. Read a few candidate archetype markdown files.
+3. Compare variables, objective, constraints, data assumptions, and known pitfalls.
+4. If the corpus is too noisy, optionally run `scripts/search_archetypes.py`.
+5. Use the chosen archetype as a reference, then write a fresh model for the current problem.
+
 ## LaTeX to Model
 
 For LaTeX:
@@ -81,4 +93,3 @@ Ask before execution when:
 - data files are absent or synthetic
 - multiple solver routes could change the mathematical interpretation
 - scaling or regularization choices are not specified
-

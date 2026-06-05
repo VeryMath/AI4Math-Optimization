@@ -1,0 +1,4 @@
+interface:
+  display_name: "Optimization"
+  short_description: "Model and solve optimization problems"
+  default_prompt: "Use $optimization-skill to read this optimization problem, build a reviewed model, choose a solver route, and report solver evidence."

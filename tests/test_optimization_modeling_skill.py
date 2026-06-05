@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT / "skills" / "optimization-modeling-skill"
+SKILL_ROOT = ROOT / "skills" / "optimization-skill"
 OPTSKILLS_ROOT = SKILL_ROOT / "references" / "optskills" / "skill_library"
 
 
@@ -16,21 +16,29 @@ def load_search_module():
     return module
 
 
-def test_modeling_skill_has_codex_metadata_and_source_notice():
+def test_repo_exposes_one_unified_optimization_skill():
+    skill_dirs = sorted(path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md"))
+
+    assert skill_dirs == ["optimization-skill"]
+
+
+def test_unified_skill_has_codex_metadata_and_source_notice():
     skill_file = SKILL_ROOT / "SKILL.md"
     text = skill_file.read_text()
 
-    assert "name: optimization-modeling-skill" in text
+    assert "name: optimization-skill" in text
     assert "OptSkills" in text
     assert "modeling_checkpoint.md" in text
     assert "problem.yaml" in text
-    assert "optimization-solver-skill" in text
+    assert "solver route" in text
     assert "optional helper" in text
     assert "rg" in text
     assert "agent judgment" in text
     assert "interaction language" in text
     assert "send the concrete optimization problem" in text
     assert "Do not start with a questionnaire" in text
+    assert "optimization-modeling-skill" not in text
+    assert "optimization-solver-skill" not in text
     assert "Use the search script before loading many archetype files" not in text
 
 
