@@ -198,15 +198,21 @@ class OptimizationProblemSpec:
         }
 
     def _auto_backend(self) -> tuple[str, list[str]]:
-        if self.problem_class in SDPT3_CLASSES:
-            return "sdpt3", [f"problem_class '{self.problem_class}' is conic/SQLP-compatible"]
+        if self._has_direct_sdpt3_data():
+            return "sdpt3", ["confirmed SQLP data includes a .mat file plus blk, At, C, and b"]
         if self.problem_class in CDOPT_CLASSES:
             return "cdopt", [f"problem_class '{self.problem_class}' is manifold-oriented"]
         if any("manifold" in str(item).lower() for item in self.constraints):
             return "cdopt", ["constraints mention a manifold"]
-        if {"blk", "At", "C", "b"} <= set(self.sdpt3.get("data_variables", {})):
-            return "sdpt3", ["sdpt3.data_variables include blk, At, C, and b"]
+        if self.problem_class in SDPT3_CLASSES:
+            return "existing", [
+                f"problem_class '{self.problem_class}' needs confirmed SQLP data or reviewed MATLAB conic modeling"
+            ]
         return "existing", ["no SDPT3/CDOpt signal was strong enough"]
+
+    def _has_direct_sdpt3_data(self) -> bool:
+        variables = self.sdpt3.get("data_variables", {})
+        return bool(self.data.get("mat_file")) and {"blk", "At", "C", "b"} <= set(variables)
 
 
 def _mapping(value: Any, field_name: str) -> dict[str, Any]:

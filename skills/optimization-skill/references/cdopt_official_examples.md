@@ -1,32 +1,35 @@
 # CDOpt Official Examples
 
-Use this reference when the user wants CDOpt examples, CDOpt prompt templates, or CDOpt implementation patterns based on the official documentation.
+Use this reference for CDOpt implementation-template notes after the model and solver route are reviewed. For official problem statements and corresponding solving code, read `few_shots/cdopt_official_pairs.md`.
 
 Sources:
 
 - Official examples directory: https://github.com/cdopt/cdopt.github.io/tree/main/docs/examples
+- Official source artifacts: https://github.com/cdopt/cdopt.github.io/tree/main/docs/_sources/examples
 - Rendered examples: https://cdopt.github.io/examples/example_scipy.html
 
 ## How To Use
 
-Keep two layers separate:
+Keep two files separate:
 
-1. **Problem Description Prompts:** for official examples with a rendered `Problem Description` section, read the local Markdown card under `examples/cdopt/problem-descriptions/` and treat its `## Prompt Body` as the modeling-test prompt.
+1. **Problem-Code Pairs:** read the matched pair in `few_shots/cdopt_official_pairs.md`.
 2. **Implementation Templates:** use official code structure as an implementation reference after the model is reviewed.
 
 Do not treat a template as proof that the model is correct. Use this as an implementation template, not as an automatically approved model.
+
+For rendered documentation pages, prefer `docs/_sources/examples/<name>.ipynb` or `.md` as the paired source artifact.
 
 ## Official Example Index
 
 | HTML file | Title | Primary use |
 | --- | --- | --- |
 | `example_scipy.html` | Optimization via SciPy | Category overview |
-| `dictionary_learning.html` | Dictionary Learning | Local Problem Description card plus Stiefel/Torch/SciPy template |
-| `dictionary_learning_jax.html` | Dictionary Learning Accelerated by JIT | Local Problem Description card plus Stiefel/JAX/JIT template |
-| `nonlinear_eigenvalue.html` | Discretized 1D Kohn-Sham Equation | Local Problem Description card plus Stiefel/NumPy/manual-derivative template |
-| `nearest_correlation_estimation.html` | Low-Rank Nearest Correlation Estimation | Local Problem Description card plus Oblique/Torch/SciPy template |
-| `bose_einstein_condensates.html` | Bose-Einstein Condensates | Local Problem Description card plus Sphere/NumPy template |
-| `symplectic_eigenvalue.html` | Symplectic Eigenvalue Problem | Local Problem Description card plus Symplectic-Stiefel/Torch template |
+| `dictionary_learning.html` | Dictionary Learning | Problem-code pair plus Stiefel/Torch/SciPy template |
+| `dictionary_learning_jax.html` | Dictionary Learning Accelerated by JIT | Problem-code pair plus Stiefel/JAX/JIT template |
+| `nonlinear_eigenvalue.html` | Discretized 1D Kohn-Sham Equation | Problem-code pair plus Stiefel/NumPy/manual-derivative template |
+| `nearest_correlation_estimation.html` | Low-Rank Nearest Correlation Estimation | Problem-code pair plus Oblique/Torch/SciPy template |
+| `bose_einstein_condensates.html` | Bose-Einstein Condensates | Problem-code pair plus Sphere/NumPy template |
+| `symplectic_eigenvalue.html` | Symplectic Eigenvalue Problem | Problem-code pair plus Symplectic-Stiefel/Torch template |
 | `example_torch.html` | Training Neural Networks with Manifold Constraints via PyTorch | Category overview |
 | `LeNet_orth.html` | Training LeNet with Constrained Convolution Kernels | PyTorch constrained convolution template |
 | `rnn_single_layer.html` | Training Single-Layer RNN with Constrained Weights | PyTorch constrained RNN template |
@@ -37,39 +40,6 @@ Do not treat a template as proof that the model is correct. Use this as an imple
 | `distributed_rnn_basic.html` | Distributed Training for RNN with Constrained Weights | Distributed PyTorch RNN template |
 | `example_jax.html` | Training Neural Networks with Manifold Constraints via JAX and FLAX | Category overview |
 | `LeNet_orth_jax.html` | Training LeNet with Constrained Convolution Kernels by JAX and FLAX | JAX/FLAX constrained convolution template |
-
-## Problem Description Prompts
-
-For these pages, the test prompt is local Markdown. The cards preserve the official source URL in frontmatter and provide a normalized `## Prompt Body` for the coding agent to read. If a user wants a manual prompt, paste the official Problem Description from the card's `## Prompt Body` section.
-
-| Local card | Official source |
-| --- | --- |
-| `examples/cdopt/problem-descriptions/dictionary-learning.md` | https://cdopt.github.io/examples/dictionary_learning.html#problem-description |
-| `examples/cdopt/problem-descriptions/dictionary-learning-jax.md` | https://cdopt.github.io/examples/dictionary_learning_jax.html#problem-description |
-| `examples/cdopt/problem-descriptions/kohn-sham-1d.md` | https://cdopt.github.io/examples/nonlinear_eigenvalue.html#problem-description |
-| `examples/cdopt/problem-descriptions/nearest-correlation.md` | https://cdopt.github.io/examples/nearest_correlation_estimation.html#problem-description |
-| `examples/cdopt/problem-descriptions/bose-einstein-condensates.md` | https://cdopt.github.io/examples/bose_einstein_condensates.html#problem-description |
-| `examples/cdopt/problem-descriptions/symplectic-eigenvalue.md` | https://cdopt.github.io/examples/symplectic_eigenvalue.html#problem-description |
-
-When using one of these examples:
-
-- Extract variables, objective, constraints, manifold, dimensions, data-generation assumptions, and solver route from the local Problem Description card.
-- Create a modeling checkpoint before generating code.
-- Use the implementation template only after the model is reviewed.
-- Do not copy the official code verbatim; adapt a minimal local script with explicit dependency checks and tiny-run defaults.
-
-### Problem Description Checklist
-
-Use these as modeling checkpoints after reading the local card:
-
-| Page | Model facts to verify |
-| --- | --- |
-| `dictionary_learning.html` | Stiefel variable `X`, synthetic Bernoulli-Gaussian-style data, objective based on the fourth power of `Y X`, orthogonality constraint. |
-| `dictionary_learning_jax.html` | Same dictionary-learning model as the Torch/SciPy page, but route template through JAX and compare JIT and non-JIT behavior. |
-| `nonlinear_eigenvalue.html` | Stiefel variable `X`, tridiagonal matrix `L`, density vector `rho`, energy objective with sparse solves, reviewed gradient and Hessian-vector product. |
-| `nearest_correlation_estimation.html` | Low-rank factor `X`, oblique row-norm constraints, weighted Frobenius distance to a target symmetric matrix, dense-memory risk. |
-| `bose_einstein_condensates.html` | Sphere variable `x`, quadratic term plus quartic nonlinearity, real simplified problem, autograd or derivative-review decision. |
-| `symplectic_eigenvalue.html` | Symplectic Stiefel variable `X`, objective involving positive definite `L`, constraint with canonical symplectic matrices, shape-convention review. |
 
 ## Implementation Templates
 
@@ -95,13 +65,15 @@ def obj_fun(X):
     return objective_value_from_reviewed_model(X)
 
 problem_obj = cdopt.core.problem(M, obj_fun, beta="auto")
-x0 = M.init_point()
+cdf_fun_np = problem_obj.cdf_fun_vec_np
+cdf_grad_np = problem_obj.cdf_grad_vec_np
+x0 = problem_obj.Xinit_vec_np
 
 started = time.time()
 result = sp.optimize.minimize(
-    problem_obj.fun,
-    x0.reshape(-1),
-    jac=problem_obj.grad,
+    cdf_fun_np,
+    x0,
+    jac=cdf_grad_np,
     method="L-BFGS-B",
     options={"maxiter": 50, "gtol": 1e-6},
 )

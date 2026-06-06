@@ -17,14 +17,17 @@ examples/cdopt/problem-descriptions/<card-name>.md
 把 card 里的 `## Prompt Body` 当成官方 Problem Description prompt。手动测试时，
 可以把这个本地 Problem Description card 里的 Prompt Body 复制进会话。
 
-先建立 modeling checkpoint。模型 review 之后，才使用对应的 Implementation
-Template reference：
+先建立 modeling checkpoint。模型 review 之后，才读取匹配的问题-代码配对：
+skills/optimization-skill/references/few_shots/cdopt_official_pairs.md
+
+然后只有在适合改写代码时，才使用对应的 Implementation Template reference：
 skills/optimization-skill/references/cdopt_official_examples.md
 
 Do not copy the official code verbatim. 未经批准，不要安装依赖或运行代码。
 ```
 
-本地 cards 是 prompt materials。实现模板单独放在
+本地 cards 是 prompt materials。问题-代码配对把官方问题陈述和对应求解代码放在一起。
+实现模板单独放在
 `skills/optimization-skill/references/cdopt_official_examples.md`。
 
 ## Prompt 0：本地 Card Map

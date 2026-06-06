@@ -49,6 +49,24 @@ def test_solver_router_selects_sdpt3_for_conic_sqlp(tmp_path):
     assert "matlab -batch" in route["candidate_command"]
 
 
+def test_auto_route_does_not_select_direct_sdpt3_without_sqlp_data():
+    spec = OptimizationProblemSpec.from_mapping(
+        {
+            "schema_version": 1,
+            "problem_id": "sdp_without_sqlp_data",
+            "input_type": "structured_spec",
+            "problem_class": "semidefinite_program",
+            "objective": {"sense": "minimize"},
+            "review": {"modeling_status": "confirmed"},
+        }
+    )
+
+    route = spec.route()
+
+    assert route["solver"] == "existing"
+    assert "confirmed SQLP data" in route["reason"]
+
+
 def test_codegen_writes_sdpt3_matlab_wrapper(tmp_path):
     spec = OptimizationProblemSpec.from_mapping(
         {

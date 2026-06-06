@@ -4,13 +4,13 @@ version: 0.2.0
 scope: computational-math-optimization
 description: Model optimization problems, classify problem types, choose solver routes, generate or adapt approved solver code, execute with approval, and interpret evidence across broad solver ecosystems.
 entrypoint: SKILL.md
-requires_env:
+preferred_env:
   conda: ai4math
 requires_tools:
   - python
   - agent-native-file-inspection
   - optional-matlab-or-octave-cli
-requires_skills:
+optional_skills:
   - computational_math_reproduction_workflow_skill
   - matlab_environment_setup_skill
   - matlab_runtime_skill

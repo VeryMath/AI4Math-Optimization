@@ -21,11 +21,10 @@ Use this index to choose the smallest reference set needed for the current optim
 
 ## Auxiliary Example Materials
 
-- `cdopt_official_examples.md`: local CDOpt Problem Description card map and CDOpt implementation-template notes. These examples are auxiliary modeling and implementation materials, not the center of the Skill.
+- `few_shots/cdopt_official_pairs.md`: CDOpt official problem-code pairs. Read only the matched official problem statement and solving code.
+- `cdopt_official_examples.md`: CDOpt implementation-template notes for use after a problem-code pair has been reviewed.
 - `optskills/SOURCE.md`: source, license, and imported OptSkills reference scope.
 - `optskills/skill_library/`: imported OptSkills archetype libraries used for pattern recognition.
-- `../../examples/lp-milp-example-prompts.md` and `../../examples/lp-milp-example-prompts.zh-CN.md`: classic LP/MILP few-shot prompts.
-- `../../examples/lp-milp-problem-specs.md`: schema-compatible LP/MILP few-shot specs.
 
 ## Default Path
 
@@ -41,6 +40,7 @@ Use this index to choose the smallest reference set needed for the current optim
 ## Do Not
 
 - Do not treat examples, solver documentation, or templates as confirmed math.
+- Do not load every problem-code pair. Match the problem first, then read only the relevant pair.
 - Do not use a solver route just because code generation exists.
 - Do not install solvers, download data, compile native extensions, or run generated code without approval.
 - Do not hide infeasibility, weak certificates, bad scaling, integrality gaps, or ambiguous termination codes.

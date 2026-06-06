@@ -15,7 +15,7 @@ Model first, solve second. The Skill's center is the mathematical model and solv
 
 CDOpt is a solver route, not the Skill's center of gravity. SDPT3, CVXPY, Pyomo, CVX, YALMIP, SciPy, HiGHS, Gurobi, MOSEK, IPOPT, Manopt, Pymanopt, Geoopt, and repository-native code are also routes when the model and environment make them appropriate.
 
-OptSkills archetypes, local CDOpt Problem Description cards, LP/MILP few-shots, solver docs, and code templates are auxiliary materials. More precisely, examples, solver docs, and code templates are auxiliary materials for modeling, routing, implementation, and diagnosis.
+OptSkills archetypes, local CDOpt Problem Description cards, solver-family problem-code pairs, LP/MILP few-shots, solver docs, and code templates are auxiliary materials. More precisely, examples, solver docs, and code templates are auxiliary materials for modeling, routing, implementation, and diagnosis.
 
 ## Operating Principle
 
@@ -64,7 +64,7 @@ Accept these inputs and route them through the same modeling checkpoint:
 - natural-language optimization problem statements
 - LaTeX objective and constraints
 - paper excerpts or theorem/proposition statements
-- official example Problem Descriptions, preferably through local cards under `examples/cdopt/problem-descriptions/`
+- official CDOpt problem-code pairs under `references/few_shots/`
 - README solver instructions
 - source code with embedded optimization models
 - `.mat`, `.npz`, `.json`, `.yaml`, or CSV data
@@ -91,13 +91,10 @@ Important references:
 - `references/solver_catalog.md`: read when selecting solver ecosystems.
 - `references/solver_selection_rules.md`: read when ranking multiple possible routes.
 - `references/implementation_templates.md`: read before adapting CVXPY, Pyomo, SciPy, SDPT3, CDOpt, or repository-native code.
-- `references/cdopt_official_examples.md`: read after a local CDOpt Problem Description card has been understood and model-reviewed.
+- `references/cdopt_official_examples.md`: read after a CDOpt problem-code pair has been understood and model-reviewed.
+- `references/few_shots/cdopt_official_pairs.md`: read only when the current problem matches a CDOpt official problem-code pair. Treat this as progressive disclosure: read only the matched problem-code pair, not every example.
 - `references/optskills/SOURCE.md`: read when using imported OptSkills references for archetype matching.
 - `scripts/search_archetypes.py`: optional helper for local keyword search over the imported OptSkills indexes and markdown files.
-- `examples/lp-milp-example-prompts.md`, `examples/lp-milp-example-prompts.zh-CN.md`, and `examples/lp-milp-problem-specs.md`: few-shot references for classic LP/MILP modeling and future CVXPY/Pyomo adapter work.
-- `examples/cdopt-example-prompts.md`, `examples/cdopt-example-prompts.zh-CN.md`, and `examples/cdopt/problem-descriptions/*.md`: local CDOpt Problem Description prompt cards for application-level modeling tests.
-
-These `examples/` files are packaged inside the Skill so an installed coding agent can read them locally. The repository root also mirrors them under `examples/` for browsing and testing.
 
 The primary navigation method is agent judgment: inspect the user goal, use `rg`, read relevant references, compare modeling assumptions, and choose the best route. The search script is only an optional helper when the corpus is large or the first `rg` pass is noisy:
 
@@ -116,7 +113,7 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 5. ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
 6. normalize the confirmed model into problem.yaml using `references/problem_schema.md`.
 7. choose a solver route using `references/solver_catalog.md` and `references/solver_selection_rules.md`.
-8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read the local Problem Description card under `examples/cdopt/problem-descriptions/`, treat its `## Prompt Body` as the modeling prompt, and read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
+8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read `references/few_shots/cdopt_official_pairs.md` only for the matched official problem statement and solving code. Read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
 9. Route the structured problem when useful:
 
 ```bash
@@ -150,7 +147,7 @@ Current generated support is concrete but intentionally bounded:
 - SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
 - CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
 - CDOpt execution should be preceded by the post-install manifold smoke test when available. The local suite at `/Users/conanxu/cdopt_manifold_tests` checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
-- CDOpt official examples should be handled in two layers: first derive the model from a local Problem Description card under `examples/cdopt/problem-descriptions/`, then adapt the implementation template from `references/cdopt_official_examples.md` after model review.
+- CDOpt official examples should be handled as problem-code pairs: read the matched official problem statement and solving code in `references/few_shots/cdopt_official_pairs.md`, then adapt implementation details from `references/cdopt_official_examples.md` after model review.
 - Natural-language or LaTeX-only models require a modeling checkpoint before executable code is generated.
 - Not all listed solver routes have automatic code generation; many should stop at a reviewed model, route recommendation, or repository-native adapter plan.
 

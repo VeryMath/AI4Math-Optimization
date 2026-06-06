@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "optimization-skill"
-version = "0.1.0"
+version = "0.2.0"
 description = "Coding-agent-facing Skill for optimization modeling, solver routing, code generation, execution evidence, and failure diagnosis."
 requires-python = ">=3.10"
 dependencies = ["pyyaml>=6.0"]

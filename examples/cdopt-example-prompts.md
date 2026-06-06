@@ -19,16 +19,22 @@ Treat the card's `## Prompt Body` section as the official Problem Description
 prompt. If running this manually, paste the official Problem Description from
 that local Problem Description card into the session.
 
-Build the modeling checkpoint first. Only after model review, use the matching
-Implementation Template reference:
+Build the modeling checkpoint first. Only after model review, read the matched
+problem-code pair:
+skills/optimization-skill/references/few_shots/cdopt_official_pairs.md
+
+Then use the matching Implementation Template reference only if code adaptation
+is appropriate:
 skills/optimization-skill/references/cdopt_official_examples.md
 
 Do not copy the official code verbatim. Do not install dependencies or run code
 without approval.
 ```
 
-The local cards are prompt materials. The implementation templates are separate
-and live in `skills/optimization-skill/references/cdopt_official_examples.md`.
+The local cards are prompt materials. The problem-code pairs keep the official
+problem statement next to the corresponding solving code. The implementation
+templates are separate and live in
+`skills/optimization-skill/references/cdopt_official_examples.md`.
 
 ## Prompt 0: Local Card Map
 
