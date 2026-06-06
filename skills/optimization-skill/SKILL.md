@@ -1,22 +1,33 @@
 ---
 name: optimization-skill
-description: Use when Codex must understand, model, solve, reproduce, route, execute, parse, or diagnose mathematical optimization problems from natural language, LaTeX, papers, code, data, or structured specs across OptSkills archetypes, SDPT3, CDOpt, MATLAB/Octave, Python, conic, semidefinite, nonlinear, MILP, or manifold workflows.
+description: Use when a coding agent must understand, model, solve, reproduce, route, execute, parse, or diagnose mathematical optimization problems from natural language, LaTeX, papers, code, data, or structured specs across OptSkills archetypes, SDPT3, CDOpt, MATLAB/Octave, Python, conic, semidefinite, nonlinear, MILP, or manifold workflows.
 ---
 
 # Optimization Skill
 
-This Skill is the single public entry point for optimization work. It covers problem intake, OptSkills-assisted archetype matching, mathematical modeling checkpoints, structured specs, solver route selection, approval-gated execution, result parsing, and failure diagnosis.
+This Skill is an **Optimization Modeling & Solver Orchestration** workflow.
+
+It helps a coding agent turn a concrete optimization problem into a reviewed mathematical model, choose a suitable solver ecosystem, generate or adapt solver code when appropriate, run only after approval, and interpret numerical evidence.
+
+## Positioning
+
+Model first, solve second. The Skill's center is the mathematical model and solver route, not any single solver package.
+
+CDOpt is a solver route, not the Skill's center of gravity. SDPT3, CVXPY, Pyomo, CVX, YALMIP, SciPy, HiGHS, Gurobi, MOSEK, IPOPT, Manopt, Pymanopt, Geoopt, and repository-native code are also routes when the model and environment make them appropriate.
+
+OptSkills archetypes, local CDOpt Problem Description cards, LP/MILP few-shots, solver docs, and code templates are auxiliary materials. More precisely, examples, solver docs, and code templates are auxiliary materials for modeling, routing, implementation, and diagnosis.
 
 ## Operating Principle
 
-Keep four layers separate and reviewable:
+Keep five layers separate and reviewable:
 
-1. **Archetype:** which known optimization pattern appears to match the user's problem.
-2. **Math model:** variables, objective, constraints, dimensions, data, and ambiguities.
-3. **Solver route:** which backend is appropriate and why.
-4. **Evidence report:** what the approved run actually returned.
+1. **Problem statement:** what the user or source actually says.
+2. **Math model:** variables, domains, objective, constraints, dimensions, data, assumptions, and ambiguities.
+3. **Problem type:** LP, MILP, QP, SOCP, SDP, NLP, least squares, conic, manifold, neural-network constrained, or repository-native.
+4. **Solver route:** which solver ecosystem is appropriate and why.
+5. **Evidence report:** what the approved run actually returned.
 
-Never let a generated model, solver route, or natural-language interpretation outrun human review.
+Never let a generated model, solver route, code template, or natural-language interpretation outrun human review.
 
 ## Interactive Opening
 
@@ -53,27 +64,42 @@ Accept these inputs and route them through the same modeling checkpoint:
 - natural-language optimization problem statements
 - LaTeX objective and constraints
 - paper excerpts or theorem/proposition statements
+- official example Problem Descriptions, preferably through local cards under `examples/cdopt/problem-descriptions/`
 - README solver instructions
 - source code with embedded optimization models
 - `.mat`, `.npz`, `.json`, `.yaml`, or CSV data
 - structured problem specs using `references/problem_schema.md`
 
-When the input is not already structured, write `modeling_checkpoint.md` content before execution: archetype match, variables, objective, constraints, dimensions, data sources, candidate solver routes, and unresolved ambiguities.
+When the input is not already structured, write `modeling_checkpoint.md` content before execution: source evidence, variables, domains, objective, constraints, dimensions, data sources, candidate problem types, candidate solver routes, and unresolved ambiguities.
 
 ## Reference Navigation
 
 Start with `references/INDEX.md` for routing.
 
-Use the imported OptSkills corpus as reference material, not as an automatically confirmed model:
+Use references through agent judgment:
 
-- `references/optskills/SOURCE.md`: source, license, and imported library scope.
-- `references/optskills/skill_library/`: imported released libraries:
-  - `skill_library_cluster`
-  - `skill_library_learned`
-  - `skill_library_nanoco_learned`
+- Core modeling references define how to turn inputs into a reviewable model and `problem.yaml`.
+- Solver selection references define what ecosystems can solve which problem types.
+- Implementation templates help after the model and route are reviewed.
+- Auxiliary example materials help with pattern recognition and tests; they are not automatically confirmed models.
+
+Important references:
+
+- `references/modeling_pipeline.md`: read for unstructured inputs and modeling checkpoints.
+- `references/problem_type_taxonomy.md`: read when classifying LP, MILP, QP, SOCP, SDP, NLP, least squares, conic, manifold, and repository-native problems.
+- `references/problem_schema.md`: read before accepting, generating, or editing `problem.yaml`.
+- `references/solver_catalog.md`: read when selecting solver ecosystems.
+- `references/solver_selection_rules.md`: read when ranking multiple possible routes.
+- `references/implementation_templates.md`: read before adapting CVXPY, Pyomo, SciPy, SDPT3, CDOpt, or repository-native code.
+- `references/cdopt_official_examples.md`: read after a local CDOpt Problem Description card has been understood and model-reviewed.
+- `references/optskills/SOURCE.md`: read when using imported OptSkills references for archetype matching.
 - `scripts/search_archetypes.py`: optional helper for local keyword search over the imported OptSkills indexes and markdown files.
+- `examples/lp-milp-example-prompts.md`, `examples/lp-milp-example-prompts.zh-CN.md`, and `examples/lp-milp-problem-specs.md`: few-shot references for classic LP/MILP modeling and future CVXPY/Pyomo adapter work.
+- `examples/cdopt-example-prompts.md`, `examples/cdopt-example-prompts.zh-CN.md`, and `examples/cdopt/problem-descriptions/*.md`: local CDOpt Problem Description prompt cards for application-level modeling tests.
 
-The primary navigation method is agent judgment: inspect the user goal, use `rg`, read relevant `index.json` files, open candidate markdown references, compare modeling assumptions, and choose the best archetype. The search script is only an optional helper when the corpus is large or the first `rg` pass is noisy:
+These `examples/` files are packaged inside the Skill so an installed coding agent can read them locally. The repository root also mirrors them under `examples/` for browsing and testing.
+
+The primary navigation method is agent judgment: inspect the user goal, use `rg`, read relevant references, compare modeling assumptions, and choose the best route. The search script is only an optional helper when the corpus is large or the first `rg` pass is noisy:
 
 ```bash
 python skills/optimization-skill/scripts/search_archetypes.py --query "<problem statement>" --limit 5
@@ -83,41 +109,39 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 
 ## Workflow
 
-1. Confirm interaction language for a new interactive session, then let the user provide the concrete problem.
-2. Classify the input type and problem class.
-3. If the input is not a confirmed structured spec, read `references/modeling_pipeline.md` and relevant OptSkills references.
-4. Create a compact modeling checkpoint with source evidence and an ambiguity list.
-5. Ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
-6. Normalize the confirmed model into `problem.yaml` using `references/problem_schema.md`.
-7. Read `references/solver_catalog.md` and choose a solver route.
-8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark.
-9. Route the structured problem:
+1. confirm interaction language.
+2. collect the concrete optimization problem.
+3. build a modeling checkpoint with source evidence, variables, objective, constraints, dimensions, data, assumptions, and ambiguity list.
+4. classify the problem type using `references/problem_type_taxonomy.md`.
+5. ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
+6. normalize the confirmed model into problem.yaml using `references/problem_schema.md`.
+7. choose a solver route using `references/solver_catalog.md` and `references/solver_selection_rules.md`.
+8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read the local Problem Description card under `examples/cdopt/problem-descriptions/`, treat its `## Prompt Body` as the modeling prompt, and read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
+9. Route the structured problem when useful:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/solver_router.py --spec <problem.yaml>
 ```
 
-10. Read `references/code_generation_patterns.md` and generate an entrypoint when appropriate:
-
-```bash
-conda run -n ai4math python skills/optimization-skill/scripts/codegen.py --spec <problem.yaml> --out outputs/{run_id}/generated
-```
-
-11. Put the exact command, risks, timeout, expected outputs, dependencies, and any CDOpt preflight result into a review plan.
-12. Run only approved commands.
+10. generate or adapt solver code only when appropriate, using `references/implementation_templates.md` and `references/code_generation_patterns.md`.
+11. Put the exact command, risks, timeout, expected outputs, dependencies, and any preflight result into a review plan.
+12. run only after approval.
 13. Parse logs and evidence:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py --log outputs/{run_id}/logs/run.log --out outputs/{run_id}/results/solver_summary.json
 ```
 
-14. Read `references/evaluation_reporting.md` and summarize status, objective values, feasibility, residuals, certificates, numerical warnings, and next choices.
+14. interpret numerical evidence: status, objective values, feasibility, residuals, gap, stationarity, certificates, numerical warnings, and next choices.
 
 ## Solver Routes
 
-- **SDPT3:** direct SQLP data (`blk`, `At`, `C`, `b`), semidefinite programs, SOCP/SDP/LP cone models, MATLAB/Octave execution.
-- **CDOpt:** Riemannian and manifold-constrained models, orthogonality constraints, constraint dissolving, Python backend workflows.
-- **Modeling layers:** CVX, YALMIP, CVXPY, JuMP, and Pyomo when the source already uses them or a modeling adapter is approved.
+- **LP/QP:** CVXPY, SciPy/HiGHS, Gurobi, MOSEK, or repository-native code.
+- **MILP:** Pyomo, CVXPY, HiGHS, CBC, GLPK, Gurobi, SCIP, or repository-native code.
+- **SOCP/SDP/conic:** CVX, YALMIP, CVXPY, SDPT3, MOSEK, SCS, or repository-native code.
+- **Smooth NLP:** SciPy, IPOPT, CasADi, or repository-native code.
+- **Least squares:** SciPy, CVXPY, specialized repository-native solvers, or Gauss-Newton/LM tooling when already present.
+- **Manifold/Riemannian:** CDOpt, Manopt, Pymanopt, Geoopt, or repository-native code.
 - **Existing solver route:** repository-native solvers when they are the safest way to reproduce the original experiment.
 - **Future backend route:** add solvers by extending `solver_catalog.md`, `problem_schema.md`, `solver_router.py`, `codegen.py`, and parser patterns together.
 
@@ -126,7 +150,9 @@ Current generated support is concrete but intentionally bounded:
 - SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
 - CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
 - CDOpt execution should be preceded by the post-install manifold smoke test when available. The local suite at `/Users/conanxu/cdopt_manifold_tests` checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
-- Natural-language or LaTeX-only models require a modeling checkpoint before executable SDPT3/CDOpt code is generated.
+- CDOpt official examples should be handled in two layers: first derive the model from a local Problem Description card under `examples/cdopt/problem-descriptions/`, then adapt the implementation template from `references/cdopt_official_examples.md` after model review.
+- Natural-language or LaTeX-only models require a modeling checkpoint before executable code is generated.
+- Not all listed solver routes have automatic code generation; many should stop at a reviewed model, route recommendation, or repository-native adapter plan.
 
 ## Approval Rules
 
@@ -137,7 +163,7 @@ Ask before:
 - installing or upgrading solver packages
 - compiling SDPT3/MEX/native extensions
 - modifying MATLAB path, Python environment, or system solver configuration
-- generating a modeling adapter from natural language or LaTeX
+- generating a modeling adapter from natural language, LaTeX, or an official Problem Description
 - editing source code or replacing data
 - accepting final mathematical conclusions
 
@@ -150,7 +176,8 @@ Call out these signals explicitly:
 - infeasible, dual-infeasible, unbounded, or ambiguous certificates
 - stalled complementarity gap, residuals, short steps, bad scaling, or factorization warnings
 - CDOpt backend mismatch, missing manifold definition, missing objective module, or shape mismatch
-- modeling ambiguity caused by natural-language or LaTeX interpretation
+- MILP integrality-gap or time-limit ambiguity
+- modeling ambiguity caused by natural-language, LaTeX, paper text, or official Problem Description interpretation
 
 ## Output Contract
 

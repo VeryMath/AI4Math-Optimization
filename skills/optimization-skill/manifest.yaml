@@ -2,7 +2,7 @@ schema_version: 1
 name: optimization-skill
 version: 0.2.0
 scope: computational-math-optimization
-description: Understand, model, route, execute, parse, and diagnose optimization workflows across OptSkills archetypes, structured specs, natural-language or LaTeX modeling checkpoints, SDPT3, CDOpt, and extensible solver backends.
+description: Model optimization problems, classify problem types, choose solver routes, generate or adapt approved solver code, execute with approval, and interpret evidence across broad solver ecosystems.
 entrypoint: SKILL.md
 requires_env:
   conda: ai4math

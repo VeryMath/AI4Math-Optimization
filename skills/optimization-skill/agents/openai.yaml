@@ -1,4 +1,4 @@
 interface:
   display_name: "Optimization"
-  short_description: "Model and solve optimization problems"
-  default_prompt: "Use $optimization-skill. First ask the user to choose Chinese or English in one short question only; after they answer, ask for the concrete optimization problem and guide modeling/solving."
+  short_description: "Model problems and choose solver routes"
+  default_prompt: "Use $optimization-skill. First ask the user to choose Chinese or English in one short question only; after they answer, ask for the concrete optimization problem, build a reviewed model, choose a solver route, and run only after approval."

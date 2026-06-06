@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-`optimization-skill` is a coding-agent Skill for mathematical optimization work. It helps an agent read a concrete problem, build a reviewed model, match OptSkills references, choose a solver route, generate approved solver entrypoints, parse evidence, and diagnose failures.
+`optimization-skill` is a coding-agent Skill for optimization modeling and solver orchestration. It helps an agent read a concrete problem, build a reviewed mathematical model, classify the problem type, choose a solver route, generate or adapt solver code when appropriate, parse evidence, and diagnose failures.
 
 The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
 
@@ -34,26 +34,11 @@ Would you like to work in Chinese or English?
 
 After choosing a language, send the actual optimization problem directly. Natural language, LaTeX, paper excerpts, source code, README instructions, data descriptions, `.mat`/`.npz`/`.json`/`.yaml`/CSV files, or an existing `problem.yaml` are all acceptable.
 
-The agent should then model the problem, expose ambiguities, ask for confirmation, propose a solver route, and run code only after approval.
-
-## CDOpt Workflow
-
-For CDOpt tasks, there are two separate checks:
-
-1. Installation/API validation: run or propose the post-install manifold smoke test.
-
-```bash
-cd /Users/conanxu/cdopt_manifold_tests
-python run_all_notebooks.py
-```
-
-2. Application examples: after the smoke test passes, use the copyable prompts in [examples/cdopt-example-prompts.md](examples/cdopt-example-prompts.md) or [examples/cdopt-example-prompts.zh-CN.md](examples/cdopt-example-prompts.zh-CN.md).
-
-The smoke test only validates the CDOpt runtime and core APIs. It is not evidence that an application model is mathematically correct.
+The agent should then model the problem, expose ambiguities, ask for confirmation, propose a solver route, and run code only after approval. Examples, solver docs, and code templates are auxiliary materials; the model and solver route remain the main workflow.
 
 ## About The Skill
 
-`optimization-skill` is designed as one public entry point for optimization work. The user gives a concrete problem; the agent is responsible for turning it into a reviewable workflow.
+`optimization-skill` is designed as one public entry point for optimization work. The user gives a concrete problem; the agent is responsible for turning it into a reviewable model, selecting an appropriate solver ecosystem, and explaining the numerical evidence.
 
 The Skill guides the agent to:
 
@@ -61,18 +46,29 @@ The Skill guides the agent to:
 - identify variables, objective, constraints, dimensions, data, and ambiguities
 - compare the problem with imported OptSkills references when useful
 - create a modeling checkpoint before executable solver code
-- route confirmed models to solver ecosystems such as SDPT3, CDOpt, or repository-native methods
-- generate bounded entrypoints and run them only after approval
+- classify problem types such as LP, MILP, QP, SOCP, SDP, NLP, least squares, and manifold optimization
+- route confirmed models to solver ecosystems such as CVXPY, Pyomo, SciPy/HiGHS, SDPT3, CVX, YALMIP, CDOpt, IPOPT, CasADi, Manopt, Pymanopt, Geoopt, commercial solvers, or repository-native methods
+- generate or adapt bounded entrypoints and run them only after approval
 - report objective values, feasibility, solver status, numerical warnings, and failure causes
 
 The Skill is not a solver by itself. It is a workflow layer that helps a coding agent use solvers carefully, with model review and execution approval kept visible.
+
+## Example Materials
+
+The examples are optional supporting material for testing and few-shot guidance. They are not the main workflow. The main workflow is still: understand the user's problem, build a reviewed model, choose a solver route, and run only after approval.
+
+CDOpt is only one solver route. Use it when the confirmed model is a good fit for manifold or constraint-dissolving optimization and the local environment supports it.
+
+- Classic LP/MILP examples: [examples/lp-milp-example-prompts.md](examples/lp-milp-example-prompts.md) and [examples/lp-milp-example-prompts.zh-CN.md](examples/lp-milp-example-prompts.zh-CN.md) cover transportation LP, assignment MILP, set cover, facility location, network flow, scheduling, and natural-language-to-spec conversion. The companion [examples/lp-milp-problem-specs.md](examples/lp-milp-problem-specs.md) shows schema-compatible `problem.yaml` drafts.
+- CDOpt application cards: [examples/cdopt-example-prompts.md](examples/cdopt-example-prompts.md), [examples/cdopt-example-prompts.zh-CN.md](examples/cdopt-example-prompts.zh-CN.md), and [examples/cdopt/problem-descriptions/](examples/cdopt/problem-descriptions/) provide local Problem Description cards. The same cards are packaged inside the Skill at [skills/optimization-skill/examples/cdopt/problem-descriptions/](skills/optimization-skill/examples/cdopt/problem-descriptions/) for installed-agent use.
+- CDOpt installation/API smoke test: if the selected route is CDOpt, the agent should run or propose `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` before a CDOpt solve. This smoke test validates the CDOpt runtime and core APIs; it is not evidence that an application model is mathematically correct.
 
 ## Maintainer Checks
 
 From this repository:
 
 ```bash
-python /Users/conanxu/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/optimization-skill
+python <path-to-skill-validator>/quick_validate.py skills/optimization-skill
 python -m pytest -q
 ```
 

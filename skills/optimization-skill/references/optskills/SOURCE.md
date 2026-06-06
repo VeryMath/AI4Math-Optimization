@@ -14,4 +14,4 @@ Imported reference libraries:
 - `skill_library/skill_library_learned`
 - `skill_library/skill_library_nanoco_learned`
 
-These files are bundled as modeling references. They are not individual Codex skills and should not be treated as automatically confirmed models for a new user problem. Let the coding agent inspect the library with `rg`, `index.json`, filenames, and targeted file reads. `../../scripts/search_archetypes.py` is only an optional helper for narrowing a large candidate set; always write a fresh modeling checkpoint with explicit assumptions and ambiguities.
+These files are bundled as modeling references. They are not individual installed agent skills and should not be treated as automatically confirmed models for a new user problem. Let the coding agent inspect the library with `rg`, `index.json`, filenames, and targeted file reads. `../../scripts/search_archetypes.py` is only an optional helper for narrowing a large candidate set; always write a fresh modeling checkpoint with explicit assumptions and ambiguities.

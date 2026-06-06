@@ -52,7 +52,7 @@ metadata:
 - `schema_version`: use `1`.
 - `problem_id`: stable identifier for filenames and run artifacts.
 - `input_type`: `natural_language`, `latex`, `paper_excerpt`, `repository_source`, `solver_data`, `structured_spec`, or `mixed`.
-- `problem_class`: `linear_program`, `quadratic_program`, `second_order_cone_program`, `semidefinite_program`, `conic_sqlp`, `nonlinear_program`, `least_squares`, `riemannian`, `manifold_optimization`, `orthogonality_constrained`, `unconstrained`, or `unknown`.
+- `problem_class`: `linear_program`, `integer_program`, `mixed_integer_linear_program`, `quadratic_program`, `second_order_cone_program`, `semidefinite_program`, `conic_sqlp`, `nonlinear_program`, `least_squares`, `riemannian`, `manifold_optimization`, `orthogonality_constrained`, `unconstrained`, or `unknown`.
 - `objective.sense`: `minimize`, `maximize`, or `unknown`.
 - `review.modeling_status`: `proposed`, `confirmed`, `needs_revision`, or `unknown`.
 
@@ -124,3 +124,5 @@ modeling_layer:
 ```
 
 Treat newly generated modeling adapters as reviewable artifacts.
+
+For LP/MILP few-shot examples that stay within the current schema, see `examples/lp-milp-problem-specs.md`.
