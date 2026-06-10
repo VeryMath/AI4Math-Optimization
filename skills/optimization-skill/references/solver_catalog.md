@@ -69,8 +69,7 @@ Primary sources:
 Before solving a CDOpt problem, use the local post-install manifold smoke test when available:
 
 ```bash
-cd /Users/conanxu/cdopt_manifold_tests
-python run_all_notebooks.py
+python "${CDOPT_SMOKE_TEST:-$HOME/cdopt_manifold_tests/run_all_notebooks.py}"
 ```
 
 This suite is installation/API validation, not an application benchmark. If it fails, diagnose the CDOpt environment before generating or running application-level CDOpt examples.

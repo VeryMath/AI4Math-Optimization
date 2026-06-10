@@ -113,7 +113,7 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 5. ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
 6. normalize the confirmed model into problem.yaml using `references/problem_schema.md`.
 7. choose a solver route using `references/solver_catalog.md` and `references/solver_selection_rules.md`.
-8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Use `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read `references/few_shots/cdopt_official_pairs.md` only for the matched official problem statement and solving code. Read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
+8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Resolve it from `CDOPT_SMOKE_TEST`, or use `~/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read `references/few_shots/cdopt_official_pairs.md` only for the matched official problem statement and solving code. Read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
 9. Route the structured problem when useful:
 
 ```bash
@@ -146,7 +146,7 @@ Current generated support is concrete but intentionally bounded:
 
 - SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
 - CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
-- CDOpt execution should be preceded by the post-install manifold smoke test when available. The local suite at `/Users/conanxu/cdopt_manifold_tests` checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
+- CDOpt execution should be preceded by the post-install manifold smoke test when available. The default suite path is `~/cdopt_manifold_tests`, or a custom path supplied through `CDOPT_SMOKE_TEST`; it checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
 - CDOpt official examples should be handled as problem-code pairs: read the matched official problem statement and solving code in `references/few_shots/cdopt_official_pairs.md`, then adapt implementation details from `references/cdopt_official_examples.md` after model review.
 - Natural-language or LaTeX-only models require a modeling checkpoint before executable code is generated.
 - Not all listed solver routes have automatic code generation; many should stop at a reviewed model, route recommendation, or repository-native adapter plan.

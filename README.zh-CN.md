@@ -62,7 +62,7 @@ CDOpt 只是其中一个 solver 路线。只有当确认后的模型适合 manif
 - 经典 LP/MILP examples：[examples/lp-milp-example-prompts.zh-CN.md](examples/lp-milp-example-prompts.zh-CN.md) 和 [examples/lp-milp-example-prompts.md](examples/lp-milp-example-prompts.md) 覆盖运输 LP、指派 MILP、集合覆盖、设施选址、网络流、调度，以及自然语言到 spec 的转换。配套的 [examples/lp-milp-problem-specs.md](examples/lp-milp-problem-specs.md) 给出 schema-compatible 的 `problem.yaml` drafts。
 - CDOpt 问题-代码配对：[skills/optimization-skill/references/few_shots/cdopt_official_pairs.md](skills/optimization-skill/references/few_shots/cdopt_official_pairs.md) 把 CDOpt 官方问题陈述和 `docs/_sources/examples/` 里的对应求解代码配成对。
 - CDOpt 应用级 cards：[examples/cdopt-example-prompts.zh-CN.md](examples/cdopt-example-prompts.zh-CN.md)、[examples/cdopt-example-prompts.md](examples/cdopt-example-prompts.md) 和 [examples/cdopt/problem-descriptions/](examples/cdopt/problem-descriptions/) 是仓库级 examples，用于浏览和手动测试。安装后的 agent 应该读取 `skills/optimization-skill/references/few_shots/` 下匹配的问题-代码配对。
-- CDOpt 安装/API smoke test：如果最终选择的路线是 CDOpt，agent 应该先运行或提出运行 `/Users/conanxu/cdopt_manifold_tests/run_all_notebooks.py`，再开始 CDOpt solve。这个 smoke test 只验证 CDOpt runtime 和核心 API，不代表某个应用模型在数学上正确。
+- CDOpt 安装/API smoke test：如果最终选择的路线是 CDOpt，agent 应该先运行或提出运行 `CDOPT_SMOKE_TEST` 指定的安装后 smoke test；如果该变量未设置但 `~/cdopt_manifold_tests/run_all_notebooks.py` 存在，则使用这个默认位置，然后再开始 CDOpt solve。这个 smoke test 只验证 CDOpt runtime 和核心 API，不代表某个应用模型在数学上正确。
 
 ## 维护者检查
 
