@@ -47,7 +47,7 @@ agent 接下来应该建模、暴露歧义、请你确认模型、提出 solver 
 - 必要时对照导入的 OptSkills references
 - 在生成可执行 solver code 前，先建立 modeling checkpoint
 - 分类 LP、MILP、QP、SOCP、SDP、NLP、least squares、manifold optimization 等问题类型
-- 把确认后的模型路由到 CVXPY、Pyomo、SciPy/HiGHS、SDPT3、CVX、YALMIP、CDOpt、IPOPT、CasADi、Manopt、Pymanopt、Geoopt、商业 solver 或仓库原生方法等 solver 生态
+- 把确认后的模型路由到 CVXPY、Pyomo、SciPy/HiGHS、SDPT3、CVX、YALMIP、IPOPT、CasADi、Manopt、Pymanopt、Geoopt、商业 solver 或仓库原生方法等 solver 生态
 - 生成或改写受限的求解入口，并且只在批准后运行
 - 报告目标值、feasibility、solver status、数值警告和失败原因
 
@@ -57,12 +57,7 @@ agent 接下来应该建模、暴露歧义、请你确认模型、提出 solver 
 
 examples 是可选辅助材料，用于测试和 few-shot 参考，不是主流程。主流程仍然是：理解用户的问题，建立经过 review 的模型，选择 solver 路由，并且只在批准后运行。
 
-CDOpt 只是其中一个 solver 路线。只有当确认后的模型适合 manifold 或 constraint-dissolving optimization，并且本地环境支持时，才应该走 CDOpt。
-
 - 经典 LP/MILP examples：[examples/lp-milp-example-prompts.zh-CN.md](examples/lp-milp-example-prompts.zh-CN.md) 和 [examples/lp-milp-example-prompts.md](examples/lp-milp-example-prompts.md) 覆盖运输 LP、指派 MILP、集合覆盖、设施选址、网络流、调度，以及自然语言到 spec 的转换。配套的 [examples/lp-milp-problem-specs.md](examples/lp-milp-problem-specs.md) 给出 schema-compatible 的 `problem.yaml` drafts。
-- CDOpt 问题-代码配对：[skills/optimization-skill/references/few_shots/cdopt_official_pairs.md](skills/optimization-skill/references/few_shots/cdopt_official_pairs.md) 把 CDOpt 官方问题陈述和 `docs/_sources/examples/` 里的对应求解代码配成对。
-- CDOpt 应用级 cards：[examples/cdopt-example-prompts.zh-CN.md](examples/cdopt-example-prompts.zh-CN.md)、[examples/cdopt-example-prompts.md](examples/cdopt-example-prompts.md) 和 [examples/cdopt/problem-descriptions/](examples/cdopt/problem-descriptions/) 是仓库级 examples，用于浏览和手动测试。安装后的 agent 应该读取 `skills/optimization-skill/references/few_shots/` 下匹配的问题-代码配对。
-- CDOpt 安装/API smoke test：如果最终选择的路线是 CDOpt，agent 应该先运行或提出运行 `CDOPT_SMOKE_TEST` 指定的安装后 smoke test；如果该变量未设置但 `~/cdopt_manifold_tests/run_all_notebooks.py` 存在，则使用这个默认位置，然后再开始 CDOpt solve。这个 smoke test 只验证 CDOpt runtime 和核心 API，不代表某个应用模型在数学上正确。
 
 ## 维护者检查
 

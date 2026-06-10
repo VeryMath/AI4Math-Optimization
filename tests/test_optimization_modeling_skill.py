@@ -5,7 +5,7 @@ from pathlib import Path
 
 import yaml
 
-from problem_spec import CDOPT_CLASSES, SDPT3_CLASSES, OptimizationProblemSpec
+from problem_spec import SDPT3_CLASSES, OptimizationProblemSpec
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -152,176 +152,53 @@ def test_lp_milp_problem_spec_few_shots_match_schema():
         assert problem.review["modeling_status"] == "proposed"
 
 
-def test_cdopt_official_examples_reference_uses_clear_problem_and_template_layers():
-    reference = SKILL_ROOT / "references" / "cdopt_official_examples.md"
+def test_specialized_package_materials_are_not_bundled():
+    removed = "cd" + "opt"
+    removed_title = "CD" + "Opt"
 
-    assert reference.exists()
-    text = reference.read_text()
-    assert "Problem-Code Pairs" in text
-    assert "Implementation Templates" in text
-    assert "https://github.com/cdopt/cdopt.github.io/tree/main/docs/examples" in text
-    assert "examples/cdopt/problem-descriptions" not in text
+    tracked_paths = {
+        path.as_posix().lower()
+        for path in ROOT.rglob("*")
+        if path.is_file() and ".git" not in path.parts and "__pycache__" not in path.parts
+    }
 
-    for filename in [
-        "dictionary_learning.html",
-        "dictionary_learning_jax.html",
-        "nonlinear_eigenvalue.html",
-        "nearest_correlation_estimation.html",
-        "bose_einstein_condensates.html",
-        "symplectic_eigenvalue.html",
-        "LeNet_orth.html",
-        "LeNet_orth_jax.html",
-        "rnn_single_layer.html",
-        "distributed_linear_basic.html",
+    assert not any(removed in path for path in tracked_paths)
+
+    for path in [
+        SKILL_ROOT / "references" / f"{removed}_official_examples.md",
+        SKILL_ROOT / "references" / "few_shots" / f"{removed}_official_pairs.md",
+        ROOT / "examples" / f"{removed}-example-prompts.md",
+        ROOT / "examples" / f"{removed}-example-prompts.zh-CN.md",
+        ROOT / "examples" / removed,
     ]:
-        assert filename in text
+        assert not path.exists(), f"removed specialized package material still exists: {path}"
 
-    assert text.count(".html") >= 17
-    assert "Use this as an implementation template, not as an automatically approved model." in text
-    assert "cdopt.core.problem" in text
-    assert "ConstraintDissolvingLayer" in text
-
-
-def test_cdopt_problem_code_pairs_are_concise_and_progressively_disclosed():
-    pair_reference = SKILL_ROOT / "references" / "few_shots" / "cdopt_official_pairs.md"
-    skill_text = (SKILL_ROOT / "SKILL.md").read_text()
-    index = (SKILL_ROOT / "references" / "INDEX.md").read_text()
-
-    assert pair_reference.exists()
-    text = pair_reference.read_text()
-
-    for required in [
-        "CDOpt Official Problem-Code Pairs",
-        "source_page",
-        "source_artifact",
-        "Official problem statement",
-        "Official solving code",
+    for file_path in [
+        ROOT / "README.md",
+        ROOT / "README.zh-CN.md",
+        SKILL_ROOT / "SKILL.md",
+        SKILL_ROOT / "references" / "INDEX.md",
+        SKILL_ROOT / "references" / "solver_catalog.md",
+        SKILL_ROOT / "references" / "problem_schema.md",
+        SKILL_ROOT / "references" / "implementation_templates.md",
+        SKILL_ROOT / "references" / "code_generation_patterns.md",
+        SKILL_ROOT / "references" / "evaluation_reporting.md",
     ]:
-        assert required in text
-
-    for forbidden in [
-        "progressive disclosure",
-        "trigger signals",
-        "modeling pattern",
-        "solver route",
-        "implementation skeleton",
-        "evidence fields",
-        "caveats",
-        "atmosphere shots",
-        "Future solver-family",
-    ]:
-        assert forbidden not in text
-
-    assert "few_shots/cdopt_official_pairs.md" in index
-    assert "few_shots/cdopt_official_pairs.md" in skill_text
-    assert "read only the matched problem-code pair" in skill_text
-
-
-def test_dictionary_learning_pair_records_html_and_source_notebook():
-    text = (SKILL_ROOT / "references" / "few_shots" / "cdopt_official_pairs.md").read_text()
-
-    assert "## Dictionary Learning" in text
-    dictionary_section = text.split("## Dictionary Learning", 1)[1].split("\n## ", 1)[0]
-
-    for required in [
-        "source_page: https://github.com/cdopt/cdopt.github.io/blob/main/docs/examples/dictionary_learning.html",
-        "source_artifact: https://github.com/cdopt/cdopt.github.io/blob/main/docs/_sources/examples/dictionary_learning.ipynb",
-        "Official problem statement",
-        "Official solving code",
-        "Stiefel",
-        "sparse Bernoulli-Gaussian",
-        "fourth-power",
-        "cdopt.core.problem",
-        "cdf_fun_vec_np",
-        "cdf_grad_vec_np",
-        "L-BFGS-B",
-        "CG",
-        "Feas_eval",
-        "stationarity",
-    ]:
-        assert required in dictionary_section
-
-    assert "source_page: docs/examples/" not in text
-    assert "source_artifact: docs/_sources/examples/" not in text
-    assert "root examples/dictionary_learning.ipynb is not authoritative" not in dictionary_section
-
-
-def test_cdopt_prompts_are_driven_by_official_problem_descriptions():
-    english = (ROOT / "examples" / "cdopt-example-prompts.md").read_text()
-    chinese = (ROOT / "examples" / "cdopt-example-prompts.zh-CN.md").read_text()
-
-    for text in [english, chinese]:
-        assert "cdopt_official_examples.md" in text
-        assert "Problem Description" in text
-        assert "Prompt Body" in text
-        assert "local Problem Description card" in text or "本地 Problem Description card" in text
-        assert "Implementation Template" in text
-        assert "examples/cdopt/problem-descriptions/" in text
-        assert "dictionary_learning.html#problem-description" in text
-        assert "LeNet_orth.html" in text
-        assert "Do not copy the official code verbatim" in text
-        assert "Read the official Problem Description section" not in text
-        assert "[PASTE THE OFFICIAL PROBLEM DESCRIPTION TEXT HERE]" not in text
-        assert text.count("## Prompt") >= 8
-
-
-def test_cdopt_problem_description_cards_are_local_markdown():
-    card_dir = ROOT / "examples" / "cdopt" / "problem-descriptions"
-    expected_cards = [
-        "dictionary-learning.md",
-        "dictionary-learning-jax.md",
-        "kohn-sham-1d.md",
-        "nearest-correlation.md",
-        "bose-einstein-condensates.md",
-        "symplectic-eigenvalue.md",
-    ]
-
-    for card_name in expected_cards:
-        path = card_dir / card_name
-        assert path.exists(), f"missing local CDOpt card: {path}"
-        text = path.read_text()
-        assert "source_url:" in text
-        assert "source_file:" in text
-        assert "prompt_kind: official_problem_description" in text
-        assert "## Prompt Body" in text
-        assert "## Expected Modeling Signals" in text
-        assert "https://cdopt.github.io/examples/" in text
-        assert "skills/optimization-skill/references/cdopt_official_examples.md" in text
-        assert "[PASTE THE OFFICIAL PROBLEM DESCRIPTION TEXT HERE]" not in text
-
-        prompt_body = text.split("## Prompt Body", 1)[1].split("## Expected Modeling Signals", 1)[0]
-        assert "Implementation Template" not in prompt_body
-
-    combined = "\n".join((card_dir / card_name).read_text() for card_name in expected_cards)
-    for modeling_signal in ["Stiefel", "oblique", "sphere", "symplectic", "L-BFGS-B", "CDOpt"]:
-        assert modeling_signal in combined
-
-
-def test_cdopt_prompt_indexes_point_to_local_problem_description_cards():
-    english = (ROOT / "examples" / "cdopt-example-prompts.md").read_text()
-    chinese = (ROOT / "examples" / "cdopt-example-prompts.zh-CN.md").read_text()
-
-    for text in [english, chinese]:
-        assert "examples/cdopt/problem-descriptions/dictionary-learning.md" in text
-        assert "examples/cdopt/problem-descriptions/symplectic-eigenvalue.md" in text
-        assert "local Problem Description card" in text or "本地 Problem Description card" in text
-        assert "[PASTE THE OFFICIAL PROBLEM DESCRIPTION TEXT HERE]" not in text
+        text = file_path.read_text()
+        assert removed not in text.lower(), f"removed package reference remains in {file_path}"
+        assert removed_title not in text, f"removed package title remains in {file_path}"
 
 
 def test_skill_does_not_bundle_duplicate_examples():
     skill_examples = SKILL_ROOT / "examples"
     skill_text = (SKILL_ROOT / "SKILL.md").read_text()
     index_text = (SKILL_ROOT / "references" / "INDEX.md").read_text()
-    cdopt_reference = (SKILL_ROOT / "references" / "cdopt_official_examples.md").read_text()
 
     assert not skill_examples.exists()
-    for text in [skill_text, index_text, cdopt_reference]:
+    for text in [skill_text, index_text]:
         assert "skills/optimization-skill/examples" not in text
-        assert "examples/cdopt/problem-descriptions" not in text
         assert "examples/lp-milp" not in text
         assert "These `examples/` files are packaged inside the Skill" not in text
-    assert "references/few_shots/cdopt_official_pairs.md" in skill_text
-    assert "few_shots/cdopt_official_pairs.md" in index_text
 
 
 def test_skill_positioning_centers_modeling_and_solver_orchestration():
@@ -330,7 +207,6 @@ def test_skill_positioning_centers_modeling_and_solver_orchestration():
     assert "Optimization Modeling & Solver Orchestration" in text
     assert "Model first, solve second" in text
     assert "examples, solver docs, and code templates are auxiliary materials" in text
-    assert "CDOpt is a solver route, not the Skill's center of gravity" in text
 
     flow = [
         "confirm interaction language",
@@ -347,19 +223,15 @@ def test_skill_positioning_centers_modeling_and_solver_orchestration():
         assert item in text
 
 
-def test_readmes_center_general_optimization_workflow_not_cdopt():
+def test_readmes_center_general_optimization_workflow():
     english = (ROOT / "README.md").read_text()
     chinese = (ROOT / "README.zh-CN.md").read_text()
 
-    assert "## CDOpt Workflow" not in english
-    assert "## CDOpt Workflow" not in chinese
     assert "## Example Materials" in english
     assert "## 示例材料" in chinese
 
     for text in [english, chinese]:
-        assert "CDOpt is only one solver route" in text or "CDOpt 只是其中一个 solver 路线" in text
         assert "examples are optional" in text or "examples 是可选辅助材料" in text
-        assert "problem-code pairs" in text or "问题-代码配对" in text
 
     assert english.index("## About The Skill") < english.index("## Example Materials")
     assert chinese.index("## 关于这个 Skill") < chinese.index("## 示例材料")
@@ -383,7 +255,6 @@ def test_reference_index_separates_core_solver_templates_and_examples():
         "solver_catalog.md",
         "solver_selection_rules.md",
         "implementation_templates.md",
-        "cdopt_official_examples.md",
         "optskills/SOURCE.md",
     ]:
         assert reference in index
@@ -410,7 +281,6 @@ def test_solver_catalog_covers_broad_problem_and_solver_families():
         "SDPT3",
         "IPOPT",
         "CasADi",
-        "CDOpt",
         "Manopt",
         "Pymanopt",
         "Geoopt",
@@ -424,17 +294,8 @@ def test_solver_catalog_covers_broad_problem_and_solver_families():
 def test_problem_schema_lists_all_router_supported_problem_classes():
     schema = (SKILL_ROOT / "references" / "problem_schema.md").read_text()
 
-    for problem_class in sorted(SDPT3_CLASSES | CDOPT_CLASSES):
+    for problem_class in sorted(SDPT3_CLASSES):
         assert f"`{problem_class}`" in schema
-
-
-def test_cdopt_templates_use_current_constraint_dissolving_callbacks():
-    reference = (SKILL_ROOT / "references" / "cdopt_official_examples.md").read_text()
-
-    for expected in ["cdf_fun_vec_np", "cdf_grad_vec_np", "Xinit_vec_np"]:
-        assert expected in reference
-    assert "problem_obj.fun" not in reference
-    assert "problem_obj.grad" not in reference
 
 
 def test_package_metadata_versions_are_aligned():

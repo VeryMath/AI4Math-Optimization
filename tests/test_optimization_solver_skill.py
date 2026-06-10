@@ -1,5 +1,4 @@
 import json
-import py_compile
 import subprocess
 import sys
 
@@ -96,36 +95,29 @@ def test_codegen_writes_sdpt3_matlab_wrapper(tmp_path):
     assert "OPTIONS.printlevel = 2;" in text
 
 
-def test_codegen_writes_cdopt_python_wrapper(tmp_path):
+def test_removed_backend_is_not_supported():
+    removed_backend = "cd" + "opt"
     spec = OptimizationProblemSpec.from_mapping(
         {
             "schema_version": 1,
-            "problem_id": "stiefel_demo",
+            "problem_id": "removed_backend_demo",
             "input_type": "structured_spec",
             "problem_class": "riemannian",
             "objective": {"sense": "minimize"},
             "review": {"modeling_status": "confirmed"},
-            "cdopt": {
-                "backend": "torch",
-                "manifold": {"type": "stiefel_torch", "shape": [20, 3]},
-                "objective": {"module": "problem_definition", "function": "obj_fun"},
-                "beta": 50,
-            },
+            "solver_preferences": {"backend": removed_backend},
         }
     )
 
-    route = generate_solver_entrypoint(spec, tmp_path / "generated")
-
-    entrypoint = tmp_path / "generated" / "run_stiefel_demo_cdopt.py"
-    assert route["solver"] == "cdopt"
-    assert entrypoint.exists()
-    text = entrypoint.read_text()
-    assert "import cdopt" in text
-    assert "problem_definition" in text
-    assert "stiefel_torch" in text
+    try:
+        spec.route()
+    except ValueError as exc:
+        assert "unsupported solver" in str(exc)
+    else:
+        raise AssertionError("removed backend should not be accepted")
 
 
-def test_solver_router_selects_cdopt_for_common_manifold_classes():
+def test_solver_router_keeps_common_manifold_classes_on_existing_route():
     for problem_class in ["sphere", "oblique", "symplectic_stiefel"]:
         spec = OptimizationProblemSpec.from_mapping(
             {
@@ -140,45 +132,8 @@ def test_solver_router_selects_cdopt_for_common_manifold_classes():
 
         route = spec.route()
 
-        assert route["solver"] == "cdopt"
-        assert "manifold" in route["reason"]
-
-
-def test_codegen_writes_runnable_cdopt_scipy_wrapper(tmp_path):
-    spec = OptimizationProblemSpec.from_mapping(
-        {
-            "schema_version": 1,
-            "problem_id": "dictionary_learning",
-            "input_type": "structured_spec",
-            "problem_class": "stiefel",
-            "objective": {"sense": "minimize"},
-            "review": {"modeling_status": "confirmed"},
-            "cdopt": {
-                "backend": "torch",
-                "manifold": {"type": "stiefel_torch", "shape": [6, 6]},
-                "objective": {"module": "problem_definition", "function": "obj_fun"},
-                "beta": "auto",
-                "optimizer": {
-                    "family": "scipy",
-                    "method": "L-BFGS-B",
-                    "options": {"maxiter": 20, "gtol": 1e-6},
-                },
-            },
-        }
-    )
-
-    route = generate_solver_entrypoint(spec, tmp_path / "generated")
-
-    entrypoint = tmp_path / "generated" / "run_dictionary_learning_cdopt.py"
-    text = entrypoint.read_text()
-    assert route["solver"] == "cdopt"
-    assert "from cdopt.manifold_torch import stiefel_torch" in text
-    assert "problem_obj = problem(M, obj_fun, beta='auto')" in text
-    assert "sp.optimize.minimize(" in text
-    assert "method='L-BFGS-B'" in text
-    assert "summary_path.write_text" in text
-    assert "Complete the generated adapter" not in text
-    py_compile.compile(str(entrypoint), doraise=True)
+        assert route["solver"] == "existing"
+        assert "manifold-oriented problem" in route["reason"]
 
 
 def test_result_parser_classifies_solver_failures_and_metrics():
@@ -197,19 +152,19 @@ def test_result_parser_classifies_solver_failures_and_metrics():
     assert summary["metrics"]["gap"] == 3.2e-08
 
 
-def test_result_parser_classifies_cdopt_missing_dependency():
-    summary = parse_solver_log("ModuleNotFoundError: No module named 'cdopt'")
+def test_result_parser_classifies_missing_dependency():
+    summary = parse_solver_log("ModuleNotFoundError: No module named 'solver_pkg'")
 
     assert summary["status"] == "failed"
     assert summary["failure_type"] == "missing_dependency"
 
 
-def test_result_parser_extracts_cdopt_json_summary_metrics():
+def test_result_parser_extracts_json_summary_metrics():
     summary = parse_solver_log(
         """
         {
           "status": "completed",
-          "solver": "cdopt",
+          "solver": "custom",
           "objective": -12.5,
           "stationarity": 1.0e-6,
           "feasibility": 2.0e-8,

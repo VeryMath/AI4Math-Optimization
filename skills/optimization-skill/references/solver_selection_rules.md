@@ -18,7 +18,7 @@ Rank solver routes by:
 - Prefer existing repository code when the task is reproduction or when the model is deeply tied to source-specific data.
 - Prefer modeling layers for LP/MILP/SOCP/SDP when the model is naturally algebraic and no direct solver data exists.
 - Prefer direct SDPT3 only when SQLP data or MATLAB conic modeling already exists.
-- Prefer CDOpt or another manifold route only when manifold constraints are explicit and the objective can be evaluated.
+- Prefer a manifold route only when manifold constraints are explicit and the objective can be evaluated.
 - Prefer SciPy/IPOPT/CasADi for smooth NLP only after checking derivative availability and constraints.
 - Stop at a modeling checkpoint if the input is natural-language only and key model choices are ambiguous.
 

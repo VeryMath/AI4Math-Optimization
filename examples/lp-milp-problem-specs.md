@@ -2,7 +2,7 @@
 
 These examples show schema-compatible `problem.yaml` drafts for LP/MILP modeling. They are intended as few-shot references for `$optimization-skill` and future CVXPY/Pyomo codegen work.
 
-Current helper scripts accept `solver_preferences.backend` values `auto`, `sdpt3`, `cdopt`, `scipy`, or `existing`, so these examples use `backend: existing` and record the intended modeling layer separately. Future LP/MILP codegen can promote these patterns into dedicated `cvxpy` or `pyomo` backends.
+Current helper scripts accept `solver_preferences.backend` values `auto`, `sdpt3`, `scipy`, or `existing`, so these examples use `backend: existing` and record the intended modeling layer separately. Future LP/MILP codegen can promote these patterns into dedicated `cvxpy` or `pyomo` backends.
 
 ## Transportation LP
 

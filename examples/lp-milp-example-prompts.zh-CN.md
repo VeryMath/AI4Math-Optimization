@@ -4,7 +4,7 @@
 
 这些 prompts 是用于测试 `$optimization-skill` 处理经典运筹优化问题的示例用户请求，包括 LP、MILP、运输问题、指派问题、集合覆盖、网络流和设施选址。
 
-它们是建模和 solver 路由选择的 few-shot prompts。当前自动代码生成最成熟的是 SDPT3 和 CDOpt；LP/MILP prompts 应该要求 agent 先生成经过 review 的模型，并推荐 CVXPY、Pyomo、YALMIP、CVX 或仓库原生路线，然后再考虑可执行 adapter。
+它们是建模和 solver 路由选择的 few-shot prompts。当前自动代码生成最成熟的是 SDPT3；LP/MILP prompts 应该要求 agent 先生成经过 review 的模型，并推荐 CVXPY、Pyomo、YALMIP、CVX 或仓库原生路线，然后再考虑可执行 adapter。
 
 使用方式：在 Skill 已安装且可发现之后，把一个完整的 `text` 代码块复制到新的 agent 会话中。
 

@@ -10,19 +10,17 @@ Use this index to choose the smallest reference set needed for the current optim
 
 ## Solver Selection References
 
-- `solver_catalog.md`: read when choosing a solver ecosystem across CVXPY, Pyomo, SciPy/HiGHS, SDPT3, CVX, YALMIP, MOSEK, Gurobi, IPOPT, CasADi, CDOpt, Manopt, Pymanopt, Geoopt, and repository-native routes.
+- `solver_catalog.md`: read when choosing a solver ecosystem across CVXPY, Pyomo, SciPy/HiGHS, SDPT3, CVX, YALMIP, MOSEK, Gurobi, IPOPT, CasADi, Manopt, Pymanopt, Geoopt, and repository-native routes.
 - `solver_selection_rules.md`: read when multiple solver routes are plausible and the agent must rank them by model fidelity, environment risk, licensing, codegen support, and evidence quality.
 
 ## Implementation Template References
 
-- `implementation_templates.md`: read after model review when adapting CVXPY, Pyomo, SciPy, SDPT3, CDOpt, or repository-native solver code.
+- `implementation_templates.md`: read after model review when adapting CVXPY, Pyomo, SciPy, SDPT3, or repository-native solver code.
 - `code_generation_patterns.md`: read before using helper code generation scripts or adding generated entrypoints.
 - `evaluation_reporting.md`: read after a run, failed run, or solver-status ambiguity.
 
 ## Auxiliary Example Materials
 
-- `few_shots/cdopt_official_pairs.md`: CDOpt official problem-code pairs. Read only the matched official problem statement and solving code.
-- `cdopt_official_examples.md`: CDOpt implementation-template notes for use after a problem-code pair has been reviewed.
 - `optskills/SOURCE.md`: source, license, and imported OptSkills reference scope.
 - `optskills/skill_library/`: imported OptSkills archetype libraries used for pattern recognition.
 

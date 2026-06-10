@@ -17,7 +17,7 @@ else:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--spec", required=True, help="YAML or JSON optimization problem spec")
-    parser.add_argument("--solver", default=None, help="Optional solver override: sdpt3, cdopt, scipy, existing")
+    parser.add_argument("--solver", default=None, help="Optional solver override: sdpt3, scipy, existing")
     parser.add_argument("--out", default=None, help="Optional JSON route output path")
     args = parser.parse_args()
 

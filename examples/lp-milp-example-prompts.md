@@ -4,7 +4,7 @@ English | [简体中文](lp-milp-example-prompts.zh-CN.md)
 
 These prompts are example user requests for exercising `$optimization-skill` on classic operations-research problems such as LP, MILP, transportation, assignment, set cover, network flow, and facility location.
 
-They are few-shot prompts for modeling and solver-route selection. Current generated code support is strongest for SDPT3 and CDOpt; LP/MILP prompts should ask the agent to produce a reviewed model and recommend CVXPY, Pyomo, YALMIP, CVX, or a repository-native route before any executable adapter is generated.
+They are few-shot prompts for modeling and solver-route selection. Current generated code support is strongest for SDPT3; LP/MILP prompts should ask the agent to produce a reviewed model and recommend CVXPY, Pyomo, YALMIP, CVX, or a repository-native route before any executable adapter is generated.
 
 Use pattern: copy one complete `text` block into a fresh agent session after the Skill is installed and discoverable.
 

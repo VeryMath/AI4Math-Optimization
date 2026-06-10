@@ -15,8 +15,8 @@ Important: not all listed routes have automatic code generation. Some routes are
 | SDP | CVX, YALMIP, CVXPY, SDPT3, MOSEK, SeDuMi, SCS, repository-native | Direct SDPT3 requires SQLP data or reviewed MATLAB construction. |
 | NLP | SciPy, IPOPT, CasADi, Knitro, repository-native | Check derivatives, constraints, scaling, and local/global claims. |
 | least squares | SciPy `least_squares`, CVXPY, Ceres-style repository code, custom Gauss-Newton/LM | Report residual norms and convergence status. |
-| manifold | CDOpt, Manopt, Pymanopt, Geoopt, repository-native | Requires explicit manifold, objective, and backend. |
-| Neural-network constrained | CDOpt, Geoopt, repository-native PyTorch/JAX code | Treat training as resource-dependent and approval-gated. |
+| manifold | Manopt, Pymanopt, Geoopt, repository-native | Requires explicit manifold, objective, and backend. |
+| Neural-network constrained | Geoopt, repository-native PyTorch/JAX code | Treat training as resource-dependent and approval-gated. |
 
 ## Primary Solver Notes
 
@@ -56,29 +56,9 @@ The direct SDPT3 data interface expects `blk`, `At`, `C`, and `b`. Current gener
 
 Use IPOPT or CasADi for smooth constrained NLP when derivatives or automatic differentiation are available. Avoid global optimality claims unless the model and solver support them.
 
-### CDOpt
-
-CDOpt is a Python package for optimization on Riemannian manifolds through constraint dissolving functions. Use it when the problem has explicit manifold constraints and the user or repository provides an objective function and manifold definition.
-
-Primary sources:
-
-- Documentation: https://cdopt.github.io/md_files/intro.html
-- Installation page: https://cdopt.github.io/md_files/installation.html
-- Quickstart: https://cdopt.github.io/md_files/tutorials/quick_start.html
-
-Before solving a CDOpt problem, use the local post-install manifold smoke test when available:
-
-```bash
-python "${CDOPT_SMOKE_TEST:-$HOME/cdopt_manifold_tests/run_all_notebooks.py}"
-```
-
-This suite is installation/API validation, not an application benchmark. If it fails, diagnose the CDOpt environment before generating or running application-level CDOpt examples.
-
-Current generated support: Python wrappers for confirmed manifold specs using CDOpt's constraint-dissolving problem object and SciPy `optimize.minimize`. Supported generated manifold families include sphere, oblique, Stiefel, Grassmann, generalized Stiefel, hyperbolic, and symplectic Stiefel variants for `torch`, `numpy`/`np`, or `jax` backends. The objective must be supplied as an importable module/function pair.
-
 ### Manopt, Pymanopt, And Geoopt
 
-Use Manopt for MATLAB manifold optimization, Pymanopt for Python Riemannian optimization, and Geoopt for PyTorch-native manifold-aware optimization. These are route candidates when the model is manifold-constrained but CDOpt is not the best fit.
+Use Manopt for MATLAB manifold optimization, Pymanopt for Python Riemannian optimization, and Geoopt for PyTorch-native manifold-aware optimization. These are route candidates when the model is manifold-constrained.
 
 ### Repository-Native
 
@@ -93,10 +73,10 @@ Use repository-native code when it preserves the original experiment, data loade
 | Small LP with arrays | SciPy/HiGHS or CVXPY | Good for quick local checks. |
 | SDP/SOCP cone model in MATLAB | CVX/YALMIP/SDPT3 | Preserve existing modeling code. |
 | Convex conic model in Python | CVXPY/MOSEK/SCS/CLARABEL | Solver depends on installed backend. |
-| Stiefel, Grassmann, sphere, oblique, hyperbolic, symplectic Stiefel | CDOpt, Manopt, Pymanopt, Geoopt | Requires objective and backend. |
-| Orthogonality-constrained neural network | CDOpt, Geoopt, or repository-native | Training is resource-dependent. |
+| Stiefel, Grassmann, sphere, oblique, hyperbolic, symplectic Stiefel | Manopt, Pymanopt, Geoopt, or repository-native | Requires objective and backend. |
+| Orthogonality-constrained neural network | Geoopt or repository-native | Training is resource-dependent. |
 | Smooth constrained NLP | IPOPT, CasADi, SciPy, repository-native | Check derivatives and scaling. |
-| Plain unconstrained smooth objective | SciPy or existing repo solver | Use CDOpt only if manifold constraints are real. |
+| Plain unconstrained smooth objective | SciPy or existing repo solver | Use a manifold solver only if manifold constraints are real. |
 | Natural-language or LaTeX only | modeling checkpoint first | Confirm the structured model before execution. |
 | Existing repository reproduces paper result | repository-native | Avoid unnecessary adapter generation. |
 
@@ -106,6 +86,6 @@ Use repository-native code when it preserves the original experiment, data loade
 - MILP: incumbent objective, best bound, integrality gap, node/time limit status, feasibility.
 - NLP: objective value, constraint violation, stationarity, iteration count, local optimality status.
 - Least squares: residual norm, gradient norm, robust loss if used, status.
-- Manifold solvers: CDOpt preflight status when applicable, objective value, gradient norm, feasibility/constraint violation, iteration history.
+- Manifold solvers: objective value, gradient norm, feasibility/constraint violation, iteration history.
 - Modeling layers: dimensions, selected backend, solver status, raw solver log.
 - Repository-native solvers: original metrics, convergence trace, parameters, runtime.

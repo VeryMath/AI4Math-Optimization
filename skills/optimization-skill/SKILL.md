@@ -1,6 +1,6 @@
 ---
 name: optimization-skill
-description: Use when a coding agent must understand, model, solve, reproduce, route, execute, parse, or diagnose mathematical optimization problems from natural language, LaTeX, papers, code, data, or structured specs across OptSkills archetypes, SDPT3, CDOpt, MATLAB/Octave, Python, conic, semidefinite, nonlinear, MILP, or manifold workflows.
+description: Use when a coding agent must understand, model, solve, reproduce, route, execute, parse, or diagnose mathematical optimization problems from natural language, LaTeX, papers, code, data, or structured specs across OptSkills archetypes, SDPT3, MATLAB/Octave, Python, conic, semidefinite, nonlinear, MILP, or manifold workflows.
 ---
 
 # Optimization Skill
@@ -13,9 +13,9 @@ It helps a coding agent turn a concrete optimization problem into a reviewed mat
 
 Model first, solve second. The Skill's center is the mathematical model and solver route, not any single solver package.
 
-CDOpt is a solver route, not the Skill's center of gravity. SDPT3, CVXPY, Pyomo, CVX, YALMIP, SciPy, HiGHS, Gurobi, MOSEK, IPOPT, Manopt, Pymanopt, Geoopt, and repository-native code are also routes when the model and environment make them appropriate.
+SDPT3, CVXPY, Pyomo, CVX, YALMIP, SciPy, HiGHS, Gurobi, MOSEK, IPOPT, Manopt, Pymanopt, Geoopt, and repository-native code are solver routes when the model and environment make them appropriate.
 
-OptSkills archetypes, local CDOpt Problem Description cards, solver-family problem-code pairs, LP/MILP few-shots, solver docs, and code templates are auxiliary materials. More precisely, examples, solver docs, and code templates are auxiliary materials for modeling, routing, implementation, and diagnosis.
+OptSkills archetypes, solver-family problem-code pairs, LP/MILP few-shots, solver docs, and code templates are auxiliary materials. More precisely, examples, solver docs, and code templates are auxiliary materials for modeling, routing, implementation, and diagnosis.
 
 ## Operating Principle
 
@@ -64,7 +64,6 @@ Accept these inputs and route them through the same modeling checkpoint:
 - natural-language optimization problem statements
 - LaTeX objective and constraints
 - paper excerpts or theorem/proposition statements
-- official CDOpt problem-code pairs under `references/few_shots/`
 - README solver instructions
 - source code with embedded optimization models
 - `.mat`, `.npz`, `.json`, `.yaml`, or CSV data
@@ -90,9 +89,7 @@ Important references:
 - `references/problem_schema.md`: read before accepting, generating, or editing `problem.yaml`.
 - `references/solver_catalog.md`: read when selecting solver ecosystems.
 - `references/solver_selection_rules.md`: read when ranking multiple possible routes.
-- `references/implementation_templates.md`: read before adapting CVXPY, Pyomo, SciPy, SDPT3, CDOpt, or repository-native code.
-- `references/cdopt_official_examples.md`: read after a CDOpt problem-code pair has been understood and model-reviewed.
-- `references/few_shots/cdopt_official_pairs.md`: read only when the current problem matches a CDOpt official problem-code pair. Treat this as progressive disclosure: read only the matched problem-code pair, not every example.
+- `references/implementation_templates.md`: read before adapting CVXPY, Pyomo, SciPy, SDPT3, or repository-native code.
 - `references/optskills/SOURCE.md`: read when using imported OptSkills references for archetype matching.
 - `scripts/search_archetypes.py`: optional helper for local keyword search over the imported OptSkills indexes and markdown files.
 
@@ -113,23 +110,22 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 5. ask the human to confirm, revise, reject, or skip the interpreted model before executable solver code or final conclusions.
 6. normalize the confirmed model into problem.yaml using `references/problem_schema.md`.
 7. choose a solver route using `references/solver_catalog.md` and `references/solver_selection_rules.md`.
-8. If the selected route is CDOpt, run or propose the post-install manifold smoke test before any CDOpt problem solve. Resolve it from `CDOPT_SMOKE_TEST`, or use `~/cdopt_manifold_tests/run_all_notebooks.py` when that test suite exists; record the command, CDOpt version/path, pass/fail status, and any dependency/API failure. Treat this as an installation/API preflight, not as an application benchmark. For official CDOpt example tests, read `references/few_shots/cdopt_official_pairs.md` only for the matched official problem statement and solving code. Read `references/cdopt_official_examples.md` only for implementation-template guidance after model review.
-9. Route the structured problem when useful:
+8. Route the structured problem when useful:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/solver_router.py --spec <problem.yaml>
 ```
 
-10. generate or adapt solver code only when appropriate, using `references/implementation_templates.md` and `references/code_generation_patterns.md`.
-11. Put the exact command, risks, timeout, expected outputs, dependencies, and any preflight result into a review plan.
-12. run only after approval.
-13. Parse logs and evidence:
+9. generate or adapt solver code only when appropriate, using `references/implementation_templates.md` and `references/code_generation_patterns.md`.
+10. Put the exact command, risks, timeout, expected outputs, dependencies, and any preflight result into a review plan.
+11. run only after approval.
+12. Parse logs and evidence:
 
 ```bash
 conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py --log outputs/{run_id}/logs/run.log --out outputs/{run_id}/results/solver_summary.json
 ```
 
-14. interpret numerical evidence: status, objective values, feasibility, residuals, gap, stationarity, certificates, numerical warnings, and next choices.
+13. interpret numerical evidence: status, objective values, feasibility, residuals, gap, stationarity, certificates, numerical warnings, and next choices.
 
 ## Solver Routes
 
@@ -138,16 +134,13 @@ conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py -
 - **SOCP/SDP/conic:** CVX, YALMIP, CVXPY, SDPT3, MOSEK, SCS, or repository-native code.
 - **Smooth NLP:** SciPy, IPOPT, CasADi, or repository-native code.
 - **Least squares:** SciPy, CVXPY, specialized repository-native solvers, or Gauss-Newton/LM tooling when already present.
-- **Manifold/Riemannian:** CDOpt, Manopt, Pymanopt, Geoopt, or repository-native code.
+- **Manifold/Riemannian:** Manopt, Pymanopt, Geoopt, or repository-native code.
 - **Existing solver route:** repository-native solvers when they are the safest way to reproduce the original experiment.
 - **Future backend route:** add solvers by extending `solver_catalog.md`, `problem_schema.md`, `solver_router.py`, `codegen.py`, and parser patterns together.
 
 Current generated support is concrete but intentionally bounded:
 
 - SDPT3 generation expects confirmed direct SQLP data in a `.mat` file and produces a MATLAB/Octave wrapper.
-- CDOpt generation expects a confirmed manifold type, shape, backend, objective module/function, beta, and SciPy optimizer options. It produces a Python wrapper that constructs the manifold, builds `cdopt.core.problem`, runs SciPy `optimize.minimize`, and writes a JSON result summary.
-- CDOpt execution should be preceded by the post-install manifold smoke test when available. The default suite path is `~/cdopt_manifold_tests`, or a custom path supplied through `CDOPT_SMOKE_TEST`; it checks PyPI `cdopt==0.5.5`, manifold constructors, CDF gradient generation, finite-difference agreement, feasibility reporting, and a tiny L-BFGS-B path.
-- CDOpt official examples should be handled as problem-code pairs: read the matched official problem statement and solving code in `references/few_shots/cdopt_official_pairs.md`, then adapt implementation details from `references/cdopt_official_examples.md` after model review.
 - Natural-language or LaTeX-only models require a modeling checkpoint before executable code is generated.
 - Not all listed solver routes have automatic code generation; many should stop at a reviewed model, route recommendation, or repository-native adapter plan.
 
@@ -156,7 +149,6 @@ Current generated support is concrete but intentionally bounded:
 Ask before:
 
 - running generated or repository solver code
-- running the CDOpt post-install smoke test, unless the user has already approved CDOpt validation in the current task
 - installing or upgrading solver packages
 - compiling SDPT3/MEX/native extensions
 - modifying MATLAB path, Python environment, or system solver configuration
@@ -172,7 +164,6 @@ Call out these signals explicitly:
 - malformed SQLP data (`blk`, `At`, `C`, `b`) or dimension mismatch
 - infeasible, dual-infeasible, unbounded, or ambiguous certificates
 - stalled complementarity gap, residuals, short steps, bad scaling, or factorization warnings
-- CDOpt backend mismatch, missing manifold definition, missing objective module, or shape mismatch
 - MILP integrality-gap or time-limit ambiguity
 - modeling ambiguity caused by natural-language, LaTeX, paper text, or official Problem Description interpretation
 

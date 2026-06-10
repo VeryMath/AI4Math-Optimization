@@ -47,7 +47,7 @@ The Skill guides the agent to:
 - compare the problem with imported OptSkills references when useful
 - create a modeling checkpoint before executable solver code
 - classify problem types such as LP, MILP, QP, SOCP, SDP, NLP, least squares, and manifold optimization
-- route confirmed models to solver ecosystems such as CVXPY, Pyomo, SciPy/HiGHS, SDPT3, CVX, YALMIP, CDOpt, IPOPT, CasADi, Manopt, Pymanopt, Geoopt, commercial solvers, or repository-native methods
+- route confirmed models to solver ecosystems such as CVXPY, Pyomo, SciPy/HiGHS, SDPT3, CVX, YALMIP, IPOPT, CasADi, Manopt, Pymanopt, Geoopt, commercial solvers, or repository-native methods
 - generate or adapt bounded entrypoints and run them only after approval
 - report objective values, feasibility, solver status, numerical warnings, and failure causes
 
@@ -57,12 +57,7 @@ The Skill is not a solver by itself. It is a workflow layer that helps a coding 
 
 The examples are optional supporting material for testing and few-shot guidance. They are not the main workflow. The main workflow is still: understand the user's problem, build a reviewed model, choose a solver route, and run only after approval.
 
-CDOpt is only one solver route. Use it when the confirmed model is a good fit for manifold or constraint-dissolving optimization and the local environment supports it.
-
 - Classic LP/MILP examples: [examples/lp-milp-example-prompts.md](examples/lp-milp-example-prompts.md) and [examples/lp-milp-example-prompts.zh-CN.md](examples/lp-milp-example-prompts.zh-CN.md) cover transportation LP, assignment MILP, set cover, facility location, network flow, scheduling, and natural-language-to-spec conversion. The companion [examples/lp-milp-problem-specs.md](examples/lp-milp-problem-specs.md) shows schema-compatible `problem.yaml` drafts.
-- CDOpt problem-code pairs: [skills/optimization-skill/references/few_shots/cdopt_official_pairs.md](skills/optimization-skill/references/few_shots/cdopt_official_pairs.md) pairs official CDOpt problem statements with their corresponding solving code from `docs/_sources/examples/`.
-- CDOpt application cards: [examples/cdopt-example-prompts.md](examples/cdopt-example-prompts.md), [examples/cdopt-example-prompts.zh-CN.md](examples/cdopt-example-prompts.zh-CN.md), and [examples/cdopt/problem-descriptions/](examples/cdopt/problem-descriptions/) are repository-level examples for browsing and manual tests. Installed agents should use the matched problem-code pair under `skills/optimization-skill/references/few_shots/`.
-- CDOpt installation/API smoke test: if the selected route is CDOpt, the agent should run or propose the post-install smoke test from `CDOPT_SMOKE_TEST`, or `~/cdopt_manifold_tests/run_all_notebooks.py` when that file exists, before a CDOpt solve. This smoke test validates the CDOpt runtime and core APIs; it is not evidence that an application model is mathematically correct.
 
 ## Maintainer Checks
 

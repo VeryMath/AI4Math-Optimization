@@ -46,18 +46,6 @@ Expected agent work:
 - avoid fabricating conic data from natural language without review
 - report primal/dual feasibility, gap, termcode, and warnings
 
-## CDOpt Template
-
-Use for confirmed manifold or Riemannian models.
-
-Expected agent work:
-
-- run or propose the CDOpt smoke test before solving
-- identify backend: NumPy, PyTorch, JAX, or repository-native
-- identify manifold constructor and shape
-- define objective module/function or neural-network constrained layer adapter
-- report objective, stationarity, feasibility, iterations, and backend/API failures
-
 ## Repository-Native Template
 
 Use when existing code already implements the model, data loading, derivatives, benchmark harness, or paper reproduction path.

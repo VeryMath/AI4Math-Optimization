@@ -15,43 +15,12 @@ else:
     from .problem_spec import OptimizationProblemSpec, load_problem_spec
 
 
-CDOPT_MANIFOLDS = {
-    "torch": {
-        "sphere_torch",
-        "oblique_torch",
-        "stiefel_torch",
-        "grassmann_torch",
-        "generalized_stiefel_torch",
-        "hyperbolic_torch",
-        "symp_stiefel_torch",
-    },
-    "numpy": {
-        "sphere_np",
-        "oblique_np",
-        "stiefel_np",
-        "grassmann_np",
-        "generalized_stiefel_np",
-        "hyperbolic_np",
-        "symp_stiefel_np",
-    },
-    "jax": {
-        "sphere_jax",
-        "oblique_jax",
-        "stiefel_jax",
-        "grassmann_jax",
-        "generalized_stiefel_jax",
-        "hyperbolic_jax",
-        "symp_stiefel_jax",
-    },
-}
-
-
 def generate_solver_entrypoint(
     spec: OptimizationProblemSpec,
     out_dir: str | Path,
     solver_override: str | None = None,
 ) -> dict[str, str]:
-    """Generate an SDPT3 or CDOpt wrapper and return route metadata."""
+    """Generate a supported solver wrapper and return route metadata."""
 
     route = spec.route(solver_override=solver_override)
     out_path = Path(out_dir)
@@ -60,9 +29,6 @@ def generate_solver_entrypoint(
     if route["solver"] == "sdpt3":
         entrypoint = out_path / route["entrypoint"]
         entrypoint.write_text(_sdpt3_matlab_wrapper(spec))
-    elif route["solver"] == "cdopt":
-        entrypoint = out_path / route["entrypoint"]
-        entrypoint.write_text(_cdopt_python_wrapper(spec))
     else:
         raise ValueError(f"code generation is not available for solver '{route['solver']}'")
 
@@ -118,181 +84,6 @@ def _sdpt3_matlab_wrapper(spec: OptimizationProblemSpec) -> str:
         end
         """
     ).lstrip()
-
-
-def _cdopt_python_wrapper(spec: OptimizationProblemSpec) -> str:
-    objective = spec.cdopt.get("objective") or {}
-    manifold = spec.cdopt.get("manifold") or {}
-    backend = str(spec.cdopt.get("backend", "torch")).lower()
-    module = objective.get("module")
-    function = objective.get("function")
-    beta = spec.cdopt.get("beta", 100)
-    optimizer = spec.cdopt.get("optimizer") or {}
-    optimizer_family = str(optimizer.get("family", "scipy")).lower()
-    method = optimizer.get("method", "L-BFGS-B")
-    options = optimizer.get("options", {})
-    summary_file = f"../results/{spec.problem_id}_cdopt_summary.json"
-
-    if optimizer_family != "scipy":
-        raise ValueError("CDOpt code generation currently supports optimizer.family='scipy'")
-
-    manifold_type = _required_string(manifold.get("type"), "cdopt.manifold.type")
-    shape = _required_shape(manifold.get("shape"))
-    module = _required_string(module, "cdopt.objective.module")
-    function = _required_string(function, "cdopt.objective.function")
-    manifold_import, manifold_setup = _cdopt_manifold_code(backend, manifold_type, shape)
-    objective_path = objective.get("path")
-    objective_path_block = ""
-    if objective_path:
-        objective_path_block = f"sys.path.insert(0, {_python_literal(objective_path)})"
-
-    lines = [
-        f'"""Generated CDOpt entrypoint for {spec.problem_id}.',
-        "",
-        "Review and approve before execution. This wrapper expects the objective",
-        "module to be importable from the approved working directory.",
-        '"""',
-        "",
-        "from importlib import import_module",
-        "import json",
-        "from pathlib import Path",
-        "import sys",
-        "import time",
-        "",
-        "",
-        "def _require(value, label):",
-        "    if not value:",
-        '        raise SystemExit(f"Missing required CDOpt spec field: {label}")',
-        "    return value",
-        "",
-        "",
-        "def main():",
-        "    try:",
-        "        import numpy as np",
-        "        import scipy as sp",
-        "        import cdopt  # noqa: F401",
-        "        from cdopt.core.problem import problem",
-        f"        {manifold_import}",
-        "    except ModuleNotFoundError as exc:",
-        "        raise SystemExit(",
-        '            f"Missing dependency {exc.name!r}. Ask for approval before installing solver packages."',
-        "        ) from exc",
-        "",
-        f"    backend = {_python_literal(backend)}",
-        f'    manifold_type = _require({_python_literal(manifold_type)}, "cdopt.manifold.type")',
-        f'    objective_module = _require({_python_literal(module)}, "cdopt.objective.module")',
-        f'    objective_function = _require({_python_literal(function)}, "cdopt.objective.function")',
-        "",
-    ]
-    if objective_path_block:
-        lines.append(f"    {objective_path_block}")
-        lines.append("")
-    lines.extend(
-        [
-            "    obj_mod = import_module(objective_module)",
-            "    obj_fun = getattr(obj_mod, objective_function)",
-            "",
-        ]
-    )
-    lines.extend(f"    {line}" for line in manifold_setup.splitlines())
-    lines.extend(
-        [
-            f"    problem_obj = problem(M, obj_fun, beta={_python_literal(beta)})",
-            "    cdf_fun_np = problem_obj.cdf_fun_vec_np",
-            "    cdf_grad_np = problem_obj.cdf_grad_vec_np",
-            "    x0 = problem_obj.Xinit_vec_np",
-            "",
-            "    start = time.time()",
-            "    result = sp.optimize.minimize(",
-            "        cdf_fun_np,",
-            "        x0,",
-            f"        method={_python_literal(method)},",
-            "        jac=cdf_grad_np,",
-            f"        options={_python_literal(options)},",
-            "    )",
-            "    elapsed = time.time() - start",
-            "",
-            '    jac = getattr(result, "jac", None)',
-            "    stationarity = float(np.linalg.norm(jac, 2)) if jac is not None else None",
-            "    feasibility = None",
-            "    feasibility_error = None",
-            "    try:",
-            "        feasibility = float(M.Feas_eval(M.v2m(M.array2tensor(result.x))))",
-            "    except Exception as exc:  # pragma: no cover - depends on CDOpt manifold backend.",
-            "        feasibility_error = repr(exc)",
-            "",
-            "    summary = {",
-            '        "status": "completed" if bool(result.success) else "failed",',
-            '        "success": bool(result.success),',
-            '        "solver": "cdopt",',
-            '        "backend": backend,',
-            '        "manifold": manifold_type,',
-            f'        "method": {_python_literal(method)},',
-            '        "objective": float(result.fun),',
-            '        "nit": int(getattr(result, "nit", -1)),',
-            '        "nfev": int(getattr(result, "nfev", -1)),',
-            '        "stationarity": stationarity,',
-            '        "feasibility": feasibility,',
-            '        "feasibility_error": feasibility_error,',
-            '        "elapsed_seconds": elapsed,',
-            '        "message": str(getattr(result, "message", "")),',
-            "    }",
-            "",
-            f"    summary_path = Path(__file__).resolve().parent / {_python_literal(summary_file)}",
-            "    summary_path.parent.mkdir(parents=True, exist_ok=True)",
-            '    summary_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\\n")',
-            "    print(json.dumps(summary, indent=2, sort_keys=True))",
-            "",
-            "",
-            'if __name__ == "__main__":',
-            "    main()",
-        ]
-    )
-    return "\n".join(lines) + "\n"
-
-
-def _cdopt_manifold_code(backend: str, manifold_type: str, shape: list[int]) -> tuple[str, str]:
-    if backend in {"np", "numpy"}:
-        backend = "numpy"
-    if backend not in CDOPT_MANIFOLDS:
-        allowed = ", ".join(sorted(CDOPT_MANIFOLDS))
-        raise ValueError(f"unsupported cdopt.backend: {backend}; expected one of {allowed}")
-    if manifold_type not in CDOPT_MANIFOLDS[backend]:
-        allowed = ", ".join(sorted(CDOPT_MANIFOLDS[backend]))
-        raise ValueError(f"unsupported manifold '{manifold_type}' for backend '{backend}'; expected one of: {allowed}")
-
-    module_suffix = {"torch": "torch", "numpy": "np", "jax": "jax"}[backend]
-    import_line = f"from cdopt.manifold_{module_suffix} import {manifold_type}"
-    shape_literal = _python_literal(tuple(shape))
-
-    if backend == "torch":
-        setup = "\n".join(
-            [
-                "import torch",
-                'local_device = torch.device("cpu")',
-                "local_dtype = torch.float64",
-                f"M = {manifold_type}({shape_literal}, device=local_device, dtype=local_dtype)",
-            ]
-        )
-    else:
-        setup = f"M = {manifold_type}({shape_literal})"
-    return import_line, setup.rstrip()
-
-
-def _required_string(value: object, label: str) -> str:
-    if not value:
-        raise ValueError(f"missing required field: {label}")
-    return str(value)
-
-
-def _required_shape(value: object) -> list[int]:
-    if not isinstance(value, list) or not value or not all(isinstance(item, int) for item in value):
-        raise ValueError("cdopt.manifold.shape must be a non-empty list of integers")
-    return value
-
-
-def _python_literal(value: object) -> str:
-    return repr(value)
 
 
 def _matlab_string(value: object) -> str:

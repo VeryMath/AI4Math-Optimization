@@ -19,7 +19,7 @@ SDPT3_CLASSES = {
     "linear_matrix_inequality",
 }
 
-CDOPT_CLASSES = {
+MANIFOLD_CLASSES = {
     "riemannian",
     "manifold_optimization",
     "orthogonality_constrained",
@@ -32,7 +32,7 @@ CDOPT_CLASSES = {
     "symplectic_stiefel",
 }
 
-SUPPORTED_BACKENDS = {"auto", "sdpt3", "cdopt", "scipy", "existing"}
+SUPPORTED_BACKENDS = {"auto", "sdpt3", "scipy", "existing"}
 INPUT_TYPES = {
     "natural_language",
     "latex",
@@ -68,7 +68,6 @@ class OptimizationProblemSpec:
     modeling_layer: dict[str, Any] = field(default_factory=dict)
     review: dict[str, Any] = field(default_factory=dict)
     sdpt3: dict[str, Any] = field(default_factory=dict)
-    cdopt: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
@@ -125,7 +124,6 @@ class OptimizationProblemSpec:
             modeling_layer=_mapping(raw.get("modeling_layer"), "modeling_layer"),
             review=review,
             sdpt3=_mapping(raw.get("sdpt3"), "sdpt3"),
-            cdopt=_mapping(raw.get("cdopt"), "cdopt"),
             metadata=_mapping(raw.get("metadata"), "metadata"),
         )
 
@@ -165,23 +163,6 @@ class OptimizationProblemSpec:
                 "reason": "; ".join(reasons),
             }
 
-        if backend == "cdopt":
-            entrypoint = f"run_{self.problem_id}_cdopt.py"
-            return {
-                "problem_id": self.problem_id,
-                "input_type": self.input_type,
-                "solver": "cdopt",
-                "language": "python",
-                "modeling_layer": "direct",
-                "modeling_status": self.review.get("modeling_status", "unknown"),
-                "entrypoint": entrypoint,
-                "candidate_command": f"conda run -n ai4math python {entrypoint}",
-                "risk_level": "medium",
-                "requires_approval": True,
-                "requires_skills": ["environment_deployment_skill", "failure_diagnosis_skill"],
-                "reason": "; ".join(reasons),
-            }
-
         return {
             "problem_id": self.problem_id,
             "input_type": self.input_type,
@@ -200,15 +181,13 @@ class OptimizationProblemSpec:
     def _auto_backend(self) -> tuple[str, list[str]]:
         if self._has_direct_sdpt3_data():
             return "sdpt3", ["confirmed SQLP data includes a .mat file plus blk, At, C, and b"]
-        if self.problem_class in CDOPT_CLASSES:
-            return "cdopt", [f"problem_class '{self.problem_class}' is manifold-oriented"]
-        if any("manifold" in str(item).lower() for item in self.constraints):
-            return "cdopt", ["constraints mention a manifold"]
         if self.problem_class in SDPT3_CLASSES:
             return "existing", [
                 f"problem_class '{self.problem_class}' needs confirmed SQLP data or reviewed MATLAB conic modeling"
             ]
-        return "existing", ["no SDPT3/CDOpt signal was strong enough"]
+        if self.problem_class in MANIFOLD_CLASSES or any("manifold" in str(item).lower() for item in self.constraints):
+            return "existing", ["manifold-oriented problem should use a reviewed external or repository-native route"]
+        return "existing", ["no solver-specific route selected"]
 
     def _has_direct_sdpt3_data(self) -> bool:
         variables = self.sdpt3.get("data_variables", {})

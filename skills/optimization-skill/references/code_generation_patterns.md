@@ -24,21 +24,6 @@ Generated wrappers should:
 5. Save `obj`, `X`, `y`, `Z`, `info`, and `runhist` to a result `.mat` file.
 6. Emit enough text for the parser to capture termination status and numerical warnings.
 
-## Python CDOpt Wrapper
-
-Generated wrappers should:
-
-1. Import CDOpt and fail clearly if it is missing.
-2. Import the user-provided objective module and function.
-3. Construct the requested manifold from the selected backend when all required fields are confirmed.
-4. Build a `cdopt.core.problem` object.
-5. Route the generated constraint-dissolving function to SciPy `optimize.minimize` for the generated adapter path.
-6. Write a JSON summary with objective value, feasibility, iterations, backend, and status.
-
-The generated CDOpt path supports `torch`, `numpy`/`np`, and `jax` manifold constructors when the spec provides a manifold type, shape, objective module, objective function, beta, and SciPy optimizer options. If the source repository already uses a PyTorch, JAX, or custom optimizer loop, preserve that route as repository-native unless the human approves a custom adapter.
-
-When the manifold construction details are ambiguous, stop at the modeling checkpoint instead of inventing executable code.
-
 ## Modeling-Layer Adapter
 
 Use this pattern for CVX, YALMIP, CVXPY, JuMP, or Pyomo:
