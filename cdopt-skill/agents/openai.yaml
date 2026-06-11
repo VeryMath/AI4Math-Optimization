@@ -1,0 +1,4 @@
+interface:
+  display_name: "CDOpt-skill"
+  short_description: "Work with CDOpt manifold optimization"
+  default_prompt: "Use $cdopt-skill to review a manifold optimization problem, run the CDOpt smoke test if approved, and produce evidence-backed CDOpt code or results."
