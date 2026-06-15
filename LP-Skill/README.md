@@ -5,9 +5,6 @@
 ## 简介
 
 求解**线性规划 (Linear Program)**：线性目标 + 线性约束。
-$$
-\min \text{ 或 } \max \; c^T x \quad \text{s.t.} \quad A_{ub}x \leq b_{ub},\; A_{eq}x = b_{eq},\; lb \leq x \leq ub
-$$
 
 
 
