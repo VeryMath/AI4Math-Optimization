@@ -6,6 +6,33 @@
 
 推荐的使用方式很简单：让你的 coding agent 自己安装这个 Skill，然后让它用这个 Skill 处理你的优化问题。环境路径、复制、软链接、配置和重载都尽量交给 agent 做。
 
+## 安装 / 加载
+
+优先从当前仓库 checkout 使用。让 coding agent 读取：
+
+```text
+AGENTS.md
+SKILL.md
+skills/optimization-skill/SKILL.md
+```
+
+如果目标 agent 支持本地 Skill discovery，可以把 `skills/optimization-skill/`
+安装或软链接到它的 Skill 路径，然后按需 reload 或 restart。Codex、Claude、
+Gemini 和 OpenCode 的薄 adapter 分别见 `.codex/INSTALL.md`、`CLAUDE.md`、
+`GEMINI.md` 和 `.opencode/INSTALL.md`。
+
+## 如何交互使用
+
+推荐使用 checkpoint 循环：
+
+```text
+优化问题 -> 建模 checkpoint -> solver 路由 -> approve / revise / reject / skip
+        -> 获批运行 -> 证据总结 -> 下一轮 checkpoint
+```
+
+`approve` 表示执行下一步，`revise` 表示先修改模型或路线，`reject` 表示停止当前路线，
+`skip` 表示跳过当前阶段。安装、求解器运行、源码修改、长时间任务和最终数值/数学结论前都应先问用户。
+
 ## 1. 让 Coding Agent 安装
 
 把下面这段发给你的 coding agent：

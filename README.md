@@ -6,6 +6,40 @@ English | [简体中文](README.zh-CN.md)
 
 The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
 
+## Installation / Loading
+
+Use the repository checkout first. Ask your coding agent to read:
+
+```text
+AGENTS.md
+SKILL.md
+skills/optimization-skill/SKILL.md
+```
+
+If your agent supports local Skill discovery, install or link
+`skills/optimization-skill/` into that agent's Skill path and reload the agent if
+needed. Platform notes live in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`,
+and `.opencode/INSTALL.md`.
+
+## Quick Start
+
+```text
+Use this repository's optimization workflow.
+
+Read:
+- AGENTS.md
+- SKILL.md
+- skills/optimization-skill/SKILL.md
+
+Goal:
+<describe the optimization model, solver task, or numerical issue>
+
+Constraints:
+- inspect the problem first;
+- build a modeling checkpoint;
+- ask before solver runs, source edits, dependency changes, or final claims.
+```
+
 ## 1. Ask Your Coding Agent To Install It
 
 Paste this into your coding agent:
@@ -35,6 +69,20 @@ Would you like to work in Chinese or English?
 After choosing a language, send the actual optimization problem directly. Natural language, LaTeX, paper excerpts, source code, README instructions, data descriptions, `.mat`/`.npz`/`.json`/`.yaml`/CSV files, or an existing `problem.yaml` are all acceptable.
 
 The agent should then model the problem, expose ambiguities, ask for confirmation, propose a solver route, and run code only after approval. Examples, solver docs, and code templates are auxiliary materials; the model and solver route remain the main workflow.
+
+## How To Interact
+
+Use a checkpoint loop:
+
+```text
+problem -> model checkpoint -> solver route -> approve / revise / reject / skip
+        -> approved run -> evidence summary -> next checkpoint
+```
+
+Use `approve` to run a proposed step, `revise` to update the model or route,
+`reject` to stop the path, and `skip` to move past a phase. The agent should ask
+before installs, solver execution, source edits, long runs, or final
+mathematical/numerical claims.
 
 ## About The Skill
 
