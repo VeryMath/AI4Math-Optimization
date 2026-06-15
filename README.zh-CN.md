@@ -10,6 +10,33 @@
 它的目标不是让 agent “跑一个优化器” 就结束，而是让 agent 以更接近研究协作的方式工作：
 先建模，再审批执行，保留证据，并把数值实验与数值结论清楚分开。
 
+## 安装 / 加载
+
+优先从当前仓库 checkout 使用。让 coding agent 读取：
+
+```text
+AGENTS.md
+SKILL.md
+cdopt-skill/SKILL.md
+```
+
+如果目标 agent 支持本地 Skill discovery，可以把 `cdopt-skill/` 安装或软链接到它的
+Skill 路径，然后按需 reload 或 restart。Codex、Claude、Gemini 和 OpenCode 的薄
+adapter 分别见 `.codex/INSTALL.md`、`CLAUDE.md`、`GEMINI.md` 和
+`.opencode/INSTALL.md`。
+
+## 如何交互使用
+
+推荐使用 checkpoint 循环：
+
+```text
+CDOpt 任务 -> 模型 review -> 计划 -> approve / revise / reject / skip
+          -> 获批运行或对比 -> 证据总结 -> 下一轮 checkpoint
+```
+
+`approve` 表示执行下一步，`revise` 表示先修改模型或计划，`reject` 表示停止当前路线，
+`skip` 表示跳过当前阶段。安装、求解器运行、对比实验扩展、源码修改和最终结论前都应先问用户。
+
 ## 为什么需要 CDOpt-skill
 
 流形优化任务很容易“差一点就对”。代码可能能跑通，但流形维度不对、后端不匹配、梯度与模型

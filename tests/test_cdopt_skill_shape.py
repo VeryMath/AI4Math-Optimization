@@ -19,7 +19,7 @@ class CdoptSkillShapeTests(unittest.TestCase):
             with self.subTest(path=path.relative_to(ROOT)):
                 self.assertIn("CDOPT_SMOKE_TEST", text)
                 self.assertIn("~/cdopt_manifold_tests/run_all_notebooks.py", text)
-                self.assertNotIn("/Users/conanxu", text)
+                self.assertNotIn("/" + "Users" + "/", text)
 
     def test_repository_has_minimal_python_project_metadata(self):
         pyproject = ROOT / "pyproject.toml"

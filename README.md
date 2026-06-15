@@ -13,6 +13,38 @@ behave like a careful computational mathematics collaborator: model first,
 ask before executing, preserve evidence, and separate numerical experiments
 from numerical conclusions.
 
+## Installation / Loading
+
+Use the repository checkout first. Ask your coding agent to read:
+
+```text
+AGENTS.md
+SKILL.md
+cdopt-skill/SKILL.md
+```
+
+If your agent supports local Skill discovery, install or link `cdopt-skill/`
+into that agent's Skill path and reload the agent if needed. Platform notes live
+in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`, and `.opencode/INSTALL.md`.
+
+## Quick Start
+
+```text
+Use this repository's CDOpt workflow.
+
+Read:
+- AGENTS.md
+- SKILL.md
+- cdopt-skill/SKILL.md
+
+Goal:
+<describe the manifold-constrained optimization task>
+
+Constraints:
+- create a modeling checkpoint first;
+- ask before installs, solver runs, comparison expansion, or final claims.
+```
+
 ## Why CDOpt-skill
 
 Manifold optimization workflows are easy to get almost right. A solver script
@@ -153,6 +185,20 @@ Would you like to work in Chinese or English?
 After choosing a language, send the actual CDOpt task. Natural language, LaTeX,
 paper excerpts, source code, a local Problem Description card, a dependency
 check, or a request for a comparison plan are all valid starting points.
+
+## How To Interact
+
+Use a checkpoint loop:
+
+```text
+task -> model review -> plan -> approve / revise / reject / skip
+     -> approved run or comparison -> evidence summary -> next checkpoint
+```
+
+Use `approve` to run a proposed step, `revise` to update the model or plan,
+`reject` to stop the path, and `skip` to move past a phase. The agent should ask
+before installs, solver runs, comparison expansion, source edits, or final
+mathematical/numerical claims.
 
 ## Repository Layout
 
