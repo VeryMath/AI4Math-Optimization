@@ -21,6 +21,14 @@ If your agent supports local Skill discovery, install or link
 needed. Platform notes live in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`,
 and `.opencode/INSTALL.md`.
 
+Remote install prompt:
+
+```text
+Please install the optimization-skill from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
+
+Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-skill there, update any registry or config if needed, reload or restart if required, and verify that $optimization-skill is discoverable.
+```
+
 ## Quick Start
 
 ```text
@@ -40,19 +48,7 @@ Constraints:
 - ask before solver runs, source edits, dependency changes, or final claims.
 ```
 
-## 1. Ask Your Coding Agent To Install It
-
-Paste this into your coding agent:
-
-```text
-Please install the optimization-skill from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
-
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-skill there, update any registry or config if needed, reload or restart if required, and verify that $optimization-skill is discoverable.
-```
-
-The agent should figure out whether it needs a user skill directory, a project skill directory, a symlink, a copied folder, or a config entry. You should not need to know its internal skill path.
-
-## 2. Start An Optimization Session
+## Start An Optimization Session
 
 After installation, open a fresh chat and paste:
 
