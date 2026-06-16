@@ -25,6 +25,14 @@ Skill 路径，然后按需 reload 或 restart。Codex、Claude、Gemini 和 Ope
 adapter 分别见 `.codex/INSTALL.md`、`CLAUDE.md`、`GEMINI.md` 和
 `.opencode/INSTALL.md`。
 
+远端安装 prompt：
+
+```text
+请把 https://github.com/ConanXu-math/CDOpt-skill 中的 CDOpt-skill 安装到你的 skill 系统里。
+
+如果本地已有 checkout 就直接使用，否则克隆该仓库。检测你的环境在哪里存放 skill，把 cdopt-skill 文件夹安装或软链接到那里，按需更新注册表或配置，必要时重载或重启，并验证 $cdopt-skill 可被发现。
+```
+
 ## 如何交互使用
 
 推荐使用 checkpoint 循环：
@@ -125,19 +133,6 @@ NumPy Stiefel 示例、Oblique 最近相关矩阵估计、Sphere 上的 Bose-Ein
 等 CDOpt 神经网络约束层。
 
 分布式 PyTorch 示例需要单独的运行计划、资源评估与审批，不属于冒烟测试。
-
-## 让编码智能体安装
-
-把下面这段粘贴给你的编码智能体：
-
-```text
-请把 https://github.com/ConanXu-math/CDOpt-skill 中的 CDOpt-skill 安装到你的 skill 系统里。
-
-如果本地已有 checkout 就直接使用，否则克隆该仓库。检测你的环境在哪里存放 skill，把 cdopt-skill 文件夹安装或软链接到那里，按需更新注册表或配置，必要时重载或重启，并验证 $cdopt-skill 可被发现。
-```
-
-智能体应自行判断需要用户级 skill 目录、项目级 skill 目录、软链接、复制文件夹还是配置项。你无需了解
-它内部的 skill 路径。
 
 ## 开始一次 CDOpt 会话
 

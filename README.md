@@ -27,6 +27,14 @@ If your agent supports local Skill discovery, install or link `cdopt-skill/`
 into that agent's Skill path and reload the agent if needed. Platform notes live
 in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`, and `.opencode/INSTALL.md`.
 
+Remote install prompt:
+
+```text
+Please install CDOpt-skill from https://github.com/ConanXu-math/CDOpt-skill into your own skill system.
+
+Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-skill folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-skill is discoverable.
+```
+
 ## Quick Start
 
 ```text
@@ -153,20 +161,6 @@ neural-network constrained layers such as `Conv2d_cdopt`, `Linear_cdopt`,
 
 Distributed PyTorch examples require a separate run plan, resource estimate, and
 approval. They are not treated as smoke tests.
-
-## Install With A Coding Agent
-
-Paste this into your coding agent:
-
-```text
-Please install CDOpt-skill from https://github.com/ConanXu-math/CDOpt-skill into your own skill system.
-
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-skill folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-skill is discoverable.
-```
-
-The agent should decide whether to use a user skill directory, project skill
-directory, symlink, copied folder, or config entry. You should not need to know
-the internal skill path for your agent environment.
 
 ## Start A CDOpt Session
 
