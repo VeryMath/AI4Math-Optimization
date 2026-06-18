@@ -1,6 +1,6 @@
 # AI4Math Optimization Skill
 
-English | [简体中文](README.zh-CN.md)
+Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
 `optimization-skill` is a coding-agent Skill for optimization modeling and solver orchestration. It helps an agent read a concrete problem, build a reviewed mathematical model, classify the problem type, choose a solver route, generate or adapt solver code when appropriate, parse evidence, and diagnose failures.
 
