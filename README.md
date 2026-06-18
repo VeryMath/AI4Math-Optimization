@@ -13,6 +13,25 @@ behave like a careful computational mathematics collaborator: model first,
 ask before executing, preserve evidence, and separate numerical experiments
 from numerical conclusions.
 
+## AI4Math Role
+
+This skill is the CDOpt-specific optimization adapter in the AI4Math stack. Use
+it when the mathematical object is a manifold-constrained optimization problem
+or when a CDOpt official example, backend, or validation run is the right
+research instrument.
+
+## Handoff
+
+Upstream handoffs may come from `AI4Math-Optimization`, `paper-to-skill`,
+`discover-math-problems`, or a scientific reproduction run that identifies a
+manifold optimization subproblem. The handoff should include the reviewed model,
+manifold type and shape, backend choice, data dimensions, and comparison
+question. Return solver summaries, generated runners, logs, and limitations to
+the broader optimization or reproduction workflow.
+When a CDOpt task has a stable metric, evaluator, and budget, it can hand off to
+`AI4Math-Evolving-Skill` for bounded search. Treat the result as search or
+numerical evidence, not proof.
+
 ## Installation / Loading
 
 Use the repository checkout first. Ask your coding agent to read:

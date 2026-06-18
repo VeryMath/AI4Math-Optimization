@@ -96,6 +96,11 @@ Keep the default run CPU-only, small, deterministic, synthetic-data, and JSON-pr
 
 10. Report from saved artifacts. Prefer a JSON summary containing solver status, objective value, iterations, evaluations, gradient norm or stationarity proxy, feasibility, elapsed CPU time, CDOpt version/path, and command.
 
+CDOpt solver summaries, comparison tables, and search improvements are
+numerical evidence, not proof. If they create a theorem claim or proof
+obligation, route the claim to `agentic-rethlas-proving` or
+`AI4Math-Lean-Agents`.
+
 ## CDOpt Patterns
 
 Use these patterns as starting points after the mathematical model is reviewed.

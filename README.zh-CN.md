@@ -10,6 +10,20 @@
 它的目标不是让 agent “跑一个优化器” 就结束，而是让 agent 以更接近研究协作的方式工作：
 先建模，再审批执行，保留证据，并把数值实验与数值结论清楚分开。
 
+## AI4Math 角色
+
+这个 Skill 是 AI4Math 体系里的 CDOpt 专用优化 adapter。当数学对象是流形约束优化问题，
+或者 CDOpt 官方示例、后端选择、验证运行本身就是合适的研究工具时，优先使用它。
+
+## 交接
+
+上游可能来自 `AI4Math-Optimization`、`paper-to-skill`、`discover-math-problems`，
+或在科学计算复现中发现的流形优化子问题。交接时应包含已 review 的模型、流形类型和 shape、
+后端选择、数据维度和 comparison question。完成后把 solver summary、generated runner、
+logs 和 limitations 交回更大的优化或复现 workflow。
+当 CDOpt 任务已有稳定 metric、evaluator 和 budget 时，可以交给 `AI4Math-Evolving-Skill`
+做有边界的搜索。结果只能作为 search 或 numerical evidence，不能当作证明。
+
 ## 安装 / 加载
 
 优先从当前仓库 checkout 使用。让 coding agent 读取：
