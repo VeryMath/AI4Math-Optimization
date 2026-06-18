@@ -6,6 +6,24 @@ English | [简体中文](README.zh-CN.md)
 
 The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
 
+## AI4Math Role
+
+This skill is the general optimization modeling and solver-routing layer in the
+AI4Math stack. Use it when the problem is first an optimization model rather
+than a specific package task: prose, LaTeX, paper snippets, data, code, or
+solver failures should all pass through a reviewed model before execution.
+
+## Handoff
+
+Upstream inputs may come from `paper-to-skill`, `discover-math-problems`,
+computational reproduction, or a user-provided optimization problem. Handoff
+downstream to `AI4Math-Optimization-cdopt-skill` when CDOpt/manifold structure is
+central, to scientific computing reproduction when repository execution is the
+main work, or to `AI4Math-Evolving-Skill` when a validated evaluator should be
+optimized by search. Numerical solver evidence, objective values, and improved
+programs are not proof artifacts; if they generate theorem claims or proof
+obligations, route them to `agentic-rethlas-proving` or `AI4Math-Lean-Agents`.
+
 ## Installation / Loading
 
 Use the repository checkout first. Ask your coding agent to read:

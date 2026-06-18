@@ -127,6 +127,10 @@ conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py -
 
 13. interpret numerical evidence: status, objective values, feasibility, residuals, gap, stationarity, certificates, numerical warnings, and next choices.
 
+Numerical solver evidence, objective values, certificates, and improved programs
+are not proof artifacts. If the result creates a theorem claim or proof
+obligation, route it to `agentic-rethlas-proving` or `AI4Math-Lean-Agents`.
+
 ## Solver Routes
 
 - **LP/QP:** CVXPY, SciPy/HiGHS, Gurobi, MOSEK, or repository-native code.

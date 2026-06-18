@@ -6,6 +6,21 @@
 
 推荐的使用方式很简单：让你的 coding agent 自己安装这个 Skill，然后让它用这个 Skill 处理你的优化问题。环境路径、复制、软链接、配置和重载都尽量交给 agent 做。
 
+## AI4Math 角色
+
+这个 Skill 是 AI4Math 体系里的通用优化建模和 solver 路由层。当问题首先是一个优化模型，
+而不是某个特定 package 的任务时使用它：自然语言、LaTeX、论文片段、数据、代码或 solver
+失败都应先经过可 review 的模型，再进入执行。
+
+## 交接
+
+上游可能来自 `paper-to-skill`、`discover-math-problems`、计算复现 workflow，或用户直接给出的
+优化问题。当 CDOpt/流形结构是核心时交给 `AI4Math-Optimization-cdopt-skill`；当主要工作是运行
+科研代码仓库时交给科学计算复现 Skill；当已有 evaluator 需要搜索改进时交给
+`AI4Math-Evolving-Skill`。数值 solver 证据、目标值和改进后的程序不是 proof artifacts；
+如果它们产生 theorem claims 或 proof obligations，应交给 `agentic-rethlas-proving` 或
+`AI4Math-Lean-Agents`。
+
 ## 安装 / 加载
 
 优先从当前仓库 checkout 使用。让 coding agent 读取：
