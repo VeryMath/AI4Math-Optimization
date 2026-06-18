@@ -1,6 +1,6 @@
 # CDOpt-skill
 
-English | [简体中文](README.zh-CN.md)
+Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
 `CDOpt-skill` is an evidence-first agent workflow layer for
 [CDOpt](https://github.com/cdopt) and manifold-constrained optimization. It
