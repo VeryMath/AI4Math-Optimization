@@ -2,24 +2,22 @@
 
 [English](README.md) | 简体中文
 
-`cdopt-optimization` 是一个面向
-[CDOpt](https://github.com/cdopt) 与流形约束优化的证据驱动型 agent
-工作流层。它把通用编码智能体提升为具备 CDOpt 语境的计算数学协作者：能够建立并评审
-优化模型、检查数值栈、参考并改编官方示例、运行受控验证，并只基于持久化证据汇报结果。
+`cdopt-optimization` 帮助 coding agent 建模和验证 CDOpt 或流形约束优化任务。
 
-它的目标不是让 agent “跑一个优化器” 就结束，而是让 agent 以更接近研究协作的方式工作：
-先建模，再审批执行，保留证据，并把数值实验与数值结论清楚分开。
+## 适合什么任务
 
-## 这个 Skill 做什么
+当任务涉及这些内容时使用：
 
-这个独立 Skill 帮助 coding agent 谨慎处理 CDOpt 和流形约束优化任务。当任务涉及 manifold model、
-CDOpt example/backend、solver validation run，或需要在执行代码前审查模型假设的对比实验时，直接使用它。
+- manifold-constrained optimization model；
+- CDOpt official example、backend 或 validation run；
+- runner generation、smoke tests 或 comparison plans；
+- 在 solver execution 前必须 review 的模型假设。
 
-它可以单独用于 CDOpt-focused modeling、runner generation、smoke test、comparison plan 和有证据支持的 solver summary。
+## 会产出什么
 
-## 安装 / 加载
+Agent 应产出 modeling checkpoints、generated runners、solver summaries、comparison plans、logs 和 limitation reports。
 
-### 一句话安装
+## 安装
 
 把下面这句话发给你的 coding agent：
 

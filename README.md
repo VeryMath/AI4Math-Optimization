@@ -2,30 +2,22 @@
 
 Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
-`cdopt-optimization` is an evidence-first agent workflow layer for
-[CDOpt](https://github.com/cdopt) and manifold-constrained optimization. It
-turns a general coding agent into a CDOpt-aware research assistant that can
-model optimization problems, inspect the numerical stack, adapt official
-examples, run controlled validation, and report only from durable artifacts.
+`cdopt-optimization` helps a coding agent model and validate CDOpt or manifold-constrained optimization tasks.
 
-The goal is not to make an agent "run an optimizer." The goal is to make it
-behave like a careful computational mathematics collaborator: model first,
-ask before executing, preserve evidence, and separate numerical experiments
-from numerical conclusions.
+## When To Use It
 
-## What This Skill Does
+Use this skill when the task involves:
 
-This standalone skill helps a coding agent work carefully with CDOpt and
-manifold-constrained optimization tasks. Use it when the task involves a manifold
-model, a CDOpt example or backend, a solver validation run, or a comparison that
-needs reviewed model assumptions before code is executed.
+- a manifold-constrained optimization model;
+- a CDOpt official example, backend, or validation run;
+- runner generation, smoke tests, or comparison plans;
+- model assumptions that must be reviewed before solver execution.
 
-It can be used by itself for CDOpt-focused modeling, runner generation, smoke
-tests, comparison plans, and evidence-backed solver summaries.
+## What It Produces
 
-## Installation / Loading
+The agent should produce modeling checkpoints, generated runners, solver summaries, comparison plans, logs, and limitation reports.
 
-### One-line Agent Install
+## Installation
 
 Copy this to your coding agent:
 
