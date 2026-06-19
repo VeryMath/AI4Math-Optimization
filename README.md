@@ -6,27 +6,21 @@ Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
 The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
 
-## AI4Math Role
+## What This Skill Does
 
-This skill is the general optimization modeling and solver-routing layer in the
-AI4Math stack. Use it when the problem is first an optimization model rather
-than a specific package task: prose, LaTeX, paper snippets, data, code, or
-solver failures should all pass through a reviewed model before execution.
+This standalone skill helps a coding agent turn an optimization problem into a
+reviewed mathematical model before execution. Use it when the input is prose,
+LaTeX, paper snippets, data, source code, solver errors, or an existing model
+that needs classification, solver-route selection, bounded code generation, and
+evidence-backed interpretation.
 
-## Handoff
-
-Upstream inputs may come from `paper-to-skill`, `discover-math-problems`,
-computational reproduction, or a user-provided optimization problem. Handoff
-downstream to `cdopt-optimization` when CDOpt/manifold structure is
-central, to scientific computing reproduction when repository execution is the
-main work, or to `openevolve-experiment-workflow` when a validated evaluator should be
-optimized by search. Numerical solver evidence, objective values, and improved
-programs are not proof artifacts; if they generate theorem claims or proof
-obligations, route them to `rethlas-proving` or `lean-formalization`.
+It can be used by itself as the general entry point for optimization modeling
+and solver routing.
 
 ## Installation / Loading
 
-Use the repository checkout first. Ask your coding agent to read:
+Clone or open this skill repository in your coding-agent environment. Then ask
+your coding agent to read:
 
 ```text
 AGENTS.md
@@ -44,7 +38,7 @@ Remote install prompt:
 ```text
 Please install `optimization-modeling` from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
 
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-modeling there, update any registry or config if needed, reload or restart if required, and verify that $optimization-modeling is discoverable.
+If this skill repository already exists locally, use it; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-modeling there, update any registry or config if needed, reload or restart if required, and verify that $optimization-modeling is discoverable.
 ```
 
 ## Quick Start
