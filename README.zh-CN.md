@@ -2,20 +2,22 @@
 
 [English](README.md) | 简体中文
 
-`optimization-modeling` 是给 coding agent 使用的通用优化建模 Skill。它帮助 agent 读取具体优化问题，建立经过 review 的数学模型，分类问题类型，选择 solver 路由，在合适时生成或改写求解代码，解析证据，并诊断失败原因。
+`optimization-modeling` 帮助 coding agent 在 solver execution 前把优化问题整理成经过 review 的数学模型。
 
-推荐的使用方式很简单：让你的 coding agent 自己安装这个 Skill，然后让它用这个 Skill 处理你的优化问题。环境路径、复制、软链接、配置和重载都尽量交给 agent 做。
+## 适合什么任务
 
-## 这个 Skill 做什么
+当输入或需求是这些内容时使用：
 
-这个独立 Skill 帮助 coding agent 在执行前把优化问题转成经过 review 的数学模型。当输入是自然语言、
-LaTeX、论文片段、数据、源码、solver error，或一个需要分类、选择 solver route、生成有边界代码并解释证据的现有模型时，直接使用它。
+- 自然语言、LaTeX、论文片段、数据、源码、solver errors 或已有模型；
+- 需要检查 variables、objective、constraints、dimensions 和 ambiguities 的优化任务；
+- 需要先分类再选择 solver ecosystem 的问题；
+- 需要解释 feasibility、objective、warnings 或 failure causes 的数值结果。
 
-它可以单独作为通用优化建模和 solver routing 的入口。
+## 会产出什么
 
-## 安装 / 加载
+Agent 应产出 modeling checkpoints、solver routes、有边界的 solver code 或 commands、run logs、feasibility/objective reports 和 failure diagnostics。
 
-### 一句话安装
+## 安装
 
 把下面这句话发给你的 coding agent：
 

@@ -2,24 +2,22 @@
 
 Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
-`optimization-modeling` is the general optimization modeling Skill for coding agents. It helps an agent read a concrete problem, build a reviewed mathematical model, classify the problem type, choose a solver route, generate or adapt solver code when appropriate, parse evidence, and diagnose failures.
+`optimization-modeling` helps a coding agent turn an optimization problem into a reviewed mathematical model before solver execution.
 
-The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
+## When To Use It
 
-## What This Skill Does
+Use this skill when the input is:
 
-This standalone skill helps a coding agent turn an optimization problem into a
-reviewed mathematical model before execution. Use it when the input is prose,
-LaTeX, paper snippets, data, source code, solver errors, or an existing model
-that needs classification, solver-route selection, bounded code generation, and
-evidence-backed interpretation.
+- prose, LaTeX, paper snippets, data, source code, solver errors, or an existing model;
+- an optimization task that needs variables, objective, constraints, dimensions, and ambiguity checks;
+- a problem that needs classification before choosing a solver ecosystem;
+- a numerical result that needs feasibility, objective, warning, or failure interpretation.
 
-It can be used by itself as the general entry point for optimization modeling
-and solver routing.
+## What It Produces
 
-## Installation / Loading
+The agent should produce modeling checkpoints, solver routes, bounded solver code or commands, run logs, feasibility/objective reports, and failure diagnostics.
 
-### One-line Agent Install
+## Installation
 
 Copy this to your coding agent:
 
