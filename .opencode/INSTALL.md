@@ -3,7 +3,7 @@
 This repository exposes a shared Skill layer at:
 
 ```text
-skills/optimization-modeling-skill/SKILL.md
+skills/optimization-modeling/SKILL.md
 ```
 
 OpenCode can use the repository checkout directly by reading `AGENTS.md`,

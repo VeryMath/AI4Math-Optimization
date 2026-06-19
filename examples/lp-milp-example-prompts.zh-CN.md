@@ -2,7 +2,7 @@
 
 [English](lp-milp-example-prompts.md) | 简体中文
 
-这些 prompts 是用于测试 `$optimization-modeling-skill` 处理经典运筹优化问题的示例用户请求，包括 LP、MILP、运输问题、指派问题、集合覆盖、网络流和设施选址。
+这些 prompts 是用于测试 `$optimization-modeling` 处理经典运筹优化问题的示例用户请求，包括 LP、MILP、运输问题、指派问题、集合覆盖、网络流和设施选址。
 
 它们是建模和 solver 路由选择的 few-shot prompts。当前自动代码生成最成熟的是 SDPT3；LP/MILP prompts 应该要求 agent 先生成经过 review 的模型，并推荐 CVXPY、Pyomo、YALMIP、CVX 或仓库原生路线，然后再考虑可执行 adapter。
 
@@ -11,7 +11,7 @@
 ## Prompt 0：提取 LP/MILP Example Map
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 我想把经典 LP/MILP 运筹优化 examples 用作这个 Skill 的问题陈述。请把 problem map 提取成三组：
 
@@ -33,7 +33,7 @@
 ## Prompt 1：Transportation Linear Program
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个运输线性规划。
 
@@ -51,7 +51,7 @@
 ## Prompt 2：Assignment MILP
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个二元指派问题。
 
@@ -69,7 +69,7 @@
 ## Prompt 3：Set Cover MILP
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个 weighted set cover 问题。
 
@@ -87,7 +87,7 @@
 ## Prompt 4：Capacitated Facility Location MILP
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个 capacitated facility location 问题。
 
@@ -105,7 +105,7 @@
 ## Prompt 5：Minimum-Cost Network Flow LP
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个 minimum-cost network flow 问题。
 
@@ -123,7 +123,7 @@
 ## Prompt 6：Single-Machine Scheduling MILP
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 请建模一个小规模 single-machine scheduling MILP。
 
@@ -141,7 +141,7 @@
 ## Prompt 7：Natural-Language To LP/MILP Spec Stress Prompt
 
 ```text
-使用 $optimization-modeling-skill。
+使用 $optimization-modeling。
 
 我会用自然语言描述一个运筹优化问题。请把它转换成经过 review 的 LP/MILP modeling checkpoint 和 schema-compatible 的 problem.yaml draft。不要运行代码。
 

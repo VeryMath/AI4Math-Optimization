@@ -1,5 +1,5 @@
 schema_version: 1
-name: optimization-modeling-skill
+name: optimization-modeling
 version: 0.2.0
 scope: computational-math-optimization
 description: Model optimization problems, classify problem types, choose solver routes, generate or adapt approved solver code, execute with approval, and interpret evidence across broad solver ecosystems.

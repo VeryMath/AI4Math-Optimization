@@ -1,15 +1,15 @@
 ---
-name: ai4math-optimization
+name: optimization-modeling
 description: Use when a coding agent needs optimization modeling, solver-route selection, approval-gated execution, numerical evidence review, or failure diagnosis for AI4Math optimization problems.
 ---
 
-# AI4Math Optimization Skill
+# Optimization Modeling
 
 This root `SKILL.md` is a compatibility entrypoint for platforms that expect one
 top-level Skill file. The shared Skill layer lives at:
 
 ```text
-skills/optimization-modeling-skill/SKILL.md
+skills/optimization-modeling/SKILL.md
 ```
 
 Read that concrete Skill before modeling or solving optimization tasks. Keep

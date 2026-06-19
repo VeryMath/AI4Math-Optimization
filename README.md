@@ -1,8 +1,8 @@
-# AI4Math Optimization Modeling Skill
+# Optimization Modeling
 
 Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
-`optimization-modeling-skill` is the general optimization modeling Skill for coding agents. It helps an agent read a concrete problem, build a reviewed mathematical model, classify the problem type, choose a solver route, generate or adapt solver code when appropriate, parse evidence, and diagnose failures.
+`optimization-modeling` is the general optimization modeling Skill for coding agents. It helps an agent read a concrete problem, build a reviewed mathematical model, classify the problem type, choose a solver route, generate or adapt solver code when appropriate, parse evidence, and diagnose failures.
 
 The intended user workflow is simple: ask your coding agent to install the Skill, then ask it to use the Skill on your optimization problem. The agent should do the environment-specific work.
 
@@ -17,12 +17,12 @@ solver failures should all pass through a reviewed model before execution.
 
 Upstream inputs may come from `paper-to-skill`, `discover-math-problems`,
 computational reproduction, or a user-provided optimization problem. Handoff
-downstream to `AI4Math-Optimization-cdopt-skill` when CDOpt/manifold structure is
+downstream to `cdopt-optimization` when CDOpt/manifold structure is
 central, to scientific computing reproduction when repository execution is the
-main work, or to `AI4Math-Evolving-Skill` when a validated evaluator should be
+main work, or to `openevolve-experiment-workflow` when a validated evaluator should be
 optimized by search. Numerical solver evidence, objective values, and improved
 programs are not proof artifacts; if they generate theorem claims or proof
-obligations, route them to `agentic-rethlas-proving` or `AI4Math-Lean-Agents`.
+obligations, route them to `rethlas-proving` or `lean-formalization`.
 
 ## Installation / Loading
 
@@ -31,20 +31,20 @@ Use the repository checkout first. Ask your coding agent to read:
 ```text
 AGENTS.md
 SKILL.md
-skills/optimization-modeling-skill/SKILL.md
+skills/optimization-modeling/SKILL.md
 ```
 
 If your agent supports local Skill discovery, install or link
-`skills/optimization-modeling-skill/` into that agent's Skill path and reload the agent if
+`skills/optimization-modeling/` into that agent's Skill path and reload the agent if
 needed. Platform notes live in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`,
 and `.opencode/INSTALL.md`.
 
 Remote install prompt:
 
 ```text
-Please install the optimization-modeling-skill from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
+Please install `optimization-modeling` from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
 
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-modeling-skill there, update any registry or config if needed, reload or restart if required, and verify that $optimization-modeling-skill is discoverable.
+Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-modeling there, update any registry or config if needed, reload or restart if required, and verify that $optimization-modeling is discoverable.
 ```
 
 ## Quick Start
@@ -55,7 +55,7 @@ Use this repository's optimization workflow.
 Read:
 - AGENTS.md
 - SKILL.md
-- skills/optimization-modeling-skill/SKILL.md
+- skills/optimization-modeling/SKILL.md
 
 Goal:
 <describe the optimization model, solver task, or numerical issue>
@@ -71,7 +71,7 @@ Constraints:
 After installation, open a fresh chat and paste:
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 ```
 
 The Skill should first ask only for the interaction language:
@@ -100,7 +100,7 @@ mathematical/numerical claims.
 
 ## About The Skill
 
-`optimization-modeling-skill` is designed as one public entry point for optimization work. The user gives a concrete problem; the agent is responsible for turning it into a reviewable model, selecting an appropriate solver ecosystem, and explaining the numerical evidence.
+`optimization-modeling` is designed as one public entry point for optimization work. The user gives a concrete problem; the agent is responsible for turning it into a reviewable model, selecting an appropriate solver ecosystem, and explaining the numerical evidence.
 
 The Skill guides the agent to:
 
@@ -126,8 +126,8 @@ The examples are optional supporting material for testing and few-shot guidance.
 From this repository:
 
 ```bash
-python <path-to-skill-validator>/quick_validate.py skills/optimization-modeling-skill
+python <path-to-skill-validator>/quick_validate.py skills/optimization-modeling
 python -m pytest -q
 ```
 
-Skill instructions live in [skills/optimization-modeling-skill/SKILL.md](skills/optimization-modeling-skill/SKILL.md). Solver-routing details live under `skills/optimization-modeling-skill/references/`.
+Skill instructions live in [skills/optimization-modeling/SKILL.md](skills/optimization-modeling/SKILL.md). Solver-routing details live under `skills/optimization-modeling/references/`.

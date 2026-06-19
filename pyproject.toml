@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "optimization-modeling-skill"
+name = "optimization-modeling"
 version = "0.2.0"
 description = "Coding-agent-facing Skill for optimization modeling, solver routing, code generation, execution evidence, and failure diagnosis."
 requires-python = ">=3.10"

@@ -2,7 +2,7 @@
 
 English | [简体中文](lp-milp-example-prompts.zh-CN.md)
 
-These prompts are example user requests for exercising `$optimization-modeling-skill` on classic operations-research problems such as LP, MILP, transportation, assignment, set cover, network flow, and facility location.
+These prompts are example user requests for exercising `$optimization-modeling` on classic operations-research problems such as LP, MILP, transportation, assignment, set cover, network flow, and facility location.
 
 They are few-shot prompts for modeling and solver-route selection. Current generated code support is strongest for SDPT3; LP/MILP prompts should ask the agent to produce a reviewed model and recommend CVXPY, Pyomo, YALMIP, CVX, or a repository-native route before any executable adapter is generated.
 
@@ -11,7 +11,7 @@ Use pattern: copy one complete `text` block into a fresh agent session after the
 ## Prompt 0: Extract LP/MILP Example Map
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 I want to use classic LP/MILP operations-research examples as problem statements for this Skill. Extract the problem map into these groups:
 
@@ -33,7 +33,7 @@ Do not install packages or run code. End by recommending the first two examples 
 ## Prompt 1: Transportation Linear Program
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a transportation linear program.
 
@@ -51,7 +51,7 @@ Requirements:
 ## Prompt 2: Assignment MILP
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a binary assignment problem.
 
@@ -69,7 +69,7 @@ Requirements:
 ## Prompt 3: Set Cover MILP
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a weighted set cover problem.
 
@@ -87,7 +87,7 @@ Requirements:
 ## Prompt 4: Capacitated Facility Location MILP
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a capacitated facility location problem.
 
@@ -105,7 +105,7 @@ Requirements:
 ## Prompt 5: Minimum-Cost Network Flow LP
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a minimum-cost network flow problem.
 
@@ -123,7 +123,7 @@ Requirements:
 ## Prompt 6: Single-Machine Scheduling MILP
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 Model a small single-machine scheduling MILP.
 
@@ -141,7 +141,7 @@ Requirements:
 ## Prompt 7: Natural-Language To LP/MILP Spec Stress Prompt
 
 ```text
-Use $optimization-modeling-skill.
+Use $optimization-modeling.
 
 I will describe an operations-research problem in natural language. Convert it into a reviewed LP/MILP modeling checkpoint and a schema-compatible problem.yaml draft. Do not run code.
 

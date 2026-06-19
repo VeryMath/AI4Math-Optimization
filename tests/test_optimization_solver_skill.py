@@ -32,7 +32,7 @@ def test_solver_router_selects_sdpt3_for_conic_sqlp(tmp_path):
     result = subprocess.run(
         [
             sys.executable,
-            "skills/optimization-modeling-skill/scripts/solver_router.py",
+            "skills/optimization-modeling/scripts/solver_router.py",
             "--spec",
             str(spec_path),
         ],
