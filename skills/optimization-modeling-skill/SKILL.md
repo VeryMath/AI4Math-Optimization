@@ -1,9 +1,9 @@
 ---
-name: optimization-skill
+name: optimization-modeling-skill
 description: Use when a coding agent must understand, model, solve, reproduce, route, execute, parse, or diagnose mathematical optimization problems from natural language, LaTeX, papers, code, data, or structured specs across OptSkills archetypes, SDPT3, MATLAB/Octave, Python, conic, semidefinite, nonlinear, MILP, or manifold workflows.
 ---
 
-# Optimization Skill
+# Optimization Modeling Skill
 
 This Skill is an **Optimization Modeling & Solver Orchestration** workflow.
 
@@ -96,7 +96,7 @@ Important references:
 The primary navigation method is agent judgment: inspect the user goal, use `rg`, read relevant references, compare modeling assumptions, and choose the best route. The search script is only an optional helper when the corpus is large or the first `rg` pass is noisy:
 
 ```bash
-python skills/optimization-skill/scripts/search_archetypes.py --query "<problem statement>" --limit 5
+python skills/optimization-modeling-skill/scripts/search_archetypes.py --query "<problem statement>" --limit 5
 ```
 
 Never treat the script ranking as authoritative. It can suggest candidates, but the coding agent must still read and judge the actual reference files against the user's problem.
@@ -113,7 +113,7 @@ Never treat the script ranking as authoritative. It can suggest candidates, but 
 8. Route the structured problem when useful:
 
 ```bash
-conda run -n ai4math python skills/optimization-skill/scripts/solver_router.py --spec <problem.yaml>
+conda run -n ai4math python skills/optimization-modeling-skill/scripts/solver_router.py --spec <problem.yaml>
 ```
 
 9. generate or adapt solver code only when appropriate, using `references/implementation_templates.md` and `references/code_generation_patterns.md`.
@@ -122,7 +122,7 @@ conda run -n ai4math python skills/optimization-skill/scripts/solver_router.py -
 12. Parse logs and evidence:
 
 ```bash
-conda run -n ai4math python skills/optimization-skill/scripts/result_parser.py --log outputs/{run_id}/logs/run.log --out outputs/{run_id}/results/solver_summary.json
+conda run -n ai4math python skills/optimization-modeling-skill/scripts/result_parser.py --log outputs/{run_id}/logs/run.log --out outputs/{run_id}/results/solver_summary.json
 ```
 
 13. interpret numerical evidence: status, objective values, feasibility, residuals, gap, stationarity, certificates, numerical warnings, and next choices.

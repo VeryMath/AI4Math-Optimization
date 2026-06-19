@@ -4,7 +4,7 @@ This repository is an AI4Math Skill adapter package for optimization modeling
 and solver orchestration. The shared Skill layer is:
 
 ```text
-skills/optimization-skill/SKILL.md
+skills/optimization-modeling-skill/SKILL.md
 ```
 
 ## Contract

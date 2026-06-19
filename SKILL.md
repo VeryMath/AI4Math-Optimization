@@ -9,7 +9,7 @@ This root `SKILL.md` is a compatibility entrypoint for platforms that expect one
 top-level Skill file. The shared Skill layer lives at:
 
 ```text
-skills/optimization-skill/SKILL.md
+skills/optimization-modeling-skill/SKILL.md
 ```
 
 Read that concrete Skill before modeling or solving optimization tasks. Keep

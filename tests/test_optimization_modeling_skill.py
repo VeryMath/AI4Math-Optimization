@@ -9,7 +9,7 @@ from problem_spec import SDPT3_CLASSES, OptimizationProblemSpec
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = ROOT / "skills" / "optimization-skill"
+SKILL_ROOT = ROOT / "skills" / "optimization-modeling-skill"
 OPTSKILLS_ROOT = SKILL_ROOT / "references" / "optskills" / "skill_library"
 
 
@@ -24,14 +24,14 @@ def load_search_module():
 def test_repo_exposes_one_unified_optimization_skill():
     skill_dirs = sorted(path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md"))
 
-    assert skill_dirs == ["optimization-skill"]
+    assert skill_dirs == ["optimization-modeling-skill"]
 
 
 def test_unified_skill_has_codex_metadata_and_source_notice():
     skill_file = SKILL_ROOT / "SKILL.md"
     text = skill_file.read_text()
 
-    assert "name: optimization-skill" in text
+    assert "name: optimization-modeling-skill" in text
     assert "description: Use when a coding agent must" in text
     assert "Use when Codex must" not in text
     assert "OptSkills" in text
@@ -44,7 +44,6 @@ def test_unified_skill_has_codex_metadata_and_source_notice():
     assert "interaction language" in text
     assert "send the concrete optimization problem" in text
     assert "Do not start with a questionnaire" in text
-    assert "optimization-modeling-skill" not in text
     assert "optimization-solver-skill" not in text
     assert "Use the search script before loading many archetype files" not in text
 
@@ -174,8 +173,6 @@ def test_specialized_package_materials_are_not_bundled():
         assert not path.exists(), f"removed specialized package material still exists: {path}"
 
     for file_path in [
-        ROOT / "README.md",
-        ROOT / "README.zh-CN.md",
         SKILL_ROOT / "SKILL.md",
         SKILL_ROOT / "references" / "INDEX.md",
         SKILL_ROOT / "references" / "solver_catalog.md",
@@ -196,9 +193,30 @@ def test_skill_does_not_bundle_duplicate_examples():
 
     assert not skill_examples.exists()
     for text in [skill_text, index_text]:
-        assert "skills/optimization-skill/examples" not in text
+        assert "skills/optimization-modeling-skill/examples" not in text
         assert "examples/lp-milp" not in text
         assert "These `examples/` files are packaged inside the Skill" not in text
+
+
+def test_public_docs_use_modeling_skill_name_for_general_entrypoint():
+    checked_paths = [
+        ROOT / "README.md",
+        ROOT / "README.zh-CN.md",
+        ROOT / "SKILL.md",
+        ROOT / ".codex" / "INSTALL.md",
+        ROOT / ".opencode" / "INSTALL.md",
+        ROOT / "AGENTS.md",
+        ROOT / "CLAUDE.md",
+        ROOT / "GEMINI.md",
+        SKILL_ROOT / "manifest.yaml",
+        SKILL_ROOT / "agents" / "openai.yaml",
+    ]
+
+    for path in checked_paths:
+        text = path.read_text()
+        assert "optimization-modeling-skill" in text
+        assert "$optimization-skill" not in text
+        assert "skills/optimization-skill" not in text
 
 
 def test_skill_positioning_centers_modeling_and_solver_orchestration():
