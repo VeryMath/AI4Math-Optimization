@@ -13,28 +13,20 @@ behave like a careful computational mathematics collaborator: model first,
 ask before executing, preserve evidence, and separate numerical experiments
 from numerical conclusions.
 
-## AI4Math Role
+## What This Skill Does
 
-This skill is the CDOpt-specific optimization adapter in the AI4Math stack. Use
-it when the mathematical object is a manifold-constrained optimization problem
-or when a CDOpt official example, backend, or validation run is the right
-research instrument.
+This standalone skill helps a coding agent work carefully with CDOpt and
+manifold-constrained optimization tasks. Use it when the task involves a manifold
+model, a CDOpt example or backend, a solver validation run, or a comparison that
+needs reviewed model assumptions before code is executed.
 
-## Handoff
-
-Upstream handoffs may come from `optimization-modeling`, `paper-to-skill`,
-`discover-math-problems`, or a scientific reproduction run that identifies a
-manifold optimization subproblem. The handoff should include the reviewed model,
-manifold type and shape, backend choice, data dimensions, and comparison
-question. Return solver summaries, generated runners, logs, and limitations to
-the broader optimization or reproduction workflow.
-When a CDOpt task has a stable metric, evaluator, and budget, it can hand off to
-`openevolve-experiment-workflow` for bounded search. Treat the result as search or
-numerical evidence, not proof.
+It can be used by itself for CDOpt-focused modeling, runner generation, smoke
+tests, comparison plans, and evidence-backed solver summaries.
 
 ## Installation / Loading
 
-Use the repository checkout first. Ask your coding agent to read:
+Clone or open this skill repository in your coding-agent environment. Then ask
+your coding agent to read:
 
 ```text
 AGENTS.md
@@ -51,7 +43,7 @@ Remote install prompt:
 ```text
 Please install `cdopt-optimization` from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
 
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-optimization folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-optimization is discoverable.
+If this skill repository already exists locally, use it; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-optimization folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-optimization is discoverable.
 ```
 
 ## Quick Start
