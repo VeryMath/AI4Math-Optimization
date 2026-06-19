@@ -15,26 +15,15 @@ LaTeX、论文片段、数据、源码、solver error，或一个需要分类、
 
 ## 安装 / 加载
 
-在你的 coding-agent 环境里 clone 或打开这个 skill 仓库，然后让 coding agent 读取：
+### 一句话安装
+
+把下面这句话发给你的 coding agent：
 
 ```text
-AGENTS.md
-SKILL.md
-skills/optimization-modeling/SKILL.md
+请帮我安装 `optimization-modeling` skill，链接是：https://github.com/VeryMath/AI4Math-Optimization.git，分支：kn-Xu。请读取 `.agent.md`，安装其中声明的 Skill entrypoint，验证 `$optimization-modeling` 可用，并告诉我是否需要重启 agent。
 ```
 
-如果目标 agent 支持本地 Skill discovery，可以把 `skills/optimization-modeling/`
-安装或软链接到它的 Skill 路径，然后按需 reload 或 restart。Codex、Claude、
-Gemini 和 OpenCode 的薄 adapter 分别见 `.codex/INSTALL.md`、`CLAUDE.md`、
-`GEMINI.md` 和 `.opencode/INSTALL.md`。
-
-远端安装 prompt：
-
-```text
-请从 https://github.com/VeryMath/AI4Math-Optimization 安装 optimization-modeling 到你自己的 skill 系统。
-
-如果本地已经有这个 skill 仓库，就使用本地版本；否则 clone 这个仓库。请检测你的环境把 skills 存在哪里，把 skills/optimization-modeling 安装或软链接到正确位置，按需更新 registry 或配置，必要时 reload 或 restart，并验证 $optimization-modeling 可以被发现。
-```
+如果你已经有这个 skill 仓库的本地文件夹，把链接换成本地路径即可。clone、link、配置、reload/restart 检查和验证都交给 coding agent 处理。
 
 ## 快速开始
 

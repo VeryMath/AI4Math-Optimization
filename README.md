@@ -19,27 +19,17 @@ and solver routing.
 
 ## Installation / Loading
 
-Clone or open this skill repository in your coding-agent environment. Then ask
-your coding agent to read:
+### One-line Agent Install
+
+Copy this to your coding agent:
 
 ```text
-AGENTS.md
-SKILL.md
-skills/optimization-modeling/SKILL.md
+Please install the `optimization-modeling` skill from https://github.com/VeryMath/AI4Math-Optimization.git (branch: kn-Xu). Read `.agent.md`, install the declared Skill entrypoint, verify that `$optimization-modeling` is discoverable, and tell me whether I need to restart the agent.
 ```
 
-If your agent supports local Skill discovery, install or link
-`skills/optimization-modeling/` into that agent's Skill path and reload the agent if
-needed. Platform notes live in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`,
-and `.opencode/INSTALL.md`.
-
-Remote install prompt:
-
-```text
-Please install `optimization-modeling` from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
-
-If this skill repository already exists locally, use it; otherwise clone the repository. Detect where your environment stores skills, install or link skills/optimization-modeling there, update any registry or config if needed, reload or restart if required, and verify that $optimization-modeling is discoverable.
-```
+If you already have this skill repository locally, replace the repository URL
+with the local folder path. The coding agent should handle cloning, linking,
+configuration, reload/restart checks, and verification.
 
 ## Quick Start
 
