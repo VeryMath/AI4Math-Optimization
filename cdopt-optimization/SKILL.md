@@ -1,9 +1,9 @@
 ---
-name: cdopt-skill
+name: cdopt-optimization
 description: Use when Codex needs to solve, reproduce, test, compare, generate examples for, or diagnose CDOpt manifold optimization workflows, including CDOpt package smoke tests, official problem description cards, Stiefel dictionary learning, SciPy wrappers, PyTorch/JAX/NumPy CDOpt examples, dependency checks, tiny CPU validation runs, comparison plans, or JSON result reporting.
 ---
 
-# CDOpt-skill
+# CDOpt Optimization
 
 ## Overview
 
@@ -98,8 +98,8 @@ Keep the default run CPU-only, small, deterministic, synthetic-data, and JSON-pr
 
 CDOpt solver summaries, comparison tables, and search improvements are
 numerical evidence, not proof. If they create a theorem claim or proof
-obligation, route the claim to `agentic-rethlas-proving` or
-`AI4Math-Lean-Agents`.
+obligation, route the claim to `rethlas-proving` or
+`lean-formalization`.
 
 ## CDOpt Patterns
 
@@ -215,7 +215,7 @@ Call out these signals explicitly:
 
 - `references/INDEX.md`: navigation for local cards, official pairs, templates, comparison protocols, and adapted-code review checks.
 - `references/problem-descriptions/`: local CDOpt Problem Description cards.
-- `references/example_prompts.md`: ready-to-paste `$cdopt-skill` prompts for each card and template family.
+- `references/example_prompts.md`: ready-to-paste `$cdopt-optimization` prompts for each card and template family.
 - `references/few_shots/cdopt_official_pairs.md`: official problem-code pairs, read only for the matched example.
 - `references/cdopt_official_examples.md`: implementation template notes after model review.
 - `scripts/check_cdopt_environment.py`: safe dependency and path probe.

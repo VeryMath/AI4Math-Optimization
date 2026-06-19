@@ -15,7 +15,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the official CDOpt PyTorch example that treats each MNIST image as a
 sequence of 28 time steps with 28 features per step, and trains a vanilla RNN

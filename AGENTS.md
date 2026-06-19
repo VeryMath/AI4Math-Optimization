@@ -4,7 +4,7 @@ This repository is an AI4Math Skill adapter package for CDOpt and
 manifold-constrained optimization. The shared Skill layer is:
 
 ```text
-cdopt-skill/SKILL.md
+cdopt-optimization/SKILL.md
 ```
 
 ## Contract

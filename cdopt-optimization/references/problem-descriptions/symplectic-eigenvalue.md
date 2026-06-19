@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the official CDOpt symplectic eigenvalue model. Let `L` be a symmetric
 positive definite matrix and let `J_n` and `J_p` be the canonical symplectic

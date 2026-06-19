@@ -15,7 +15,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the official CDOpt PyTorch example that trains a bidirectional,
 multi-layer LSTM on MNIST sequence data. Recurrent weights are constrained to

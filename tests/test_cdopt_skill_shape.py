@@ -10,8 +10,8 @@ class CdoptSkillShapeTests(unittest.TestCase):
         files = [
             ROOT / "README.md",
             ROOT / "README.zh-CN.md",
-            ROOT / "cdopt-skill" / "SKILL.md",
-            ROOT / "cdopt-skill" / "references" / "INDEX.md",
+            ROOT / "cdopt-optimization" / "SKILL.md",
+            ROOT / "cdopt-optimization" / "references" / "INDEX.md",
         ]
 
         for path in files:
@@ -26,7 +26,7 @@ class CdoptSkillShapeTests(unittest.TestCase):
         self.assertTrue(pyproject.is_file())
 
         text = pyproject.read_text(encoding="utf-8")
-        self.assertIn('name = "CDOpt-skill"', text)
+        self.assertIn('name = "cdopt-optimization"', text)
         self.assertIn('requires-python = ">=3.10"', text)
         self.assertIn('dev = ["pytest>=8.0"]', text)
         self.assertIn('testpaths = ["tests"]', text)

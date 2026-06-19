@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "CDOpt-skill"
+name = "cdopt-optimization"
 version = "0.1.0"
 description = "AI4Math Skill for CDOpt manifold optimization workflows and evidence-backed validation."
 requires-python = ">=3.10"

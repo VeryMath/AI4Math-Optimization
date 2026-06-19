@@ -1,16 +1,16 @@
 # CDOpt Example Prompts
 
-These prompts exercise `$cdopt-skill` with the local Problem Description cards in
+These prompts exercise `$cdopt-optimization` with the local Problem Description cards in
 `references/problem-descriptions/`. The coding-agent workflow should read the
 local card first; the official URL is kept as provenance, not as the primary
 prompt source.
 
-All paths below are relative to the skill root (`cdopt-skill/`).
+All paths below are relative to the skill root (`cdopt-optimization/`).
 
 Use pattern:
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read this local Problem Description card:
 references/problem-descriptions/<card-name>.md
@@ -31,7 +31,7 @@ without approval.
 ## Prompt 0: Local Card Map
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local CDOpt Problem Description cards under:
 references/problem-descriptions/
@@ -49,7 +49,7 @@ Local card: `references/problem-descriptions/dictionary-learning.md`
 Source: https://cdopt.github.io/examples/dictionary_learning.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/dictionary-learning.md
@@ -70,7 +70,7 @@ Local card: `references/problem-descriptions/dictionary-learning-jax.md`
 Source: https://cdopt.github.io/examples/dictionary_learning_jax.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/dictionary-learning-jax.md
@@ -91,7 +91,7 @@ Local card: `references/problem-descriptions/kohn-sham-1d.md`
 Source: https://cdopt.github.io/examples/nonlinear_eigenvalue.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/kohn-sham-1d.md
@@ -112,7 +112,7 @@ Local card: `references/problem-descriptions/nearest-correlation.md`
 Source: https://cdopt.github.io/examples/nearest_correlation_estimation.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/nearest-correlation.md
@@ -133,7 +133,7 @@ Local card: `references/problem-descriptions/bose-einstein-condensates.md`
 Source: https://cdopt.github.io/examples/bose_einstein_condensates.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/bose-einstein-condensates.md
@@ -154,7 +154,7 @@ Local card: `references/problem-descriptions/symplectic-eigenvalue.md`
 Source: https://cdopt.github.io/examples/symplectic_eigenvalue.html#problem-description
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/symplectic-eigenvalue.md
@@ -175,7 +175,7 @@ Local card: `references/problem-descriptions/lenet-orthogonal-pytorch.md`
 Source: https://cdopt.github.io/examples/LeNet_orth.html
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/lenet-orthogonal-pytorch.md
@@ -200,7 +200,7 @@ Local card: `references/problem-descriptions/lenet-orthogonal-jax.md`
 Source: https://cdopt.github.io/examples/LeNet_orth_jax.html
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/lenet-orthogonal-jax.md
@@ -222,7 +222,7 @@ Local card: `references/problem-descriptions/rnn-constrained-pytorch.md`
 Source: https://cdopt.github.io/examples/rnn_single_layer.html
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/rnn-constrained-pytorch.md
@@ -248,7 +248,7 @@ Local card: `references/problem-descriptions/lstm-constrained-pytorch.md`
 Source: https://cdopt.github.io/examples/rnn_lstm.html
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Read the local Problem Description card:
 references/problem-descriptions/lstm-constrained-pytorch.md
@@ -280,7 +280,7 @@ Sources:
 - https://cdopt.github.io/examples/distributed_rnn_basic.html
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 These CDOpt official pages are Implementation Template examples, not standalone
 Problem Description cards. Use:

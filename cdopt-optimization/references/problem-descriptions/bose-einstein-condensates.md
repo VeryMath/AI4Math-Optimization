@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the simplified real-valued Bose-Einstein condensates model from the
 official CDOpt example. Let `x` be a real vector on the unit sphere and let `A`

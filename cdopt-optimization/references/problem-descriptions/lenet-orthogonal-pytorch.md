@@ -15,7 +15,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the official CDOpt PyTorch example that trains a LeNet-style CNN whose
 convolution kernels are constrained to the Stiefel manifold (orthonormal

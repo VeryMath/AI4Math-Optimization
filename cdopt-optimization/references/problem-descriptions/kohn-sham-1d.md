@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the discretized one-dimensional Kohn-Sham model from the official
 CDOpt nonlinear eigenvalue example. Let `X in R^{n x p}` collect `p` orthonormal

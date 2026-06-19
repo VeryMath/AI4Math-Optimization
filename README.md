@@ -1,8 +1,8 @@
-# CDOpt-skill
+# CDOpt Optimization
 
 Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
-`CDOpt-skill` is an evidence-first agent workflow layer for
+`cdopt-optimization` is an evidence-first agent workflow layer for
 [CDOpt](https://github.com/cdopt) and manifold-constrained optimization. It
 turns a general coding agent into a CDOpt-aware research assistant that can
 model optimization problems, inspect the numerical stack, adapt official
@@ -22,14 +22,14 @@ research instrument.
 
 ## Handoff
 
-Upstream handoffs may come from `AI4Math-Optimization`, `paper-to-skill`,
+Upstream handoffs may come from `optimization-modeling`, `paper-to-skill`,
 `discover-math-problems`, or a scientific reproduction run that identifies a
 manifold optimization subproblem. The handoff should include the reviewed model,
 manifold type and shape, backend choice, data dimensions, and comparison
 question. Return solver summaries, generated runners, logs, and limitations to
 the broader optimization or reproduction workflow.
 When a CDOpt task has a stable metric, evaluator, and budget, it can hand off to
-`AI4Math-Evolving-Skill` for bounded search. Treat the result as search or
+`openevolve-experiment-workflow` for bounded search. Treat the result as search or
 numerical evidence, not proof.
 
 ## Installation / Loading
@@ -39,19 +39,19 @@ Use the repository checkout first. Ask your coding agent to read:
 ```text
 AGENTS.md
 SKILL.md
-cdopt-skill/SKILL.md
+cdopt-optimization/SKILL.md
 ```
 
-If your agent supports local Skill discovery, install or link `cdopt-skill/`
+If your agent supports local Skill discovery, install or link `cdopt-optimization/`
 into that agent's Skill path and reload the agent if needed. Platform notes live
 in `CLAUDE.md`, `GEMINI.md`, `.codex/INSTALL.md`, and `.opencode/INSTALL.md`.
 
 Remote install prompt:
 
 ```text
-Please install CDOpt-skill from https://github.com/ConanXu-math/CDOpt-skill into your own skill system.
+Please install `cdopt-optimization` from https://github.com/VeryMath/AI4Math-Optimization into your own skill system.
 
-Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-skill folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-skill is discoverable.
+Use the local checkout if it already exists; otherwise clone the repository. Detect where your environment stores skills, install or link the cdopt-optimization folder there, update any registry or config if needed, reload or restart if required, and verify that $cdopt-optimization is discoverable.
 ```
 
 ## Quick Start
@@ -62,7 +62,7 @@ Use this repository's CDOpt workflow.
 Read:
 - AGENTS.md
 - SKILL.md
-- cdopt-skill/SKILL.md
+- cdopt-optimization/SKILL.md
 
 Goal:
 <describe the manifold-constrained optimization task>
@@ -72,12 +72,12 @@ Constraints:
 - ask before installs, solver runs, comparison expansion, or final claims.
 ```
 
-## Why CDOpt-skill
+## Why CDOpt Optimization
 
 Manifold optimization workflows are easy to get almost right. A solver script
 can run while the manifold shape is wrong, the backend is mismatched, the
 gradient is not the one implied by the model, or two methods are compared under
-different seeds and stopping rules. `CDOpt-skill` gives coding agents a compact
+different seeds and stopping rules. `cdopt-optimization` gives coding agents a compact
 protocol for avoiding those failures.
 
 It provides:
@@ -101,7 +101,7 @@ does not belong.
 
 ## Evidence-First Workflow
 
-`CDOpt-skill` starts each task by creating a dedicated workspace under
+`cdopt-optimization` starts each task by creating a dedicated workspace under
 `outputs/{run_id}/`. Modeling checkpoints, generated code, logs, JSON results,
 comparison tables, and final summaries for that task stay inside this
 workspace, so evidence is not scattered across the repository.
@@ -186,7 +186,7 @@ approval. They are not treated as smoke tests.
 After installation, open a fresh chat and paste:
 
 ```text
-Use $cdopt-skill.
+Use $cdopt-optimization.
 ```
 
 The skill first asks only for the interaction language:
@@ -216,12 +216,12 @@ mathematical/numerical claims.
 ## Repository Layout
 
 ```text
-cdopt-skill/
+cdopt-optimization/
 ├── SKILL.md                              # Skill instructions
 ├── agents/openai.yaml                    # agent interface metadata
 ├── references/
 │   ├── INDEX.md                          # progressive-disclosure navigation
-│   ├── example_prompts.md                # ready-to-paste $cdopt-skill prompts
+│   ├── example_prompts.md                # ready-to-paste $cdopt-optimization prompts
 │   ├── cdopt_official_examples.md        # implementation templates
 │   ├── few_shots/cdopt_official_pairs.md # official problem-code pairs
 │   └── problem-descriptions/             # local Problem Description cards
@@ -236,18 +236,18 @@ cdopt-skill/
 
 ```bash
 # Safe dependency probe: no install, no solver run
-python3 cdopt-skill/scripts/check_cdopt_environment.py --json
+python3 cdopt-optimization/scripts/check_cdopt_environment.py --json
 
 # Generate the tiny deterministic Stiefel dictionary-learning runner
-python3 cdopt-skill/scripts/write_stiefel_dictionary_runner.py \
+python3 cdopt-optimization/scripts/write_stiefel_dictionary_runner.py \
   --output-dir .local/cdopt-runs/dictionary_learning_torch_scipy
 
 # Generate the tiny PyTorch constrained-layer training runner
-python3 cdopt-skill/scripts/write_constrained_layer_runner.py \
+python3 cdopt-optimization/scripts/write_constrained_layer_runner.py \
   --output-dir .local/cdopt-runs/constrained_layer_torch
 
 # Generate the tiny PyTorch RNN/LSTM training runner
-python3 cdopt-skill/scripts/write_constrained_rnn_runner.py \
+python3 cdopt-optimization/scripts/write_constrained_rnn_runner.py \
   --output-dir .local/cdopt-runs/constrained_rnn_torch
 ```
 

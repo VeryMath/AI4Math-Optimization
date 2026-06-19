@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the dictionary-learning model from the official CDOpt example. The
 data vectors are generated as

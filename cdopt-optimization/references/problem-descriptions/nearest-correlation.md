@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the official CDOpt low-rank nearest-correlation model. Given a
 symmetric target matrix `G` and a nonnegative symmetric weight matrix `H`, find

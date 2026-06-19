@@ -14,7 +14,7 @@ approval_required: true
 
 ## Prompt Body
 
-Use $cdopt-skill.
+Use $cdopt-optimization.
 
 Consider the JAX version of the official CDOpt dictionary-learning example. The
 mathematical model is the same orthogonal dictionary-learning problem:
