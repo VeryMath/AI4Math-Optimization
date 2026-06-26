@@ -7,7 +7,7 @@ description: >-
   problems into LP before building and solving. When no local solver is available, searches
   GitHub for open-source LP solving code. Use when the user mentions linear
   programming, LP, word problems, applications, story problems, natural-language
-  descriptions, 应用题, 线性规划文字题, or matrix forms like Ax <= b, Ax == b,
+  descriptions, 应用题, 线性规划文字题, matrix-form inequalities or equalities,
   and variable bounds.
 metadata:
   author: "李爽夕"

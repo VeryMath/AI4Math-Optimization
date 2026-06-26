@@ -98,7 +98,7 @@ Keep the default run CPU-only, small, deterministic, synthetic-data, and JSON-pr
 
 CDOpt solver summaries, comparison tables, and search improvements are
 numerical evidence, not proof. If they create a theorem claim or proof
-obligation, route the claim to `rethlas-proving` or
+obligation, route the claim to `proof-blueprint-review` or
 `lean-formalization`.
 
 ## CDOpt Patterns
