@@ -55,9 +55,9 @@ import cvxpy; print(cvxpy.installed_solvers())
 
 ## 被引用的 Skill
 
-- `@LP/SKILL.md` — 线性规划
-- `@MIP/SKILL.md` — 混合整数规划
-- `@SOCP/SKILL.md` — 二阶锥规划
+- `../linear-programming/SKILL.md` — 线性规划
+- `../mixed-integer-programming/SKILL.md` — 混合整数规划
+- `../second-order-cone-programming/SKILL.md` — 二阶锥规划
 
 ## 示例
 

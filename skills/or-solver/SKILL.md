@@ -1,6 +1,5 @@
 ---
 name: or-solver
-author: 李爽夕
 description: >-
   Unified solver detection, installation, selection, and license configuration
   for OR optimization skills (LP, MIP, SOCP). One-stop solver management: detect
@@ -10,6 +9,8 @@ description: >-
   (HiGHS, SCIP, CLARABEL, CBC, ECOS, SCS, etc.). Use when the LP, MIP, or SOCP
   skill needs to set up a solver environment, or when the user asks about solver
   installation, solver comparison, license setup, or solver selection.
+metadata:
+  author: "李爽夕"
 ---
 
 <!-- 作者：李爽夕 -->
@@ -20,9 +21,9 @@ description: >-
 
 本 skill 为以下运筹优化 skill 提供统一的求解器检测、安装与选择：
 
-- **LP**（线性规划）→ `@LP/SKILL.md`
-- **MIP**（混合整数规划）→ `@MIP/SKILL.md`
-- **SOCP**（二阶锥规划）→ `@SOCP/SKILL.md`
+- **LP**（线性规划）→ `../linear-programming/SKILL.md`
+- **MIP**（混合整数规划）→ `../mixed-integer-programming/SKILL.md`
+- **SOCP**（二阶锥规划）→ `../second-order-cone-programming/SKILL.md`
 
 当 LP / MIP / SOCP skill 在 Quick Start 第一步需要做环境准备时，应调用本 skill 的检测与安装流程，而非各自维护独立的求解器管理代码。
 
@@ -379,7 +380,7 @@ LP / MIP / SOCP skill 在 Quick Start 的环境准备步骤中，可简化为对
 
 ```markdown
 - [ ] **环境准备与依赖安装（必须第一步）**：
-  1. 参考 `@OR_SOLVER/SKILL.md` 执行统一求解器检测与安装
+  1. 参考 `../or-solver/SKILL.md` 执行统一求解器检测与安装
   2. 确认当前问题类型为 [LP / MIP / SOCP]
   3. 按降级策略选择求解器，若无可用求解器则安装
   4. 验证导入成功

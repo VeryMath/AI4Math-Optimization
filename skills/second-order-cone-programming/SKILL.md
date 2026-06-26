@@ -1,6 +1,5 @@
 ---
 name: socp
-author: 李爽夕
 description: >-
   Models and solves second-order cone programs and problems convertible to SOCP
   form using cvxpy with multiple solver backends (COPT, Gurobi, MOSEK, CPLEX,
@@ -8,6 +7,8 @@ description: >-
   second-order cone constraints, as well as problems reducible to SOCP such as
   portfolio optimization, robust optimization, and engineering design. When no
   local solver is available, searches GitHub for open-source SOCP solving code.
+metadata:
+  author: "李爽夕"
 ---
 
 <!--
@@ -38,7 +39,7 @@ description: >-
 按下面清单执行并在回答中保留结构。**环境准备必须先于求解**。
 
 - [ ] **环境准备与依赖安装（必须第一步）**：
-  1. 参考 `@OR_SOLVER/SKILL.md` 执行统一求解器检测、安装与选择
+  1. 参考 `../or-solver/SKILL.md` 执行统一求解器检测、安装与选择
   2. 确认问题类型为 SOCP，按降级策略选择求解器
   3. 若全部不可用且安装失败 → 走 GitHub 搜索路径
 - [ ] 路径判断：用户给的是自然语言描述、矩阵/JSON，还是要求从 GitHub 找代码
@@ -175,7 +176,7 @@ site:github.com second order cone programming solver python <问题特征>
 
 ## 求解器
 
-求解器检测、安装、License 配置、降级策略等详见 `@OR_SOLVER/SKILL.md`。
+求解器检测、安装、License 配置、降级策略等详见 `../or-solver/SKILL.md`。
 
 SOCP 求解器优先级：**COPT > Gurobi > MOSEK > CPLEX > CLARABEL > ECOS > SCS > CVXOPT > COSMO > OSQP > GitHub 搜索**。
 

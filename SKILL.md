@@ -11,8 +11,10 @@ Use this repository as a routing layer for optimization workflows.
 
 - `skills/copt-linear-program/`: COPT linear programming workflow. Read
   `SKILL.md`, `readme.md`, `reference/`, and `scripts/` before use.
-- `LP-Skill/`, `MIP-Skill/`, `SOCP-Skill/`, `OR_SOLVER-Skill/`: legacy
-  root-level optimization skill material.
+- `skills/linear-programming/`: general LP modeling and solver selection.
+- `skills/mixed-integer-programming/`: MIP and MILP modeling workflows.
+- `skills/second-order-cone-programming/`: SOCP modeling and solver workflows.
+- `skills/or-solver/`: shared optimization solver setup and selection.
 
 Prefer package-local instructions over this router when running a concrete
 workflow.
