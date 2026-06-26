@@ -1,6 +1,5 @@
 ---
 name: linear-program
-author: 李爽夕
 description: >-
   Models and solves linear programs (LP) with multiple solvers (COPT, Gurobi,
   MOSEK, CPLEX, HiGHS (scipy/highspy), CLARABEL, PuLP/CBC, CVXOPT,
@@ -10,6 +9,8 @@ description: >-
   programming, LP, word problems, applications, story problems, natural-language
   descriptions, 应用题, 线性规划文字题, or matrix forms like Ax <= b, Ax == b,
   and variable bounds.
+metadata:
+  author: "李爽夕"
 ---
 
 <!-- 作者：李爽夕 -->
@@ -29,7 +30,7 @@ description: >-
 按下面清单执行并在回答中保留结构。**环境准备必须先于求解**。
 
 - [ ] **环境准备与依赖安装（必须第一步）**：
-  1. 参考 `@OR_SOLVER/SKILL.md` 执行统一求解器检测、安装与选择
+  1. 参考 `../or-solver/SKILL.md` 执行统一求解器检测、安装与选择
   2. 确认问题类型为 LP，按降级策略选择求解器
   3. 若全部不可用且安装失败 → 走 GitHub 搜索路径
 - [ ] 路径判断：用户给的是自然语言、已给矩阵/JSON，还是要求从 GitHub 找代码
@@ -183,7 +184,7 @@ site:github.com linear programming solver python <问题特征>
 
 ## 求解器
 
-求解器检测、安装、License 配置、降级策略等详见 `@OR_SOLVER/SKILL.md`。
+求解器检测、安装、License 配置、降级策略等详见 `../or-solver/SKILL.md`。
 
 LP 求解器优先级：**COPT > Gurobi > MOSEK > CPLEX > HiGHS (scipy/highspy) > CLARABEL > OR-Tools/GLOP > PuLP/CBC > ECOS > CVXOPT > GLPK > SoPlex > lpsolve > GitHub 搜索**。
 
