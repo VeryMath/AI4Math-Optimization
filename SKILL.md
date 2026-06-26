@@ -9,6 +9,9 @@ Use this repository as a routing layer for optimization workflows.
 
 ## Packages
 
+- `skills/cdopt-optimization/`: CDOpt and manifold-constrained optimization
+  modeling, validation, and runner generation. Read `SKILL.md`, README,
+  references, and scripts before use.
 - `skills/copt-linear-program/`: COPT linear programming workflow. Read
   `SKILL.md`, `readme.md`, `reference/`, and `scripts/` before use.
 - `skills/linear-programming/`: general LP modeling and solver selection.

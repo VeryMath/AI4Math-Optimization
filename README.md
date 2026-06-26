@@ -7,6 +7,7 @@ optimization modeling, solver use, and optimization workflow support.
 
 | Package | Purpose | Entry point |
 | --- | --- | --- |
+| `skills/cdopt-optimization/` | CDOpt and manifold-constrained optimization modeling, validation, and runner generation. | `README.md`, `SKILL.md` |
 | `skills/copt-linear-program/` | COPT linear programming workflow with scripts and references. | `SKILL.md`, `readme.md` |
 | `skills/linear-programming/` | General LP modeling and solver selection. | `README.md`, `SKILL.md` |
 | `skills/mixed-integer-programming/` | MIP and MILP modeling workflows. | `README.md`, `SKILL.md` |
