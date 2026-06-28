@@ -1,5 +1,5 @@
 ---
-name: socp
+name: second-order-cone-programming
 description: >-
   Models and solves second-order cone programs and problems convertible to SOCP
   form using cvxpy with multiple solver backends (COPT, Gurobi, MOSEK, CPLEX,

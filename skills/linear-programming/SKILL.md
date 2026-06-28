@@ -1,5 +1,5 @@
 ---
-name: linear-program
+name: linear-programming
 description: >-
   Models and solves linear programs (LP) with multiple solvers (COPT, Gurobi,
   MOSEK, CPLEX, HiGHS (scipy/highspy), CLARABEL, PuLP/CBC, CVXOPT,
