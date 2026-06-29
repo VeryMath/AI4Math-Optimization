@@ -5,7 +5,7 @@
 Skill packages for mathematical optimization modeling, solver setup, LP/MIP/SOCP
 workflows, and manifold-constrained optimization.
 
-[中文说明](README.zh-CN.md) · [Contributors](CONTRIBUTORS.md) · [Skill packages](#skill-packages) · [Quick start](#quick-start) · [Security model](#security-and-scope)
+[中文说明](README.zh-CN.md) · [Contributors](CONTRIBUTORS.md) · [Skill packages](#skill-packages) · [Installation](#installation) · [Quick start](#quick-start) · [Security model](#security-and-scope)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
 ![skills](https://img.shields.io/badge/skills-6-2ea44f)
@@ -32,6 +32,48 @@ package that matches the problem class.
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | MILP/MIP modeling with binary, integer, and continuous decision variables. | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
+
+## Installation
+
+The recommended path is AI-assisted installation: ask your coding agent to clone or update this repository, read the Skill instructions, install the entrypoints, and verify discovery.
+
+```text
+Please install these AI4Math Skills for me.
+
+Repository: https://github.com/VeryMath/AI4Math-Optimization.git
+Branch: main
+Skill paths:
+- skills/cdopt-optimization
+- skills/copt-linear-program
+- skills/linear-programming
+- skills/mixed-integer-programming
+- skills/second-order-cone-programming
+- skills/or-solver
+
+Steps:
+1. Clone or update the repository locally.
+2. Read README.md, SKILL.md, AGENTS.md if present, and each target Skill entrypoint.
+3. If this environment supports local Skill discovery, link each directory that contains SKILL.md into the local skills directory.
+4. Keep shared sibling support directories in place when a Skill depends on them.
+5. Verify that the installed Skills are discoverable.
+6. Tell me the installed paths, whether a restart is needed, and give me one test prompt.
+```
+
+Manual fallback for Codex-style local discovery:
+
+```bash
+git clone https://github.com/VeryMath/AI4Math-Optimization.git
+cd AI4Math-Optimization
+mkdir -p ~/.codex/skills
+ln -s "$PWD/skills/cdopt-optimization" ~/.codex/skills/cdopt-optimization
+ln -s "$PWD/skills/copt-linear-program" ~/.codex/skills/copt-linear-program
+ln -s "$PWD/skills/linear-programming" ~/.codex/skills/linear-programming
+ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-programming
+ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
+ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
+```
+
+If your agent uses a different local Skill directory, replace `~/.codex/skills` with that configured path.
 
 ## Quick Start
 

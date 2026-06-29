@@ -4,7 +4,7 @@
 
 面向数学优化建模、求解器配置、LP/MIP/SOCP workflow 和流形约束优化的 AI4Math 技能集合。
 
-[English](README.md) · [贡献者](CONTRIBUTORS.md) · [技能包](#技能包) · [快速开始](#快速开始) · [安全边界](#安全边界)
+[English](README.md) · [贡献者](CONTRIBUTORS.md) · [技能包](#技能包) · [安装](#安装) · [快速开始](#快速开始) · [安全边界](#安全边界)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
 ![skills](https://img.shields.io/badge/skills-6-2ea44f)
@@ -28,6 +28,48 @@
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | 含 binary、integer 和 continuous 变量的 MILP/MIP 建模。 | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP 建模和基于 cvxpy 的锥优化求解流程。 | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | 为 OR skills 提供统一求解器检测、安装规划、license 检查和选择策略。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
+
+## 安装
+
+推荐方式是 AI 自动安装：让你的 coding agent 自己 clone 或更新仓库、读取 Skill 说明、安装入口并验证 discovery。
+
+```text
+请帮我安装这些 AI4Math Skills。
+
+仓库：https://github.com/VeryMath/AI4Math-Optimization.git
+分支：main
+Skill 路径：
+- skills/cdopt-optimization
+- skills/copt-linear-program
+- skills/linear-programming
+- skills/mixed-integer-programming
+- skills/second-order-cone-programming
+- skills/or-solver
+
+请执行：
+1. 本地 clone 或更新仓库。
+2. 读取 README.md、SKILL.md、AGENTS.md（如果存在）以及每个目标 Skill 入口。
+3. 如果当前环境支持本地 Skill discovery，把每个包含 SKILL.md 的目录链接到本地 skills 目录。
+4. 如果某个 Skill 依赖相邻的共享支持目录，请保留这些 sibling 目录。
+5. 验证安装后的 Skills 是否可被发现。
+6. 告诉我安装路径、是否需要重启 agent，并给我一个测试 prompt。
+```
+
+Codex 风格本地 discovery 的手工 fallback：
+
+```bash
+git clone https://github.com/VeryMath/AI4Math-Optimization.git
+cd AI4Math-Optimization
+mkdir -p ~/.codex/skills
+ln -s "$PWD/skills/cdopt-optimization" ~/.codex/skills/cdopt-optimization
+ln -s "$PWD/skills/copt-linear-program" ~/.codex/skills/copt-linear-program
+ln -s "$PWD/skills/linear-programming" ~/.codex/skills/linear-programming
+ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-programming
+ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
+ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
+```
+
+如果你的 agent 使用别的本地 Skill 目录，把 `~/.codex/skills` 替换成对应配置路径。
 
 ## 快速开始
 
