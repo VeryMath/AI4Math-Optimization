@@ -12,6 +12,11 @@
 
 </div>
 
+<p align="center">
+  如果这个项目对你有帮助，欢迎为仓库点 Star ⭐
+  <a href="https://github.com/VeryMath/AI4Math-Optimization"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/VeryMath/AI4Math-Optimization?style=social"></a>
+</p>
+
 ## 这个仓库是什么
 
 这个仓库是 AI4Math 优化方向的技能入口，收集用于数学规划建模、求解器选择、环境检查、示例适配和优化运行证据报告的技能包。

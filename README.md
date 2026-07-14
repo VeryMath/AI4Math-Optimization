@@ -13,6 +13,11 @@ workflows, and manifold-constrained optimization.
 
 </div>
 
+<p align="center">
+  If this project helps your work, please consider giving the repository a Star ⭐
+  <a href="https://github.com/VeryMath/AI4Math-Optimization"><img alt="GitHub stars" src="https://img.shields.io/github/stars/VeryMath/AI4Math-Optimization?style=social"></a>
+</p>
+
 ## What This Repository Is
 
 This repository is the AI4Math home for optimization skills. It collects
