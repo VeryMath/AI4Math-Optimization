@@ -2,13 +2,14 @@
 
 # AI4Math · Optimization
 
-Skill packages for mathematical optimization modeling, solver setup, LP/MIP/SOCP
-workflows, and manifold-constrained optimization.
+Skill packages for mathematical optimization modeling, solver setup,
+LP/MIP/SOCP workflows, continuous convex QP/OSQP, and
+manifold-constrained optimization.
 
 [中文说明](README.zh-CN.md) · [Contributors](CONTRIBUTORS.md) · [Skill packages](#skill-packages) · [Installation](#installation) · [Quick start](#quick-start) · [Security model](#security-and-scope)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
-![skills](https://img.shields.io/badge/skills-6-2ea44f)
+![skills](https://img.shields.io/badge/skills-7-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -37,6 +38,7 @@ package that matches the problem class.
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | MILP/MIP modeling with binary, integer, and continuous decision variables. | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
+| [`osqp-solver`](skills/osqp-solver/) | OSQP modeling, repeated solves, status gates, and independent verification for continuous convex QPs. | [`README`](skills/osqp-solver/README.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
 
 ## Installation
 
@@ -54,6 +56,7 @@ Skill paths:
 - skills/mixed-integer-programming
 - skills/second-order-cone-programming
 - skills/or-solver
+- skills/osqp-solver
 
 Steps:
 1. Clone or update the repository locally.
@@ -76,6 +79,7 @@ ln -s "$PWD/skills/linear-programming" ~/.codex/skills/linear-programming
 ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-programming
 ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
 ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
+ln -s "$PWD/skills/osqp-solver" ~/.codex/skills/osqp-solver
 ```
 
 If your agent uses a different local Skill directory, replace `~/.codex/skills` with that configured path.
@@ -102,6 +106,12 @@ For general LP/MIP/SOCP modeling, start with the matching package under
 skills/cdopt-optimization/SKILL.md
 ```
 
+For continuous convex QPs solved with OSQP, start with:
+
+```text
+skills/osqp-solver/SKILL.md
+```
+
 ## Repository Layout
 
 ```text
@@ -115,6 +125,7 @@ AI4Math-Optimization/
     ├── linear-programming/
     ├── mixed-integer-programming/
     ├── or-solver/
+    ├── osqp-solver/
     └── second-order-cone-programming/
 ```
 
