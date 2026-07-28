@@ -18,6 +18,8 @@ Use this repository as a routing layer for optimization workflows.
 - `skills/mixed-integer-programming/`: MIP and MILP modeling workflows.
 - `skills/second-order-cone-programming/`: SOCP modeling and solver workflows.
 - `skills/or-solver/`: shared optimization solver setup and selection.
+- `skills/osqp-solver/`: continuous convex QP modeling, OSQP execution,
+  status gates, and independent solution or infeasibility-certificate checks.
 
 Prefer package-local instructions over this router when running a concrete
 workflow.

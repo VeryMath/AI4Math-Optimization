@@ -1,0 +1,4 @@
+interface:
+  display_name: "OSQP Solver"
+  short_description: "Model and verify convex QPs with OSQP"
+  default_prompt: "Use $osqp-solver to model this convex quadratic program, solve it with OSQP, and verify the status, residuals, and certificates."

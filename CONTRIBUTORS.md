@@ -16,6 +16,7 @@ attribution ledger.
 | Module | Source | Contributor(s) | Contribution scope | Attribution record |
 | --- | --- | --- | --- | --- |
 | Root repository router | Current `VeryMath/AI4Math-Optimization` repository | [Conan Xu](https://github.com/ConanXu-math), conanxu <1845830029@qq.com> | Root README, bilingual repository map, package routing layer, and public repository structure. | Preserved through repository commit history. |
+| `skills/osqp-solver` | New package prepared in the AI4Math Skill Library from official OSQP documentation | [Conan Xu](https://github.com/ConanXu-math) | Package commissioning, integration, review, and release stewardship; implementation was AI-assisted and independently tested. | Preserve through the upstream integration commit and pull request. |
 | Optimization skill packages | Repository history and imported optimization work | [ricercar77](https://github.com/ricercar77) | Optimization skill contributions and package content. | Preserved through GitHub contributor graph, repository history, and this ledger. |
 | `skills/linear-programming`, `skills/mixed-integer-programming`, `skills/second-order-cone-programming`, `skills/or-solver` | Current package metadata | 李爽夕 | LP, MIP, SOCP, solver-setup workflow content, examples, and benchmark materials. | Recorded in package metadata and this ledger. |
 
