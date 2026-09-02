@@ -35,7 +35,7 @@
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP 建模和基于 cvxpy 的锥优化求解流程。 | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | 为 OR skills 提供统一求解器检测、安装规划、license 检查和选择策略。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | 面向连续凸 QP 的 OSQP 建模、重复求解、状态门槛与独立验证。 | [`README`](skills/osqp-solver/README.zh-CN.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
-| [`optskills`](skills/optskills/) | 独立选择和使用 OptSkills 已发布的 103 个优化问题原型知识卡，并支持显式的上游更新。 | [`README`](skills/optskills/README.zh-CN.md) · [`SKILL`](skills/optskills/SKILL.md) |
+| [`optskills`](skills/optskills/) | 独立接入从 OptSkills 官方技能库汇总去重的 103 张卡片（93 张 NanoCO + 10 张 learned 独有卡片），用于原型匹配、数学建模、在环境允许时实际求解并检查结果。 | [`README`](skills/optskills/README.zh-CN.md) · [`使用手册`](skills/optskills/assignment-problem-example.zh-CN.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
 `optskills` 是自包含的，不依赖相邻技能包。
 

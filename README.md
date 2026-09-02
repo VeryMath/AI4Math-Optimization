@@ -39,7 +39,7 @@ package that matches the problem class.
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | OSQP modeling, repeated solves, status gates, and independent verification for continuous convex QPs. | [`README`](skills/osqp-solver/README.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
-| [`optskills`](skills/optskills/) | Standalone selection and use of 103 released OptSkills problem-archetype cards, with explicit upstream updates. | [`README`](skills/optskills/README.md) · [`SKILL`](skills/optskills/SKILL.md) |
+| [`optskills`](skills/optskills/) | Standalone access to 103 deduplicated cards assembled from the official OptSkills libraries (93 NanoCO and 10 learned-only), for archetype matching, modeling, solver execution when available, and result checks. | [`README`](skills/optskills/README.md) · [`Guide`](skills/optskills/assignment-problem-example.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
 `optskills` is self-contained and does not require sibling packages.
 

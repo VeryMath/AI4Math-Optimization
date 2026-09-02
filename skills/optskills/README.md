@@ -2,10 +2,10 @@
 
 [中文](README.zh-CN.md)
 
-OptSkills is a standalone thin entrypoint to 103 released OptSkills
-problem-archetype cards. It helps an agent select a card, formulate the
-user's actual operations-research problem, solve it when the environment
-permits, and report what was checked.
+OptSkills is a standalone thin entrypoint to a 103-card deduplicated collection
+assembled from the official released OptSkills libraries. It helps an agent
+select a card, formulate the user's actual operations-research problem, solve
+it when the environment permits, and report what was checked.
 
 ## Source selection
 
