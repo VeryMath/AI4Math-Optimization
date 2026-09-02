@@ -39,8 +39,9 @@ Run this workflow only after the user explicitly asks for an upstream update.
 10. After all comparisons and approvals are complete, copy selected card text
     and index fields as published upstream. Follow each accepted upstream path;
     when an ID moves, remove its obsolete path. Update every affected card plus
-    index, source, and count wording in `index.json`, `SOURCES.md`, and any
-    affected package or root README files in the same reviewable Git change.
+    index, source, count wording, and the `SOURCES.md` upstream snapshot commit
+    in `index.json`, `SOURCES.md`, and any affected package or root README files
+    in the same reviewable Git change.
 11. Validate every index path and run real problems for every affected card.
     Report file updates separately from solver execution and checked results.
     If final validation fails, do not publish the change; restore the pre-update

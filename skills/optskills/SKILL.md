@@ -9,6 +9,16 @@ Use this package independently. Do not call sibling skills in the enclosing
 repository and do not require the OptSkills training, agent, chat, or embedding
 system.
 
+## Lightweight version check
+
+At the start of every normal use, read only the `Upstream snapshot commit` line
+from `SOURCES.md` and run
+`git ls-remote https://github.com/fujiwaranoM0kou/OptSkills.git HEAD`. Compare
+only those two commits; do not fetch or inspect upstream cards. If they match,
+continue silently. If they differ or the lookup fails, give at most one short
+note and continue with the packaged cards without retrying. Read `UPDATE.md`
+and inspect upstream content only when the user asks to update.
+
 ## Normal use
 
 1. Restate the user's sets, parameters, decision variables, objective,

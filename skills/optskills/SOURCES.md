@@ -3,6 +3,8 @@
 This package provides a thin, standalone entrypoint to released optimization
 skill cards from [OptSkills](https://github.com/fujiwaranoM0kou/OptSkills).
 
+Upstream snapshot commit: d9e14300df4b499529c74ea1981e2c1aba0628b8
+
 Paper: *OptSkills: Learning Generalizable Optimization Skills from Problem
 Archetypes via Cluster-Based Distillation*, arXiv:2605.29829.
 
