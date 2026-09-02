@@ -9,7 +9,7 @@ manifold-constrained optimization.
 [中文说明](README.zh-CN.md) · [Contributors](CONTRIBUTORS.md) · [Skill packages](#skill-packages) · [Installation](#installation) · [Quick start](#quick-start) · [Security model](#security-and-scope)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
-![skills](https://img.shields.io/badge/skills-7-2ea44f)
+![skills](https://img.shields.io/badge/skills-8-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -39,6 +39,9 @@ package that matches the problem class.
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | OSQP modeling, repeated solves, status gates, and independent verification for continuous convex QPs. | [`README`](skills/osqp-solver/README.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
+| [`optskills`](skills/optskills/) | Standalone selection and use of 103 released OptSkills problem-archetype cards, with explicit upstream updates. | [`README`](skills/optskills/README.md) · [`SKILL`](skills/optskills/SKILL.md) |
+
+`optskills` is self-contained and does not require sibling packages.
 
 ## Installation
 
@@ -57,6 +60,7 @@ Skill paths:
 - skills/second-order-cone-programming
 - skills/or-solver
 - skills/osqp-solver
+- skills/optskills
 
 Steps:
 1. Clone or update the repository locally.
@@ -80,6 +84,7 @@ ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-prog
 ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
 ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
 ln -s "$PWD/skills/osqp-solver" ~/.codex/skills/osqp-solver
+ln -s "$PWD/skills/optskills" ~/.codex/skills/optskills
 ```
 
 If your agent uses a different local Skill directory, replace `~/.codex/skills` with that configured path.
@@ -112,6 +117,12 @@ For continuous convex QPs solved with OSQP, start with:
 skills/osqp-solver/SKILL.md
 ```
 
+For natural-language operations-research archetypes, start with:
+
+```text
+skills/optskills/SKILL.md
+```
+
 ## Repository Layout
 
 ```text
@@ -126,6 +137,7 @@ AI4Math-Optimization/
     ├── mixed-integer-programming/
     ├── or-solver/
     ├── osqp-solver/
+    ├── optskills/
     └── second-order-cone-programming/
 ```
 

@@ -8,7 +8,7 @@
 [English](README.md) · [贡献者](CONTRIBUTORS.md) · [技能包](#技能包) · [安装](#安装) · [快速开始](#快速开始) · [安全边界](#安全边界)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
-![skills](https://img.shields.io/badge/skills-7-2ea44f)
+![skills](https://img.shields.io/badge/skills-8-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -35,6 +35,9 @@
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP 建模和基于 cvxpy 的锥优化求解流程。 | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | 为 OR skills 提供统一求解器检测、安装规划、license 检查和选择策略。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | 面向连续凸 QP 的 OSQP 建模、重复求解、状态门槛与独立验证。 | [`README`](skills/osqp-solver/README.zh-CN.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
+| [`optskills`](skills/optskills/) | 独立选择和使用 OptSkills 已发布的 103 个优化问题原型知识卡，并支持显式的上游更新。 | [`README`](skills/optskills/README.zh-CN.md) · [`SKILL`](skills/optskills/SKILL.md) |
+
+`optskills` 是自包含的，不依赖相邻技能包。
 
 ## 安装
 
@@ -53,6 +56,7 @@ Skill 路径：
 - skills/second-order-cone-programming
 - skills/or-solver
 - skills/osqp-solver
+- skills/optskills
 
 请执行：
 1. 本地 clone 或更新仓库。
@@ -76,6 +80,7 @@ ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-prog
 ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
 ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
 ln -s "$PWD/skills/osqp-solver" ~/.codex/skills/osqp-solver
+ln -s "$PWD/skills/optskills" ~/.codex/skills/optskills
 ```
 
 如果你的 agent 使用别的本地 Skill 目录，把 `~/.codex/skills` 替换成对应配置路径。
@@ -107,6 +112,12 @@ skills/cdopt-optimization/SKILL.md
 skills/osqp-solver/SKILL.md
 ```
 
+自然语言运筹优化问题原型从这里开始：
+
+```text
+skills/optskills/SKILL.md
+```
+
 ## 仓库结构
 
 ```text
@@ -121,6 +132,7 @@ AI4Math-Optimization/
     ├── mixed-integer-programming/
     ├── or-solver/
     ├── osqp-solver/
+    ├── optskills/
     └── second-order-cone-programming/
 ```
 
