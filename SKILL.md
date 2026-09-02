@@ -20,6 +20,10 @@ Use this repository as a routing layer for optimization workflows.
 - `skills/or-solver/`: shared optimization solver setup and selection.
 - `skills/osqp-solver/`: continuous convex QP modeling, OSQP execution,
   status gates, and independent solution or infeasibility-certificate checks.
+- `skills/optskills/`: standalone selection and use of released OptSkills
+  problem-archetype cards. Read its `SKILL.md`, combined
+  `skill_library/index.json`, and selected card files. It does not depend on
+  sibling skill packages.
 
 Prefer package-local instructions over this router when running a concrete
 workflow.
