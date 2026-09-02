@@ -1,5 +1,7 @@
 # OptSkills
 
+[English](README.md)
+
 OptSkills 是一个独立的薄入口，连接 103 张已发布的 OptSkills
 问题原型卡片。它帮助智能体选择卡片、为用户的实际运筹问题建模、在环境允许时求解，并如实报告已检查的内容。
 
@@ -9,17 +11,17 @@ OptSkills 是一个独立的薄入口，连接 103 张已发布的 OptSkills
 cluster 卡片，也不包含 `ingredients.json`。选中的卡片及其相对路径列在
 `skill_library/index.json` 中。
 
-## 安装
+## 让 Coding Agent 安装
 
-克隆 `VeryMath/AI4Math-Optimization`，然后只把 `skills/optskills`
-链接到智能体的技能目录：
+把下面的提示词发给 Coding Agent：
 
-```bash
-git clone https://github.com/VeryMath/AI4Math-Optimization.git
-cd AI4Math-Optimization
-mkdir -p ~/.codex/skills
-ln -s "$PWD/skills/optskills" ~/.codex/skills/optskills
-```
+> 请从 GitHub 仓库 `VeryMath/AI4Math-Optimization` 安装
+> `skills/optskills`。只安装这个独立 Skill，自动判断当前 Coding Agent
+> 的技能目录，完成链接或复制并验证能否发现 `optskills`。最后告诉我安装
+> 路径、是否需要重启，并给出一个测试提示词。
+
+Coding Agent 应负责克隆或更新仓库、找到当前环境的技能目录、完成安装并
+验证发现结果。用户不需要先判断应使用哪个本地目录。
 
 ## 快速开始
 
@@ -27,6 +29,8 @@ ln -s "$PWD/skills/optskills" ~/.codex/skills/optskills
 
 > 阅读 `SKILL.md`，通过 `skill_library/index.json` 选择相关的 OptSkills
 > 卡片，为我的问题建模，在可以时求解，并检查关键约束。
+
+完整过程见[用 OptSkills 求解一个指派问题](assignment-problem-example.zh-CN.md)。
 
 ## 更新
 
