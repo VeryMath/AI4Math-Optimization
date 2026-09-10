@@ -1,64 +1,25 @@
 <!-- 作者：李爽夕 -->
 
-# 运筹优化求解器统一配置
+# 配置指定求解器的环境
 
-## 简介
+`or-solver` 为用户或建模任务已经选定的求解器配置 Python 环境：
 
-为 OptSkills 及 LP、MIP、SOCP 建模任务提供**统一的求解器检测、安装、选择与 License 配置**。配置完成后，由原建模任务继续求解；单独调用时只处理环境配置。
+- 检查当前 Python、目标软件包和必要依赖。
+- 按需安装软件包，配置许可证及环境变量。
+- 排查配置错误，说明环境是否可用。
 
-## 覆盖范围
+求解器选型、问题建模和求解由用户或 OptSkills 等建模任务负责。
 
-| 问题类型 | 可用求解器数 | 开源首选 | 商业首选 |
-|----------|:----------:|----------|----------|
-| LP（线性规划） | 13 | HiGHS (MIT) | COPT |
-| MIP（混合整数规划） | 12 | SCIP (Apache 2.0) / HiGHS (MIT) | COPT / Gurobi |
-| SOCP（二阶锥规划） | 10 | CLARABEL (Apache 2.0) | COPT / MOSEK |
+## 使用方式
 
-共覆盖 **20 种求解器/接口**，含 4 种商业求解器和 16 种开源求解器。
+> 为当前项目配置 COPT 的 Python 环境，使用 coptpy。检查依赖和许可证，
+> 处理配置错误，告诉我当前环境是否可用。
 
-## 快速开始
+也可以由 OptSkills 指定目标后调用：
 
-### 1. 检测已有求解器
+OptSkills 决定使用 COPT → or-solver 配置 COPT 环境 → OptSkills 继续求解。
 
-```bash
-pip list | grep -iE "coptpy|gurobipy|mosek|cplex|pyscipopt|highspy|clarabel|pulp|mip|ortools|ecos|scs|cvxopt|cosmo|osqp|swiglpk|scipy|lpsolve55|numpy|cvxpy"
-```
+未指定求解器时，先明确目标；不会仅根据 LP、MIP 或 SOCP 类型自动挑选。
+配置失败时说明阻碍，将后续决定交回原任务。
 
-### 2. 一键安装（按需）
-
-```bash
-# 只做 LP
-pip install numpy scipy
-
-# LP + MIP
-pip install numpy pulp highspy
-
-# LP + MIP + SOCP（全套开源）
-pip install numpy scipy pulp highspy cvxpy clarabel ecos scs
-```
-
-### 3. 验证
-
-```python
-import numpy, scipy
-from scipy.optimize import linprog
-import cvxpy; print(cvxpy.installed_solvers())
-```
-
-## 降级策略（统一优先级）
-
-```
-商业: COPT > Gurobi > MOSEK > CPLEX
-开源: HiGHS/SCIP/CLARABEL > PuLP/CBC/ECOS > CVXOPT/GLPK/...
-环境仍不可用: 报告原因，返回原建模任务
-```
-
-## 配合使用的 Skill
-
-- `../optskills/SKILL.md` — 自然语言运筹建模，包含线性规划
-- `../mixed-integer-programming/SKILL.md` — 混合整数规划
-- `../second-order-cone-programming/SKILL.md` — 二阶锥规划
-
-## 示例
-
-详见 [examples.md](examples.md)，含检测输出示例和安装场景示例。
+执行步骤见 [SKILL.md](SKILL.md)，安装和许可证配置场景见 [examples.md](examples.md)。

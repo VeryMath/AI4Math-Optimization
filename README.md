@@ -35,12 +35,13 @@ package that matches the problem class.
 | [`cdopt-optimization`](skills/cdopt-optimization/) | CDOpt and manifold-constrained optimization modeling, validation, runner generation, and evidence reports. | [`README`](skills/cdopt-optimization/README.md) · [`SKILL`](skills/cdopt-optimization/SKILL.md) |
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | MILP/MIP modeling with binary, integer, and continuous decision variables. | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
-| [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
+| [`or-solver`](skills/or-solver/) | Python dependencies, installation, licenses, environment variables, and setup troubleshooting for a specified solver. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | OSQP modeling, repeated solves, status gates, and independent verification for continuous convex QPs. | [`README`](skills/osqp-solver/README.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
 | [`optskills`](skills/optskills/) | Standalone selection and use of 103 released OptSkills problem-archetype cards, with explicit upstream updates. | [`README`](skills/optskills/README.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
 `optskills` can be used on its own for modeling and solving with an available
-solver. Use `or-solver` when dependency installation or license setup is needed.
+solver. The user or modeling skill chooses the solver; `or-solver` configures
+that specified solver when dependency installation or license setup is needed.
 
 ## Installation
 
@@ -93,7 +94,7 @@ git clone https://github.com/VeryMath/AI4Math-Optimization.git
 cd AI4Math-Optimization
 ```
 
-For solver setup and selection, start with:
+To configure a solver already chosen by the user or modeling skill, start with:
 
 ```text
 skills/or-solver/SKILL.md

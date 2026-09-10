@@ -34,9 +34,10 @@ Coding Agent 应负责克隆或更新仓库、找到当前环境的技能目录�
 
 ## 求解器环境
 
-环境中已有合适的求解器时，OptSkills 可以直接求解。缺少依赖或遇到许可证错误时，
-使用独立的 [or-solver](../or-solver/SKILL.md) Skill，配置完成后继续原来的 OptSkills
-任务。它是可选支持；只安装 OptSkills 不会同时安装 or-solver。
+求解器由用户或 OptSkills 决定。缺少依赖或遇到许可证错误时，将指定的求解器、
+调用接口和目标 Python 环境交给独立的 [or-solver](../or-solver/SKILL.md) Skill。
+它只配置这个目标，配置完成后由 OptSkills 继续求解。环境支持是可选的；
+只安装 OptSkills 不会同时安装 or-solver。
 
 ## 更新
 

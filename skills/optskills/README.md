@@ -40,10 +40,11 @@ for a complete walkthrough.
 
 ## Solver environment
 
-OptSkills can solve with a suitable solver already available in the environment.
-For missing dependencies or license errors, use the separate
-[or-solver](../or-solver/SKILL.md) Skill, then return to the same OptSkills task.
-It is optional; installing OptSkills alone does not install or-solver.
+The user or OptSkills chooses the solver. For missing dependencies or license
+errors, pass that solver, its interface, and the target Python environment to
+the separate [or-solver](../or-solver/SKILL.md) Skill. It configures that target;
+OptSkills then continues solving. Environment support is optional; installing
+OptSkills alone does not install or-solver.
 
 ## Updates
 

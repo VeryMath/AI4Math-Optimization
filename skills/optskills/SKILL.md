@@ -32,12 +32,15 @@ and inspect upstream content only when the user asks to update.
    mathematical modeling without claiming a card was used.
 5. Apply the card to the user's actual data. Card examples are guidance, not
    proof that the new model is correct.
-6. Use only solver libraries and licenses actually available in the current
-   environment. If a suitable solver is missing or dependency or license errors
-   prevent execution, use `or-solver` when available (in this repository:
-   `../or-solver/SKILL.md`). Pass the problem type and any observed error, then
-   resume this workflow after setup. If that skill is unavailable, explain the
-   missing setup and continue only with work the current environment supports.
+6. Choose the solver in this modeling task, honoring the user's choice, model
+   requirements, and actual library and license availability. If the chosen
+   solver needs installation or configuration, use `or-solver` when available
+   (in this repository: `../or-solver/SKILL.md`). Pass the specified solver,
+   interface, any version requirements, target Python environment, and observed
+   setup error. That skill only configures the named target; solver choice and
+   solving remain here. Resume after setup, using only libraries and licenses
+   actually available. If setup support is unavailable or fails, explain the
+   missing conditions and continue with work the current environment supports.
    Ask before installing dependencies unless the user has already authorized it.
 7. Check solver status before reading values. Recompute the objective and the
    problem's key constraints whenever execution is possible.

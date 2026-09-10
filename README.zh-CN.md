@@ -31,11 +31,11 @@
 | [`cdopt-optimization`](skills/cdopt-optimization/) | CDOpt 和流形约束优化建模、验证、runner 生成和证据报告。 | [`README`](skills/cdopt-optimization/README.md) · [`SKILL`](skills/cdopt-optimization/SKILL.md) |
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | 含 binary、integer 和 continuous 变量的 MILP/MIP 建模。 | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP 建模和基于 cvxpy 的锥优化求解流程。 | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
-| [`or-solver`](skills/or-solver/) | 为 OR skills 提供统一求解器检测、安装规划、license 检查和选择策略。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
+| [`or-solver`](skills/or-solver/) | 为已指定的求解器检查 Python 依赖、安装软件包、配置许可证和环境变量，并排查配置错误。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | 面向连续凸 QP 的 OSQP 建模、重复求解、状态门槛与独立验证。 | [`README`](skills/osqp-solver/README.zh-CN.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
 | [`optskills`](skills/optskills/) | 独立选择和使用 OptSkills 已发布的 103 个优化问题原型知识卡，并支持显式的上游更新。 | [`README`](skills/optskills/README.zh-CN.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
-`optskills` 可独立用于建模，并使用已有求解器求解。需要安装依赖或配置许可证时，使用 `or-solver`。
+`optskills` 可独立用于建模和求解。用户或建模任务选定求解器后，需要安装依赖或配置许可证时，由 `or-solver` 配置这个指定目标。
 
 ## 安装
 
@@ -88,7 +88,7 @@ git clone https://github.com/VeryMath/AI4Math-Optimization.git
 cd AI4Math-Optimization
 ```
 
-求解器配置与选择从这里开始：
+用户或建模任务已经选定求解器后，环境配置从这里开始：
 
 ```text
 skills/or-solver/SKILL.md
