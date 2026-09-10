@@ -8,7 +8,7 @@
 [English](README.md) · [贡献者](CONTRIBUTORS.md) · [技能包](#技能包) · [安装](#安装) · [快速开始](#快速开始) · [安全边界](#安全边界)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
-![skills](https://img.shields.io/badge/skills-8-2ea44f)
+![skills](https://img.shields.io/badge/skills-6-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -29,15 +29,13 @@
 | 包 | 适用任务 | 入口 |
 | --- | --- | --- |
 | [`cdopt-optimization`](skills/cdopt-optimization/) | CDOpt 和流形约束优化建模、验证、runner 生成和证据报告。 | [`README`](skills/cdopt-optimization/README.md) · [`SKILL`](skills/cdopt-optimization/SKILL.md) |
-| [`copt-linear-program`](skills/copt-linear-program/) | COPT/coptpy 线性规划 workflow、文字题重述和求解脚本。 | [`README`](skills/copt-linear-program/readme.md) · [`SKILL`](skills/copt-linear-program/SKILL.md) |
-| [`linear-programming`](skills/linear-programming/) | 通用 LP 建模、求解器选择和自然语言到模型的工作流。 | [`README`](skills/linear-programming/README.md) · [`SKILL`](skills/linear-programming/SKILL.md) |
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | 含 binary、integer 和 continuous 变量的 MILP/MIP 建模。 | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP 建模和基于 cvxpy 的锥优化求解流程。 | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | 为 OR skills 提供统一求解器检测、安装规划、license 检查和选择策略。 | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | 面向连续凸 QP 的 OSQP 建模、重复求解、状态门槛与独立验证。 | [`README`](skills/osqp-solver/README.zh-CN.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
 | [`optskills`](skills/optskills/) | 独立选择和使用 OptSkills 已发布的 103 个优化问题原型知识卡，并支持显式的上游更新。 | [`README`](skills/optskills/README.zh-CN.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
-`optskills` 是自包含的，不依赖相邻技能包。
+`optskills` 可独立用于建模，并使用已有求解器求解。需要安装依赖或配置许可证时，使用 `or-solver`。
 
 ## 安装
 
@@ -50,8 +48,6 @@
 分支：main
 Skill 路径：
 - skills/cdopt-optimization
-- skills/copt-linear-program
-- skills/linear-programming
 - skills/mixed-integer-programming
 - skills/second-order-cone-programming
 - skills/or-solver
@@ -74,8 +70,6 @@ git clone https://github.com/VeryMath/AI4Math-Optimization.git
 cd AI4Math-Optimization
 mkdir -p ~/.codex/skills
 ln -s "$PWD/skills/cdopt-optimization" ~/.codex/skills/cdopt-optimization
-ln -s "$PWD/skills/copt-linear-program" ~/.codex/skills/copt-linear-program
-ln -s "$PWD/skills/linear-programming" ~/.codex/skills/linear-programming
 ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-programming
 ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
 ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
@@ -100,7 +94,7 @@ cd AI4Math-Optimization
 skills/or-solver/SKILL.md
 ```
 
-通用 LP/MIP/SOCP 建模请进入 `skills/` 下对应包。CDOpt 或流形约束优化从这里开始：
+LP 建模从 `skills/optskills/SKILL.md` 开始；MIP 和 SOCP 专项工作流请进入 `skills/` 下对应包。CDOpt 或流形约束优化从这里开始：
 
 ```text
 skills/cdopt-optimization/SKILL.md
@@ -127,8 +121,6 @@ AI4Math-Optimization/
 ├── SKILL.md
 └── skills/
     ├── cdopt-optimization/
-    ├── copt-linear-program/
-    ├── linear-programming/
     ├── mixed-integer-programming/
     ├── or-solver/
     ├── osqp-solver/

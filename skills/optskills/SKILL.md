@@ -5,9 +5,9 @@ description: Use when a coding agent must model or solve a natural-language oper
 
 # OptSkills
 
-Use this package independently. Do not call sibling skills in the enclosing
-repository and do not require the OptSkills training, agent, chat, or embedding
-system.
+Use this package independently for problem modeling. It does not require the
+OptSkills training, agent, chat, or embedding system. Solver environment setup
+can use the separate `or-solver` skill as described in step 6.
 
 ## Lightweight version check
 
@@ -33,7 +33,12 @@ and inspect upstream content only when the user asks to update.
 5. Apply the card to the user's actual data. Card examples are guidance, not
    proof that the new model is correct.
 6. Use only solver libraries and licenses actually available in the current
-   environment. Ask before installing dependencies.
+   environment. If a suitable solver is missing or dependency or license errors
+   prevent execution, use `or-solver` when available (in this repository:
+   `../or-solver/SKILL.md`). Pass the problem type and any observed error, then
+   resume this workflow after setup. If that skill is unavailable, explain the
+   missing setup and continue only with work the current environment supports.
+   Ask before installing dependencies unless the user has already authorized it.
 7. Check solver status before reading values. Recompute the objective and the
    problem's key constraints whenever execution is possible.
 8. Report separately: selected card, completed model, solver execution,

@@ -4,7 +4,7 @@
 
 ## 简介
 
-为线性规划 (LP)、混合整数规划 (MIP)、二阶锥规划 (SOCP) 提供**统一的求解器检测、安装、选择与 License 配置**。避免三个 skill 各自维护重复的求解器管理逻辑。
+为 OptSkills 及 LP、MIP、SOCP 建模任务提供**统一的求解器检测、安装、选择与 License 配置**。配置完成后，由原建模任务继续求解；单独调用时只处理环境配置。
 
 ## 覆盖范围
 
@@ -50,12 +50,12 @@ import cvxpy; print(cvxpy.installed_solvers())
 ```
 商业: COPT > Gurobi > MOSEK > CPLEX
 开源: HiGHS/SCIP/CLARABEL > PuLP/CBC/ECOS > CVXOPT/GLPK/...
-最终: GitHub 搜索独立实现
+环境仍不可用: 报告原因，返回原建模任务
 ```
 
-## 被引用的 Skill
+## 配合使用的 Skill
 
-- `../linear-programming/SKILL.md` — 线性规划
+- `../optskills/SKILL.md` — 自然语言运筹建模，包含线性规划
 - `../mixed-integer-programming/SKILL.md` — 混合整数规划
 - `../second-order-cone-programming/SKILL.md` — 二阶锥规划
 

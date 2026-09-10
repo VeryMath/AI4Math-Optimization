@@ -9,7 +9,7 @@ manifold-constrained optimization.
 [中文说明](README.zh-CN.md) · [Contributors](CONTRIBUTORS.md) · [Skill packages](#skill-packages) · [Installation](#installation) · [Quick start](#quick-start) · [Security model](#security-and-scope)
 
 ![version](https://img.shields.io/badge/version-0.1.0-blue)
-![skills](https://img.shields.io/badge/skills-8-2ea44f)
+![skills](https://img.shields.io/badge/skills-6-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -33,15 +33,14 @@ package that matches the problem class.
 | Package | Use it for | Start here |
 | --- | --- | --- |
 | [`cdopt-optimization`](skills/cdopt-optimization/) | CDOpt and manifold-constrained optimization modeling, validation, runner generation, and evidence reports. | [`README`](skills/cdopt-optimization/README.md) · [`SKILL`](skills/cdopt-optimization/SKILL.md) |
-| [`copt-linear-program`](skills/copt-linear-program/) | COPT/coptpy linear-programming workflows, word-problem restatement, and solver scripts. | [`README`](skills/copt-linear-program/readme.md) · [`SKILL`](skills/copt-linear-program/SKILL.md) |
-| [`linear-programming`](skills/linear-programming/) | General LP modeling, solver selection, and natural-language-to-model workflows. | [`README`](skills/linear-programming/README.md) · [`SKILL`](skills/linear-programming/SKILL.md) |
 | [`mixed-integer-programming`](skills/mixed-integer-programming/) | MILP/MIP modeling with binary, integer, and continuous decision variables. | [`README`](skills/mixed-integer-programming/README.md) · [`SKILL`](skills/mixed-integer-programming/SKILL.md) |
 | [`second-order-cone-programming`](skills/second-order-cone-programming/) | SOCP modeling and cvxpy-based conic solver workflows. | [`README`](skills/second-order-cone-programming/README.md) · [`SKILL`](skills/second-order-cone-programming/SKILL.md) |
 | [`or-solver`](skills/or-solver/) | Shared solver detection, installation planning, license checks, and solver selection for OR skills. | [`README`](skills/or-solver/README.md) · [`SKILL`](skills/or-solver/SKILL.md) |
 | [`osqp-solver`](skills/osqp-solver/) | OSQP modeling, repeated solves, status gates, and independent verification for continuous convex QPs. | [`README`](skills/osqp-solver/README.md) · [`SKILL`](skills/osqp-solver/SKILL.md) |
 | [`optskills`](skills/optskills/) | Standalone selection and use of 103 released OptSkills problem-archetype cards, with explicit upstream updates. | [`README`](skills/optskills/README.md) · [`SKILL`](skills/optskills/SKILL.md) |
 
-`optskills` is self-contained and does not require sibling packages.
+`optskills` can be used on its own for modeling and solving with an available
+solver. Use `or-solver` when dependency installation or license setup is needed.
 
 ## Installation
 
@@ -54,8 +53,6 @@ Repository: https://github.com/VeryMath/AI4Math-Optimization.git
 Branch: main
 Skill paths:
 - skills/cdopt-optimization
-- skills/copt-linear-program
-- skills/linear-programming
 - skills/mixed-integer-programming
 - skills/second-order-cone-programming
 - skills/or-solver
@@ -78,8 +75,6 @@ git clone https://github.com/VeryMath/AI4Math-Optimization.git
 cd AI4Math-Optimization
 mkdir -p ~/.codex/skills
 ln -s "$PWD/skills/cdopt-optimization" ~/.codex/skills/cdopt-optimization
-ln -s "$PWD/skills/copt-linear-program" ~/.codex/skills/copt-linear-program
-ln -s "$PWD/skills/linear-programming" ~/.codex/skills/linear-programming
 ln -s "$PWD/skills/mixed-integer-programming" ~/.codex/skills/mixed-integer-programming
 ln -s "$PWD/skills/second-order-cone-programming" ~/.codex/skills/second-order-cone-programming
 ln -s "$PWD/skills/or-solver" ~/.codex/skills/or-solver
@@ -104,8 +99,9 @@ For solver setup and selection, start with:
 skills/or-solver/SKILL.md
 ```
 
-For general LP/MIP/SOCP modeling, start with the matching package under
-`skills/`. For CDOpt or manifold-constrained tasks, start with:
+For LP modeling, start with `skills/optskills/SKILL.md`. For dedicated MIP or
+SOCP workflows, use the matching package under `skills/`. For CDOpt or
+manifold-constrained tasks, start with:
 
 ```text
 skills/cdopt-optimization/SKILL.md
@@ -132,8 +128,6 @@ AI4Math-Optimization/
 ├── SKILL.md
 └── skills/
     ├── cdopt-optimization/
-    ├── copt-linear-program/
-    ├── linear-programming/
     ├── mixed-integer-programming/
     ├── or-solver/
     ├── osqp-solver/

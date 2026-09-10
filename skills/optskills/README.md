@@ -38,6 +38,13 @@ Use this prompt:
 See [Solving an assignment problem with OptSkills](assignment-problem-example.md)
 for a complete walkthrough.
 
+## Solver environment
+
+OptSkills can solve with a suitable solver already available in the environment.
+For missing dependencies or license errors, use the separate
+[or-solver](../or-solver/SKILL.md) Skill, then return to the same OptSkills task.
+It is optional; installing OptSkills alone does not install or-solver.
+
 ## Updates
 
 Use this prompt only when an upstream update is wanted:
@@ -48,8 +55,8 @@ Use this prompt only when an upstream update is wanted:
 
 Raw cards may contain placeholders or unverified examples. Being installed,
 loaded, solved, and checked are different claims; report each state separately.
-Normal use is package-local and does not call sibling skills or require the
-upstream training, agent, chat, or embedding system.
+Problem modeling stays in this package, with optional environment support from
+or-solver. The upstream training, agent, chat, and embedding system is not required.
 
 ## License and sources
 

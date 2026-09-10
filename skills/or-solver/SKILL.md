@@ -2,12 +2,12 @@
 name: or-solver
 description: >-
   Unified solver detection, installation, selection, and license configuration
-  for OR optimization skills (LP, MIP, SOCP). One-stop solver management: detect
-  installed packages, install missing solvers with proper priority, select the
+  for OptSkills and OR optimization tasks (LP, MIP, SOCP). Detect installed
+  packages, install missing solvers with proper priority, select the
   best available solver by problem type, and troubleshoot common errors. Covers
   20 solvers across commercial (COPT, Gurobi, MOSEK, CPLEX) and open-source
-  (HiGHS, SCIP, CLARABEL, CBC, ECOS, SCS, etc.). Use when the LP, MIP, or SOCP
-  skill needs to set up a solver environment, or when the user asks about solver
+  (HiGHS, SCIP, CLARABEL, CBC, ECOS, SCS, etc.). Use when OptSkills or another
+  LP, MIP, or SOCP workflow needs environment setup, or when the user asks about solver
   installation, solver comparison, license setup, or solver selection.
 metadata:
   author: "李爽夕"
@@ -19,13 +19,15 @@ metadata:
 
 ## 适用场景
 
-本 skill 为以下运筹优化 skill 提供统一的求解器检测、安装与选择：
+本 skill 为以下运筹优化任务提供统一的求解器检测、安装与选择：
 
-- **LP**（线性规划）→ `../linear-programming/SKILL.md`
+- **OptSkills**（自然语言运筹建模，包含 LP）→ `../optskills/SKILL.md`
 - **MIP**（混合整数规划）→ `../mixed-integer-programming/SKILL.md`
 - **SOCP**（二阶锥规划）→ `../second-order-cone-programming/SKILL.md`
 
-当 LP / MIP / SOCP skill 在 Quick Start 第一步需要做环境准备时，应调用本 skill 的检测与安装流程，而非各自维护独立的求解器管理代码。
+建模任务需要准备求解器环境或处理依赖、许可证错误时，使用本 skill 的检测与安装流程。
+本 skill 只负责环境配置；完成后报告可用求解器和未解决的问题，由原建模任务继续求解。
+单独调用时不启动其他建模 skill。
 
 ## Quick Start（求解器环境准备）
 
@@ -40,9 +42,9 @@ flowchart TD
   LIC --> SELECT["Step 2: 综合已安装的商业 + 开源，按优先级选择"]
   COMM -->|否| SELECT
   SELECT --> AVAIL{"有可用求解器？"}
-  AVAIL -->|有| SOLVE["求解"]
+  AVAIL -->|有| RESULT["报告可用求解器与配置结果"]
   AVAIL -->|无| INSTALL["Step 3: pip install 安装开源求解器（需询问用户）"]
-  INSTALL --> SOLVE
+  INSTALL --> RESULT
 ```
 
 ### Step 1：统一检测
@@ -120,7 +122,7 @@ pip install numpy pulp                            # LP + MIP（PuLP 自带 CBC�
 pip install numpy scipy pulp cvxpy clarabel       # LP + MIP + SOCP（全套开源）
 ```
 
-**安装前必须询问用户。** 安装完成后回到 Step 2c 重新选择。
+安装前确认用户已授权；已有明确授权时不重复询问。安装完成后回到 Step 2c 重新选择。
 
 仅在以下情况考虑安装商业求解器：
 - 用户**明确要求**（如"我想用 Gurobi"）
@@ -374,31 +376,32 @@ print("CPLEX license OK")
 
 ---
 
-## 集成方式（供 LP/MIP/SOCP skill 引用）
+## 集成方式（供 OptSkills、MIP、SOCP skill 引用）
 
-LP / MIP / SOCP skill 在 Quick Start 的环境准备步骤中，可简化为对本 skill 的调用：
+建模 skill 需要配置环境时，将已确定的问题类型和实际报错交给本 skill：
 
 ```markdown
-- [ ] **环境准备与依赖安装（必须第一步）**：
+- [ ] **求解器环境配置**：
   1. 参考 `../or-solver/SKILL.md` 执行统一求解器检测与安装
   2. 确认当前问题类型为 [LP / MIP / SOCP]
-  3. 按降级策略选择求解器，若无可用求解器则安装
-  4. 验证导入成功
+  3. 选择适用的求解器，按已有授权处理所需依赖和许可证
+  4. 报告配置结果和仍然存在的错误
 ```
 
-然后直接进入各自 skill 的路径判断与问题建模。
+完成后返回原建模任务继续执行，不重新调用或启动建模 skill。
+若配置未完成，明确说明阻碍；建模任务可继续数学推导，但不能声称已完成求解。
 
 ---
 
 ## 与 GitHub 搜索的衔接
 
-当以下情况发生时，不应继续尝试安装本地求解器，应直接进入各自 skill 的「路径 C：GitHub 搜索」：
+当以下情况发生时，停止反复尝试安装，并向原建模任务说明情况：
 
 - 所有求解器安装均失败（网络/权限/系统不兼容）
 - Python 环境受限（无法 pip install）
 - 用户明确要求使用 GitHub 开源独立实现
 
-GitHub 搜索关键词因问题类型而异，详见各自 skill：
+如果需要寻找 GitHub 上的求解实现，由原建模任务负责。可按问题类型搜索：
 - LP：`site:github.com linear programming solver python`
 - MIP：`site:github.com mixed integer programming solver python`
 - SOCP：`site:github.com second order cone programming solver python`
