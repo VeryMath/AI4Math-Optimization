@@ -243,4 +243,4 @@ reviewed model, and do not copy official example code verbatim.
 
 ## License
 
-Released under the [MIT License](LICENSE).
+Released under the [MIT License](../../LICENSE).

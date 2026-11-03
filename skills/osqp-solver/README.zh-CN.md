@@ -3,9 +3,9 @@
 English guide: [README.md](README.md)
 
 这个 AI4Math skill 使用原生 OSQP Python 接口，对连续凸二次规划进行建模、求解、
-参数更新和独立复核。它目前是
+参数更新和独立复核。该技能包已纳入
 [`VeryMath/AI4Math-Optimization`](https://github.com/VeryMath/AI4Math-Optimization)
-的发布就绪本地候选；只有目标仓库接受并合并后，才能称为官方上游 package。
+仓库，采用仓库的 [MIT License](../../LICENSE)。
 
 ## 适用范围
 
@@ -78,11 +78,10 @@ python scripts/solve_qp.py references/feasible-example.json \
 
 ## 验证
 
-激活隔离环境后，在 AI4Math Skill Library 根目录运行：
+激活隔离环境后，在 `AI4Math-Optimization` 仓库根目录运行：
 
 ```bash
-python -m unittest discover -s tests -p 'test_osqp_solver_skill.py' -v
-python scripts/validate_skill_repo.py
+python -m unittest discover -s tests -v
 ```
 
 被跳过的数值测试不能作为发布证据；公开发布前必须在安装 OSQP 的环境中做到该测试集
@@ -90,12 +89,11 @@ python scripts/validate_skill_repo.py
 
 ## 许可证、引用与来源边界
 
-在维护者授权并被上游接受后，本 package 预期沿用 AI4Math 仓库的 MIT license。
+本技能包采用仓库的 [MIT License](../../LICENSE)。
 单独安装的 OSQP 项目采用 Apache-2.0 license；本 package 不打包、也不重新许可
 OSQP 代码。软件许可和学术引用是两项不同义务。官方 OSQP 引用见
 [references/citation.md](references/citation.md)。
 
 本工作流和参考材料依据
 [references/python-api.md](references/python-api.md) 所列 OSQP 官方文档整理。
-公开发布前，人类维护者必须确认发布授权，并如实记录贡献者署名；AI agent 完成打包
-不能替代这项授权。
+仓库的贡献者署名记录见 [CONTRIBUTORS.md](../../CONTRIBUTORS.md)。
