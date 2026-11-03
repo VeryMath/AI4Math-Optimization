@@ -33,7 +33,7 @@ pip install numpy cvxpy          # 必装
 pip install clarabel              # 推荐开源求解器
 ```
 
-支持 **10 种求解器**：COPT、Gurobi、MOSEK、CPLEX、CLARABEL、ECOS、SCS、CVXOPT、COSMO、OSQP。无任何求解器时自动从 GitHub 搜索开源代码。
+支持 **9 种求解器**：COPT、Gurobi、MOSEK、CPLEX、CLARABEL、ECOS、SCS、CVXOPT、COSMO。OSQP 用于带线性约束的凸 QP；包含一般二阶锥约束时，使用上述 SOCP 后端。无任何求解器时自动从 GitHub 搜索开源代码。
 
 ## 输出格式
 

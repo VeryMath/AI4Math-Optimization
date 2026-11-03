@@ -3,7 +3,7 @@ name: second-order-cone-programming
 description: >-
   Models and solves second-order cone programs and problems convertible to SOCP
   form using cvxpy with multiple solver backends (COPT, Gurobi, MOSEK, CPLEX,
-  CLARABEL, ECOS, SCS, CVXOPT, COSMO, OSQP). Handles linear objectives with
+  CLARABEL, ECOS, SCS, CVXOPT, COSMO). Handles linear objectives with
   second-order cone constraints, as well as problems reducible to SOCP such as
   portfolio optimization, robust optimization, and engineering design. When no
   local solver is available, searches GitHub for open-source SOCP solving code.
@@ -43,7 +43,7 @@ metadata:
   2. 目标需要安装或配置时，将后端名称、cvxpy 接口、Python 环境及实际报错交给 `../or-solver/SKILL.md`；该 skill 只配置指定目标
   3. 配置后由本任务继续求解；配置失败时，由本任务决定下一步，必要时走 GitHub 搜索路径
 - [ ] 路径判断：用户给的是自然语言描述、矩阵/JSON，还是要求从 GitHub 找代码
-- [ ] 求解器选择：优先使用可用求解器（COPT > Gurobi > MOSEK > CPLEX > CLARABEL > ECOS > SCS > CVXOPT > COSMO > OSQP），无可用求解器时走 GitHub 搜索路径
+- [ ] 求解器选择：优先使用可用求解器（COPT > Gurobi > MOSEK > CPLEX > CLARABEL > ECOS > SCS > CVXOPT > COSMO），无可用求解器时走 GitHub 搜索路径
 - [ ] 问题类型：是标准的 SOCP（锥约束），还是可转化为 SOCP 的问题
 - [ ] 输出重述（1-2 句）
 - [ ] 列变量/目标/约束（符号化）
@@ -128,7 +128,8 @@ site:github.com second order cone programming solver python <问题特征>
   - [未安装] ecos — pip install ecos (1.5s, 安装成功 ✓)
 - 安装操作记录：
   - pip install ecos → 成功 (version 2.0.14)
-- cvxpy 可用求解器列表：['SCS', 'ECOS', 'OSQP']
+- cvxpy 已安装的求解器列表：['SCS', 'ECOS', 'OSQP']
+- 本次 SOCP 可用后端：['SCS', 'ECOS']
 - 选用求解器：SCS (COPT 不可用时的降级选择)
 
 ### 问题重述
@@ -178,7 +179,9 @@ site:github.com second order cone programming solver python <问题特征>
 
 求解器选择由本建模任务负责；选定后需要安装、许可证配置或环境排错时，将指定后端交给 `../or-solver/SKILL.md`。
 
-SOCP 求解器优先级：**COPT > Gurobi > MOSEK > CPLEX > CLARABEL > ECOS > SCS > CVXOPT > COSMO > OSQP > GitHub 搜索**。
+SOCP 求解器优先级：**COPT > Gurobi > MOSEK > CPLEX > CLARABEL > ECOS > SCS > CVXOPT > COSMO > GitHub 搜索**。
+
+仅将支持模型全部约束的后端列为本次可用求解器。OSQP 用于带线性约束的凸 QP；包含一般二阶锥约束时，使用上述 SOCP 后端。
 
 cvxpy 作为统一建模接口，可无缝切换后端求解器。开源首选 `CLARABEL`（Apache 2.0，同质嵌入内点法，2024），备选 `ECOS`（GPLv3）。商业首选 COPT。
 

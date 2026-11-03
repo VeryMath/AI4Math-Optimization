@@ -207,4 +207,4 @@ python3 skills/cdopt-optimization/scripts/write_constrained_rnn_runner.py \
 
 ## 许可证
 
-基于 [MIT License](LICENSE) 发布。
+基于 [MIT License](../../LICENSE) 发布。

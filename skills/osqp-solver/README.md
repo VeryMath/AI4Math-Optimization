@@ -3,11 +3,9 @@
 Chinese guide: [README.zh-CN.md](README.zh-CN.md)
 
 This AI4Math skill models, solves, updates, and independently checks continuous
-convex quadratic programs with the native OSQP Python interface. It is a
-release-ready local candidate for
-[`VeryMath/AI4Math-Optimization`](https://github.com/VeryMath/AI4Math-Optimization);
-it is not an official upstream package until that repository accepts and merges
-it.
+convex quadratic programs with the native OSQP Python interface. It is included
+in [`VeryMath/AI4Math-Optimization`](https://github.com/VeryMath/AI4Math-Optimization)
+under the repository's [MIT License](../../LICENSE).
 
 ## Scope
 
@@ -88,11 +86,10 @@ acceptance conditions.
 
 ## Validation
 
-From the AI4Math Skill Library root, with the isolated environment active:
+From the `AI4Math-Optimization` repository root, with the isolated environment active:
 
 ```bash
-python -m unittest discover -s tests -p 'test_osqp_solver_skill.py' -v
-python scripts/validate_skill_repo.py
+python -m unittest discover -s tests -v
 ```
 
 Do not treat skipped numerical tests as release evidence. The OSQP-enabled
@@ -101,15 +98,13 @@ and require `skipped=0`.
 
 ## License, citation, and provenance
 
-This package is intended to follow the AI4Math repository's MIT license after
-maintainer authorization and upstream acceptance. The separately installed
-OSQP project is Apache-2.0 licensed; this package does not vendor or relicense
+This package is distributed under the repository's [MIT License](../../LICENSE).
+The separately installed OSQP project is Apache-2.0 licensed; this package does
+not vendor or relicense
 OSQP code. Software licensing and academic citation are separate obligations.
 Use [references/citation.md](references/citation.md) for the official OSQP
 citation.
 
 The workflow and references were prepared from the official OSQP documentation
-linked in [references/python-api.md](references/python-api.md). Before public
-release, a human maintainer must confirm publication authorization and record
-factual contributor attribution. Packaging by an AI agent is not that
-authorization.
+linked in [references/python-api.md](references/python-api.md). Repository
+attribution is recorded in [CONTRIBUTORS.md](../../CONTRIBUTORS.md).
