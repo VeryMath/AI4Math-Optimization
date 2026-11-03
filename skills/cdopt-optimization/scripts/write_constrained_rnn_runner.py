@@ -2,6 +2,7 @@
 """Write a tiny CPU-only CDOpt PyTorch constrained RNN/LSTM training runner."""
 
 import argparse
+import math
 import textwrap
 from pathlib import Path
 
@@ -16,6 +17,7 @@ get_quad_penalty as a feasibility proxy.
 
 import argparse
 import json
+import math
 import time
 from pathlib import Path
 
@@ -123,6 +125,25 @@ def main():
     parser.add_argument("--results-dir", default="results")
     args = parser.parse_args()
 
+    positive_ints = {
+        "--batch": args.batch,
+        "--seq-len": args.seq_len,
+        "--input-size": args.input_size,
+        "--hidden-size": args.hidden_size,
+        "--num-layers": args.num_layers,
+        "--num-classes": args.num_classes,
+        "--steps": args.steps,
+    }
+    for name, value in positive_ints.items():
+        if value < 1 or value > 100_000:
+            parser.error(f"{name} must be between 1 and 100000")
+    for name, value in (("--lr", args.lr), ("--penalty", args.penalty)):
+        if not math.isfinite(value) or value <= 0.0:
+            parser.error(f"{name} must be finite and greater than 0")
+    results_dir = Path(args.results_dir)
+    if results_dir.exists() and (results_dir.is_symlink() or not results_dir.is_dir()):
+        parser.error("--results-dir must be a real directory")
+
     torch.manual_seed(args.seed)
     rng = np.random.default_rng(args.seed)
     device = torch.device("cpu")
@@ -143,16 +164,20 @@ def main():
     initial_loss = None
     final_loss = None
     error = None
+    completed_steps = 0
     try:
         for step in range(args.steps):
             optimizer.zero_grad()
             logits = model(x)
             loss = criterion(logits, y) + get_quad_penalty(model)
+            if not torch.isfinite(loss):
+                raise FloatingPointError("training loss is not finite")
             loss.backward()
             optimizer.step()
             if step == 0:
                 initial_loss = float(loss.item())
             final_loss = float(loss.item())
+            completed_steps = step + 1
     except Exception as exc:  # noqa: BLE001 - keep run summary robust
         error = f"{type(exc).__name__}: {exc}"
     elapsed = time.time() - started
@@ -163,15 +188,23 @@ def main():
     except Exception as exc:  # noqa: BLE001 - keep run summary robust
         feasibility = f"unavailable: {type(exc).__name__}: {exc}"
 
+    execution_success = error is None and completed_steps == args.steps
+    verification_success = isinstance(feasibility, float) and math.isfinite(feasibility)
     summary = {
         "example": f"constrained_{args.cell_type}_torch",
         "framework": f"pytorch + cdopt.nn {args.cell_type.upper()}_cdopt",
-        "success": error is None,
+        "success": execution_success and verification_success,
+        "failure_stage": None if error is None else "training",
+        "execution": {"success": execution_success, "completed_steps": completed_steps},
+        "solver": {"success": execution_success, "kind": "torch.optim.SGD"},
+        "verification": {"success": verification_success, "metric": "quadratic_penalty_proxy"},
+        "mathematical_conclusion": "not_assessed",
         "error": error,
         "initial_loss": initial_loss,
         "final_loss": final_loss,
         "final_quad_penalty": feasibility,
         "steps": args.steps,
+        "completed_steps": completed_steps,
         "elapsed_seconds": elapsed,
         "parameters": {
             "cell_type": args.cell_type,
@@ -198,16 +231,20 @@ def main():
         },
     }
 
-    results_dir = Path(args.results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
+    if results_dir.is_symlink():
+        raise RuntimeError("results directory became a symlink")
     out_path = results_dir / "solver_summary.json"
+    if out_path.is_symlink():
+        raise RuntimeError("refusing to replace symlinked solver_summary.json")
     out_path.write_text(json.dumps(summary, indent=2, sort_keys=True))
     print(json.dumps(summary, indent=2, sort_keys=True))
     print(f"wrote {out_path}")
+    return 0 if summary["success"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
 '''
 
 
@@ -221,8 +258,12 @@ def main():
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
+    if output_dir.is_symlink() or (output_dir.exists() and not output_dir.is_dir()):
+        parser.error("--output-dir must be a real directory")
     output_dir.mkdir(parents=True, exist_ok=True)
     runner_path = output_dir / "run_constrained_rnn.py"
+    if runner_path.is_symlink() or (runner_path.exists() and not runner_path.is_file()):
+        parser.error("refusing to replace an unsafe generated runner path")
     runner_path.write_text(textwrap.dedent(RUNNER))
     runner_path.chmod(0o755)
     print(runner_path)
